@@ -19,3 +19,9 @@
  */
 
 RodrigoButta\Admin\Form::forget(['map', 'editor']);
+
+
+
+// use RodrigoButta\Admin\Grid\Column;
+// use RodrigoButta\Admin\Grid\Displayers\Orderable;
+// Column::extend('orderable', Orderable::class);

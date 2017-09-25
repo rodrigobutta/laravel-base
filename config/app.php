@@ -168,6 +168,10 @@ return [
          * Package Service Providers...
          */
 
+        App\Modules\Job\JobServiceProvider::class,
+
+
+
         /*
          * Application Service Providers...
          */
