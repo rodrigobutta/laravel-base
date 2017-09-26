@@ -45,6 +45,35 @@ $('.grid-row-orderable').on('click', function() {
     });
 
 });
+
+
+$("table.table > tbody > tr").nestedSortable({
+    forcePlaceholderSize: true,
+    disableNestingClass: 'mjs-nestedSortable-no-nesting',
+    handle: '.grid-row-orderable',
+    helper: 'clone',
+    items: 'li',
+    maxLevels: 0,
+    opacity: .6,
+    placeholder: 'placeholder',
+    revert: 250,
+    tabSize: 25,
+    tolerance: 'pointer',
+    toleranceElement: '> div',
+    update: function () {
+
+        console.log("orenando")
+        // $.ajax({
+        //     type: "POST",
+        //     url: "{{ route('admin.job.reorder') }}",
+        //     data: {
+        //         tree: $("table.table > tbody > tr").nestedSortable("toArray", {startDepthCount: -1})
+        //     },
+        //     globalLoading: true
+        // });
+    }
+});
+
 EOT;
     }
 }

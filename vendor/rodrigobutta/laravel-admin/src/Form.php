@@ -506,6 +506,8 @@ class Form
 
         $data = $this->handleFileDelete($data);
 
+
+        // aca actua con las flechitas
         if ($this->handleOrderable($id, $data)) {
             return response([
                 'status'  => true,

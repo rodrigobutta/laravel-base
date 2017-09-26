@@ -118,15 +118,20 @@ class JobAdminController extends Controller{
         return Admin::grid(JobModel::class, function (Grid $grid) {
 
 
-
             $grid->id('ID');
             // $grid->id('ID')->sortable();
 
             $grid->column('title', 'Titulo');
 
-            // $grid->orderable();
+            $grid->description()->editable('textarea');
 
             $grid->column('sort', 'Ordenar')->orderable();
+
+            $published_states = [
+                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $grid->published()->switch($published_states);
 
 
             $grid->model()->orderBy('sort', 'asc');
@@ -148,6 +153,12 @@ class JobAdminController extends Controller{
 
             $form->text('title');
             $form->text('description');
+
+            $published_states = [
+                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $form->switch("published")->states($published_states);
 
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
