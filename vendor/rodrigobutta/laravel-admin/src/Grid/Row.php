@@ -25,17 +25,37 @@ class Row
      */
     protected $attributes = [];
 
+
+    /**
+     * Inherited Grid Options to handle Sortable TR attributes and so
+     *
+     * @var array
+     */
+    protected $gridOptions = [];
+
     /**
      * Constructor.
      *
      * @param $number
      * @param $data
      */
-    public function __construct($number, $data)
+    public function __construct($number, $data, $gridOptions)
     {
         $this->number = $number;
 
         $this->data = $data;
+
+        $this->gridOptions = $gridOptions;
+
+        $this->attributes = [
+            "item-id" => $data["id"]
+        ];
+
+        if( $this->gridOptions["isSortable"]==true ){
+            $this->attributes["item-sort"] =  $data[$this->gridOptions["sortableField"]];
+        }
+
+
     }
 
     /**
@@ -55,6 +75,9 @@ class Row
      */
     public function getRowAttributes()
     {
+
+        // *****************************************************
+
         return $this->formatHtmlAttribute($this->attributes);
     }
 

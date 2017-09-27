@@ -1,3 +1,5 @@
+{!! $grid->renderSortable() !!}
+
 <div class="box">
     <div class="box-header">
 
@@ -44,3 +46,5 @@
     </div>
     <!-- /.box-body -->
 </div>
+
+

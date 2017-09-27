@@ -164,6 +164,8 @@ class Grid
         'useActions'        => true,
         'useRowSelector'    => true,
         'allowCreate'       => true,
+        'isSortable'       => false,
+        'sortableField'     => 'sort'
     ];
 
     /**
@@ -582,7 +584,7 @@ class Grid
     protected function buildRows(array $data)
     {
         $this->rows = collect($data)->map(function ($model, $number) {
-            return new Row($number, $model);
+            return new Row($number, $model, $this->options);
         });
 
         if ($this->rowsCallback) {
@@ -677,6 +679,34 @@ class Grid
         return $this->option('useExporter', false);
     }
 
+
+
+
+    public function makeSortable($sortable_field="sort")
+    {
+
+        $this->model()->orderBy($sortable_field, 'asc');
+
+        $this->option('sortableField', $sortable_field);
+
+        return $this->option('isSortable', true);
+
+
+    }
+
+
+    public function isSortable()
+    {
+        return $this->option('isSortable');
+    }
+
+    public function getSortableField()
+    {
+        return $this->option('sortableField');
+    }
+
+
+
     /**
      * Render export button.
      *
@@ -686,6 +716,18 @@ class Grid
     {
         return new Tools\ExportButton($this);
     }
+
+
+    /**
+     * Render export button.
+     *
+     * @return Tools\Sortable
+     */
+    public function renderSortable()
+    {
+        return new Tools\Sortable($this);
+    }
+
 
     /**
      * Disable creation.
