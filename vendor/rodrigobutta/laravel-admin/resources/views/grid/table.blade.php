@@ -17,11 +17,13 @@
     <!-- /.box-header -->
     <div class="box-body table-responsive no-padding">
         <table class="table table-hover">
-            <tr>
-                @foreach($grid->columns() as $column)
-                <th>{{$column->getLabel()}}{!! $column->sorter() !!}</th>
-                @endforeach
-            </tr>
+            <thead>
+                <tr>
+                    @foreach($grid->columns() as $column)
+                    <th>{{$column->getLabel()}}{!! $column->sorter() !!}</th>
+                    @endforeach
+                </tr>
+            </thead>
 
             @foreach($grid->rows() as $row)
             <tr {!! $row->getRowAttributes() !!}>

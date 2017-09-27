@@ -23,6 +23,10 @@ class Orderable extends AbstractDisplayer
     <button type="button" class="btn btn-xs btn-default grid-row-orderable" data-id="{$this->getKey()}" data-direction="0">
         <i class="fa fa-caret-down fa-fw"></i>
     </button>
+
+    <button type="button" class="btn btn-xs btn-default grid-sortable" data-sort="{$this->value}" data-id="{$this->getKey()}">
+        <i class="fa fa-sort"></i>
+    </button>
 </div>
 
 EOT;
@@ -32,47 +36,62 @@ EOT;
     {
         return <<<EOT
 
-$('.grid-row-orderable').on('click', function() {
+            $('.grid-row-orderable').on('click', function() {
 
-    var key = $(this).data('id');
-    var direction = $(this).data('direction');
+                var key = $(this).data('id');
+                var direction = $(this).data('direction');
 
-    $.post('{$this->getResource()}/' + key, {_method:'PUT', _token:LA.token, _orderable:direction}, function(data){
-        if (data.status) {
-            $.pjax.reload('#pjax-container');
-            toastr.success(data.message);
-        }
-    });
+                $.post('{$this->getResource()}/' + key, {
+                        _method:'PUT',
+                        _token:LA.token,
+                        _orderable:direction
+                    }, function(data){
+                    if (data.status) {
+                        $.pjax.reload('#pjax-container');
+                        toastr.success(data.message);
+                    }
+                });
 
-});
+            });
 
 
-$("table.table > tbody > tr").nestedSortable({
-    forcePlaceholderSize: true,
-    disableNestingClass: 'mjs-nestedSortable-no-nesting',
-    handle: '.grid-row-orderable',
-    helper: 'clone',
-    items: 'li',
-    maxLevels: 0,
-    opacity: .6,
-    placeholder: 'placeholder',
-    revert: 250,
-    tabSize: 25,
-    tolerance: 'pointer',
-    toleranceElement: '> div',
-    update: function () {
+            $( "table.table > tbody" ).sortable( {
+                update: function( event, ui ) {
 
-        console.log("orenando")
-        // $.ajax({
-        //     type: "POST",
-        //     url: "{{ route('admin.job.reorder') }}",
-        //     data: {
-        //         tree: $("table.table > tbody > tr").nestedSortable("toArray", {startDepthCount: -1})
-        //     },
-        //     globalLoading: true
-        // });
-    }
-});
+                    var ids = [];
+                    var sorts = [];
+
+                    $(this).children().each(function(index) {
+                        ids.push(  parseInt( $(this).find('.grid-sortable').attr('data-id')  ) );
+                        sorts.push(  parseInt( $(this).find('.grid-sortable').attr('data-sort')  ) );
+                    });
+
+                    console.log(ids);
+                    console.log(sorts);
+
+                    var min = sorts.reduce(function(a, b) {
+                        return Math.min(a, b);
+                    });
+
+                    console.log(min);
+
+                    $.post('{$this->getResource()}/sort', {
+                            _method:'POST',
+                            _token:LA.token,
+                            _sortable:true,
+                            min:min,
+                            ids: ids
+                    }, function(data){
+
+                        if (data.status) {
+                            $.pjax.reload('#pjax-container');
+                            toastr.success(data.message);
+                        }
+
+                    });
+
+                }
+            });
 
 EOT;
     }

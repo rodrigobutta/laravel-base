@@ -16,18 +16,20 @@ Route::group(['namespace' => '\App\Modules\Job'], function () {
     ], function (Router $router) {
 
 
-        $router->get('job', ['as' => 'admin.job.list', 'uses' => 'JobAdminController@getList']);
-        $router->post('job', ['as' => 'admin.job.put', 'uses' => 'JobAdminController@put']);
-        $router->post('job/reorder', ['as' => 'admin.job.reorder', 'uses' => 'JobAdminController@reorder']);
-        $router->patch('job/{id}/state', ['as' => 'admin.job.state', 'uses' => 'JobAdminController@state', 'before' => 'csrf']);
-        $router->get('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@edit']);
-        $router->patch('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@patch']);
-        $router->delete('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@delete']);
-        $router->get('job/{id}/clone', ['as' => 'admin.job.clone', 'uses' => 'JobAdminController@doClone']);
-        $router->get('job/search', ['as' => 'admin.job.search', 'uses' => 'JobAdminController@search']);
+        // $router->get('job', ['as' => 'admin.job.list', 'uses' => 'JobAdminController@getList']);
+        // $router->post('job', ['as' => 'admin.job.put', 'uses' => 'JobAdminController@put']);
+        // $router->post('job/reorder', ['as' => 'admin.job.reorder', 'uses' => 'JobAdminController@reorder']);
+        // $router->patch('job/{id}/state', ['as' => 'admin.job.state', 'uses' => 'JobAdminController@state', 'before' => 'csrf']);
+        // $router->get('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@edit']);
+        // $router->patch('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@patch']);
+        // $router->delete('job/{id}/edit', ['as' => 'admin.job.edit', 'uses' => 'JobAdminController@delete']);
+        // $router->get('job/{id}/clone', ['as' => 'admin.job.clone', 'uses' => 'JobAdminController@doClone']);
+        // $router->get('job/search', ['as' => 'admin.job.search', 'uses' => 'JobAdminController@search']);
 
 
         $router->resource('jobs', JobAdminController::class);
+
+        $router->post('jobs/sort', ['as' => 'admin.job.sort', 'uses' => 'JobAdminController@sort']);
 
     });
 

@@ -14,6 +14,9 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/dist/css/skins/" . config('admin.skin') .".min.css") }}">
 
+
+
+
     {!! Admin::css() !!}
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/laravel-admin/laravel-admin.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/nprogress/nprogress.css") }}">
@@ -23,6 +26,9 @@
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/google-fonts/fonts.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
+
+    <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/jquery-ui/themes/smoothness/jquery-ui.css") }}">
+
 
     <!-- REQUIRED JS SCRIPTS -->
     <script src="{{ admin_asset ("/vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
@@ -63,6 +69,10 @@
 </script>
 
 <!-- REQUIRED JS SCRIPTS -->
+
+<script src="{{ admin_asset ("/vendor/laravel-admin/jquery-ui/jquery-ui.min.js") }}"></script>
+{{-- <script src="{{ admin_asset ("/vendor/laravel-admin/nestedSortable/jquery.ui.nestedSortable.js") }}"></script>  --}}
+
 <script src="{{ admin_asset ("/vendor/laravel-admin/nestable/jquery.nestable.js") }}"></script>
 <script src="{{ admin_asset ("/vendor/laravel-admin/toastr/build/toastr.min.js") }}"></script>
 <script src="{{ admin_asset ("/vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js") }}"></script>

@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 
@@ -169,20 +171,58 @@ class JobAdminController extends Controller{
 
 
 
+    // sirve al ajax de Displayers/Orderable, obtiene ids ordenados y el minimo del sort para poder hacer sortable paginado
+    public function sort(Request $request)
+    {
+
+        $min = intval( $request->get('min') ) ;
+        $ids = $request->get('ids');
+
+        $query = "UPDATE job SET sort = (CASE id ";
+        foreach($ids as $sort => $id) {
+            $sort_with_offset = $sort + $min;
+            $query .= " WHEN {$id} THEN {$sort_with_offset}";
+        }
+        $query .= " END) WHERE id IN (" . implode(",", $ids) . ")";
+
+        $affected = DB::update($query);
+
+        // return new JsonResponse($affected, 200);
+
+        if($affected>0){
+
+            return response([
+                'status'  => true,
+                'message' => trans('admin.update_succeeded'),
+            ]);
+
+        }
+        else{
+
+            return response([
+                'status'  => false
+            ]);
+
+        }
 
 
 
-
-
-
-
-    public function getList(){
-        $title = 'Items';
-
-        $items = JobModel::orderBy('lft', 'asc')->get();
-
-        return iView('job::admin.list', compact('title','items'));
     }
+
+
+
+
+
+
+
+
+    // public function getList(){
+    //     $title = 'Items';
+
+    //     $items = JobModel::orderBy('lft', 'asc')->get();
+
+    //     return iView('job::admin.list', compact('title','items'));
+    // }
 
 
 
