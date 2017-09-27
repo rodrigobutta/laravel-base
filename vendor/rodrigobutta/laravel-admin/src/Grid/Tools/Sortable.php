@@ -82,8 +82,6 @@ EOT;
 
         return <<<EOT
 
-    // isSortable
-
 EOT;
     }
 }

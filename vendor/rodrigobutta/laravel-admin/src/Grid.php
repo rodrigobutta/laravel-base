@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Schema;
 use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
 
+use Illuminate\Support\Facades\DB;
 
 use RodrigoButta\Admin\Dispatchable;
 
@@ -1058,7 +1059,7 @@ class Grid extends Dispatchable
 
 
      /**
-      * Handle sortab;e update.
+      * Handle sortable update.
       *
       * @param array $input
       *

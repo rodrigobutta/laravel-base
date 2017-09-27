@@ -10,6 +10,8 @@ use RodrigoButta\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
+use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
+
 class PermissionController extends Controller
 {
     use ResourceDispatcherTrait;

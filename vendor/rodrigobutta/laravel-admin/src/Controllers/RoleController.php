@@ -10,6 +10,8 @@ use RodrigoButta\Admin\Grid;
 use RodrigoButta\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 
+use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
+
 class RoleController extends Controller
 {
     use ResourceDispatcherTrait;

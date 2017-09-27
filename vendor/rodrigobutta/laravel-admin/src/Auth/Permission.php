@@ -6,6 +6,11 @@ use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Middleware\Pjax;
 use Illuminate\Support\Facades\Auth;
 
+// TODO sirve para vuelta de switcher error deny
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
 class Permission
 {
     /**
@@ -75,9 +80,26 @@ class Permission
      */
     public static function error()
     {
-        $response = response(Admin::content()->withError(trans('admin.deny')));
+
+        $request = Request::capture();
+
+        // ajax but not pjax
+        if ($request->ajax() && !$request->pjax()) {
+
+            $response = response([
+                 'status'  => false,
+                 'message' => trans('admin.deny'),
+             ]);
+
+        }
+        else{
+
+            $response = response(Admin::content()->withError(trans('admin.deny')));
+
+        }
 
         Pjax::respond($response);
+
     }
 
     /**
@@ -89,4 +111,12 @@ class Permission
     {
         return Auth::guard('admin')->user()->isRole('administrator');
     }
+
+
+
+
+
+
+
+
 }
