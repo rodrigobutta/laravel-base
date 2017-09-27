@@ -13,7 +13,7 @@ use Illuminate\Routing\Controller;
 
 class UserController extends Controller
 {
-    use ModelForm;
+    use ResourceDispatcherTrait;
 
     /**
      * Index interface.

@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Schema;
 use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
 
-class Grid
+
+use RodrigoButta\Admin\Dispatchable;
+
+class Grid extends Dispatchable
 {
     /**
      * The grid data model instance.
@@ -691,9 +694,7 @@ class Grid
 
         return $this->option('isSortable', true);
 
-
     }
-
 
     public function isSortable()
     {
@@ -1023,4 +1024,78 @@ class Grid
     {
         return $this->render();
     }
+
+
+
+
+
+    /**
+     * Store manejado en grid
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse
+     */
+     public function store()
+     {
+         $data = Input::all();
+
+         // aca actua con las flechitas
+         if ($this->handleSortable($data)) {
+             return response([
+                 'status'  => true,
+                 'message' => trans('admin.update_succeeded'),
+             ]);
+         }
+
+
+        if ($response = $this->ajaxResponse(trans('admin.nothign_to_do'))) {
+            return $response;
+        }
+
+
+     }
+
+
+
+
+     /**
+      * Handle sortab;e update.
+      *
+      * @param array $input
+      *
+      * @return bool
+      */
+     protected function handleSortable(array $input = [])
+     {
+         if (array_key_exists('_sortable', $input)) {
+
+            $table = $this->model->getTable();
+            $sort_field = $this->getSortableField();
+            $min = intval( $input['min'] ) ;
+            $ids = $input['ids'];
+
+            $query = "UPDATE $table SET $sort_field = (CASE id ";
+            foreach($ids as $sort => $id) {
+                $sort_with_offset = $sort + $min;
+                $query .= " WHEN {$id} THEN {$sort_with_offset}";
+            }
+            $query .= " END) WHERE id IN (" . implode(",", $ids) . ")";
+
+            // \Debugbar::info($query);
+
+            $affected = DB::update($query);
+
+            return true;
+
+            // if($affected>0){
+            // }
+            // else{
+            // }
+
+         }
+
+         return false;
+     }
+
+
+
 }

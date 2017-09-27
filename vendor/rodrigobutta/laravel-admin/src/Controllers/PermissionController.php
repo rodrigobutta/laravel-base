@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
-    use ModelForm;
+    use ResourceDispatcherTrait;
 
     /**
      * Index interface.

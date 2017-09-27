@@ -34,25 +34,18 @@ use RodrigoButta\Admin\Grid;
 use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 // use App\Http\Controllers\Controller;
-use RodrigoButta\Admin\Controllers\ModelForm;
+use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 
 
 class JobAdminController extends Controller{
 
-
-    use ModelForm;
-
-
+    use ResourceDispatcherTrait;
 
     public function __construct(JobRepositoryInterface $p){
         // view()->addNamespace('job', app_path('Modules/job/views/'));
         $this->jobRepository = $p;
     }
-
-
-
-
 
 
     /**
@@ -168,48 +161,6 @@ class JobAdminController extends Controller{
 
         });
     }
-
-
-
-
-    // sirve al ajax de Displayers/Orderable, obtiene ids ordenados y el minimo del sort para poder hacer sortable paginado
-    public function sort(Request $request)
-    {
-
-        $min = intval( $request->get('min') ) ;
-        $ids = $request->get('ids');
-
-        $query = "UPDATE job SET sort = (CASE id ";
-        foreach($ids as $sort => $id) {
-            $sort_with_offset = $sort + $min;
-            $query .= " WHEN {$id} THEN {$sort_with_offset}";
-        }
-        $query .= " END) WHERE id IN (" . implode(",", $ids) . ")";
-
-        $affected = DB::update($query);
-
-        // return new JsonResponse($affected, 200);
-
-        if($affected>0){
-
-            return response([
-                'status'  => true,
-                'message' => trans('admin.update_succeeded'),
-            ]);
-
-        }
-        else{
-
-            return response([
-                'status'  => false
-            ]);
-
-        }
-
-
-
-    }
-
 
 
 

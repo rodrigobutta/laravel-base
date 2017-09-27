@@ -12,7 +12,7 @@ use Illuminate\Routing\Controller;
 
 class RoleController extends Controller
 {
-    use ModelForm;
+    use ResourceDispatcherTrait;
 
     /**
      * Index interface.

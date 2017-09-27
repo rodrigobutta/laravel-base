@@ -42,7 +42,8 @@ class Sortable extends AbstractTool
                     return Math.min(a, b);
                 });
 
-                $.post('{$resource}/sort', {
+                // $.post('{$resource}/sort', {
+                $.post('{$resource}', {
                         _method:'POST',
                         _token:LA.token,
                         _sortable:true,

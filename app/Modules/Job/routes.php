@@ -29,8 +29,6 @@ Route::group(['namespace' => '\App\Modules\Job'], function () {
 
         $router->resource('jobs', JobAdminController::class);
 
-        $router->post('jobs/sort', ['as' => 'admin.job.sort', 'uses' => 'JobAdminController@sort']);
-
     });
 
 });

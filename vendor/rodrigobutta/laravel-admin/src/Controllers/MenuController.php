@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller;
 
 class MenuController extends Controller
 {
-    use ModelForm;
+    use ResourceDispatcherTrait;
 
     /**
      * Index interface.

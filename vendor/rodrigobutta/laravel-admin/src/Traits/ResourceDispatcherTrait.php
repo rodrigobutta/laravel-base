@@ -1,8 +1,10 @@
 <?php
 
-namespace RodrigoButta\Admin\Controllers;
+namespace RodrigoButta\Admin\Traits;
 
-trait ModelForm
+use Illuminate\Support\Facades\Input;
+
+trait ResourceDispatcherTrait
 {
     /**
      * Display the specified resource.
@@ -57,6 +59,16 @@ trait ModelForm
      */
     public function store()
     {
-        return $this->form()->store();
+        $data = Input::all();
+
+        // analizo los parametros de entrada del POST (store) y determino si debe actuar el form por elemento unico o bien el grid por multiple como un sort
+        if($data["_sortable"]){
+            return $this->grid()->store();
+        }
+        else{
+            return $this->form()->store();
+        }
+
+
     }
 }

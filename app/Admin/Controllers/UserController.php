@@ -9,11 +9,11 @@ use RodrigoButta\Admin\Grid;
 use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
-use RodrigoButta\Admin\Controllers\ModelForm;
+use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 class UserController extends Controller
 {
-    use ModelForm;
+    use ResourceDispatcherTrait;
 
     /**
      * Index interface.

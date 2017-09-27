@@ -68,7 +68,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Captcha        captcha($column, $label = '')
  * @method Field\Listbox        listbox($column, $label = '')
  */
-class Form
+
+use RodrigoButta\Admin\Dispatchable;
+
+class Form extends Dispatchable
 {
     /**
      * Eloquent model of the form.
@@ -369,27 +372,6 @@ class Form
         return redirect($url);
     }
 
-    /**
-     * Get ajax response.
-     *
-     * @param string $message
-     *
-     * @return bool|\Illuminate\Http\JsonResponse
-     */
-    protected function ajaxResponse($message)
-    {
-        $request = Request::capture();
-
-        // ajax but not pjax
-        if ($request->ajax() && !$request->pjax()) {
-            return response()->json([
-                'status'  => true,
-                'message' => $message,
-            ]);
-        }
-
-        return false;
-    }
 
     /**
      * Prepare input data for insert or update.
