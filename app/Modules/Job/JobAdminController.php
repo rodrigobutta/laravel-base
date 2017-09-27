@@ -121,14 +121,11 @@ class JobAdminController extends Controller{
 
 
             $grid->id('ID');
-            // $grid->id('ID')->sortable();
+            // $grid->id('ID')->sortable(); // TODO desactivar cualquier llamado a sortable si es que el Grid tiene el makeSortable
 
             $grid->column('title', 'Titulo');
 
             $grid->description()->editable('textarea');
-
-            $grid->column('sort', 'Ordenar')->orderable();
-
             $published_states = [
                 'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
                 'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
@@ -136,7 +133,11 @@ class JobAdminController extends Controller{
             $grid->published()->switch($published_states);
 
 
-            $grid->model()->orderBy('sort', 'asc');
+            // $grid->column('sort', 'Ordenar')->orderable();
+
+            $grid->makeSortable('sort');
+
+            // $grid->model()->orderBy('sort', 'asc'); // lo elimino porque el makeSortable ya lo incluye dentro
 
         });
     }
