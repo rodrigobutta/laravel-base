@@ -113,7 +113,7 @@ return [
      */
     'operation_log'   => [
 
-        'enable' => true,
+        'enable' => false,
 
         /*
          * Routes that will not log to database.
@@ -145,7 +145,7 @@ return [
     /*
      * Version displayed in footer.
      */
-    'version'   => '1.5.x-dev',
+    'version'   => '2.1',
 
     /*
      * Settings for extensions.
