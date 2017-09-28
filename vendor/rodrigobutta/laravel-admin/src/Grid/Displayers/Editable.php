@@ -144,7 +144,34 @@ class Editable extends AbstractDisplayer
 
         $options = json_encode($this->options);
 
-        Admin::script("$('.$class').editable($options);");
+        $options = rtrim($options,"}"); // tengo que sacar la ultima llave que se armaba automaticamente linda, para poder concatenar los callbacks
+
+        $options .= ",success: function(data) {
+                        if (data.status) {
+                            toastr.success(data.message);
+                        }
+                        else{
+                            toastr.error(data.message);
+                        }
+                    }";
+
+        $options .= ",error: function(data) {
+                        console.log(data)
+                        toastr.error('".trans('admin.error')."');
+                    }";
+
+        $options .= "}";
+
+                $script = <<<EOT
+
+                $('.$class').editable($options);
+
+EOT;
+
+                Admin::script($script);
+
+
+
 
         $attributes = [
             'href'       => '#',

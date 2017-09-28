@@ -12,6 +12,7 @@ return [
     'remember_me'           => 'Remember me',
     'user_setting'          => 'User setting',
     'avatar'                => 'Avatar',
+    'error'                => 'Error',
 
     'list'         => 'List',
     'new'          => 'New',

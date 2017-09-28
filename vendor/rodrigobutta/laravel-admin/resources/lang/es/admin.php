@@ -12,6 +12,7 @@ return [
     'remember_me'           => 'Recordarme',
     'user_setting'          => 'Configuración del usuario',
     'avatar'                => 'Avatar',
+    'error'                => 'Error',
 
     'list'         => 'Lista',
     'new'          => 'Nuevo',
