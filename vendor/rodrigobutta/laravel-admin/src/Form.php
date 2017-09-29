@@ -324,6 +324,7 @@ class Form extends Dispatchable
      */
     public function store()
     {
+
         $data = Input::all();
 
         // Handle validation errors.
@@ -346,6 +347,11 @@ class Form extends Dispatchable
 
             $this->updateRelation($this->relations);
         });
+
+        // return response()->json([
+        //     'status'  => true,
+        //     'message' => trans('admin.save_succeeded'),
+        // ]);
 
         if (($response = $this->complete($this->saved)) instanceof Response) {
             return $response;
@@ -482,6 +488,8 @@ class Form extends Dispatchable
      */
     public function update($id)
     {
+        \Debugbar::info("Form -> update()");
+
         $data = Input::all();
 
         $data = $this->handleEditable($data);

@@ -59,9 +59,11 @@ trait ResourceDispatcherTrait
      */
     public function store()
     {
+        \Debugbar::info("ResourceDispatcherTrait -> store()");
+
         $data = Input::all();
 
-        // analizo los parametros de entrada del POST (store) y determino si debe actuar el form por elemento unico o bien el grid por multiple como un sort
+        // TODO cambiar esta logica. Analizo los parametros de entrada del POST (store) y determino si debe actuar el form por elemento unico o bien el grid por multiple como un sort
         if(isset($data["_sortable"])){
             return $this->grid()->store();
         }

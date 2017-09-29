@@ -169,6 +169,7 @@ return [
          */
 
         App\Modules\Job\JobServiceProvider::class,
+        App\Modules\Tree\TreeServiceProvider::class,
 
 
 

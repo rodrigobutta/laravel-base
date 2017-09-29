@@ -1,7 +1,7 @@
 <?php
-namespace App\Modules\Job;
+namespace App\Modules\Tree;
 
-use App\Modules\Job\JobRepositoryInterface;
+use App\Modules\Tree\TreeRepositoryInterface;
 
 
 use App\Helpers\Resize;
@@ -17,16 +17,17 @@ use App\Http\Controllers\Controller;
 use Exception;
 use MP;
 
-class JobFrontController extends Controller
+class TreeFrontController extends Controller
 {
 
-    public function __construct(JobRepositoryInterface $job)
+    public function __construct(TreeRepositoryInterface $tree)
     {
 
-        // view()->addNamespace('job', app_path('Modules/job/views/'));
+        // view()->addNamespace('tree', app_path('Modules/tree/views/'));
 
 
-        $this->job = $job;
+        $this->tree = $tree;
+
     }
 
 
@@ -35,19 +36,19 @@ class JobFrontController extends Controller
     //     $breadcrumb = [];
 
 
-    //     $items = JobModel::where('parent_id', '=', 0)->wherePublished(1)->orderBy('lft', 'asc')->get();
+    //     $items = TreeModel::where('parent_id', '=', 0)->wherePublished(1)->orderBy('lft', 'asc')->get();
 
-    //     $page = $this->page->getBySlug('job');
+    //     $page = $this->page->getBySlug('tree');
     //     $title = $page->title;
 
-    //     // filtrar solo los jobos publicados
-    //     // $job = $job->filter(function ($item) {
+    //     // filtrar solo los treeos publicados
+    //     // $tree = $tree->filter(function ($item) {
     //     //     return $item->isPublished();
     //     // })->values();
 
 
 
-    //     return iView('job::front.index', compact( 'items', 'page', 'title'));
+    //     return iView('tree::front.index', compact( 'items', 'page', 'title'));
 
     // }
 
@@ -63,7 +64,7 @@ class JobFrontController extends Controller
     //     $c = explode('/', $mslug);
 
     //     try {
-    //         $item = $this->job->getBySlug(end($c));
+    //         $item = $this->tree->getBySlug(end($c));
     //     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
     //         return redirect()->route('home')->with('flashError', 'no encontrado');
     //     }
@@ -91,15 +92,15 @@ class JobFrontController extends Controller
     //         }
     //         array_pop($breadcrumb);
 
-    //         $childs = JobModel::where('parent_id', '=', $item->id)->wherePublished(1)->orderBy('lft', 'asc')->get();
+    //         $childs = TreeModel::where('parent_id', '=', $item->id)->wherePublished(1)->orderBy('lft', 'asc')->get();
 
-    //         $brothers = JobModel::where('parent_id', '=', $item->parent_id)->wherePublished(1)->orderBy('lft', 'asc')->get();
+    //         $brothers = TreeModel::where('parent_id', '=', $item->parent_id)->wherePublished(1)->orderBy('lft', 'asc')->get();
 
 
     //         $title = $item->title;
 
 
-    //         return iView('job::front.view', compact('item', 'title', 'breadcrumb', 'childs', 'brothers'));
+    //         return iView('tree::front.view', compact('item', 'title', 'breadcrumb', 'childs', 'brothers'));
     //     }
     // }
 

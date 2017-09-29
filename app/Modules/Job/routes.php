@@ -4,9 +4,9 @@ use Illuminate\Routing\Router;
 Route::group(['namespace' => '\App\Modules\Job'], function () {
 
 
-    Route::any('jobsroot', ['as' => 'job.index', 'uses' => 'JobFrontController@getList']);
+    // Route::any('jobsroot', ['as' => 'job.index', 'uses' => 'JobFrontController@getList']);
 
-    Route::any('jobs/{mslug?}', ['as' => 'job.view', 'uses' => 'JobFrontController@getView'])->where('mslug', '(.*)');
+    // Route::any('jobs/{mslug?}', ['as' => 'job.view', 'uses' => 'JobFrontController@getView'])->where('mslug', '(.*)');
 
 
 

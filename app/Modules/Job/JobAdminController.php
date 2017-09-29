@@ -2,13 +2,14 @@
 namespace App\Modules\Job;
 
 
-use App\Modules\Job\JobModel;
-use App\Modules\Job\JobInfoModel;
+// use App\Modules\Job\JobModel;
+// use App\Modules\Job\JobInfoModel;
 
 use App\Modules\Job\JobRepositoryInterface;
 use App\Modules\Job\JobAdminRequest;
 
 
+// TODO revisar que use no se usan
 
 use Cache;
 use Excel;
@@ -27,13 +28,10 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 
-
-
 use RodrigoButta\Admin\Form;
 use RodrigoButta\Admin\Grid;
 use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
-// use App\Http\Controllers\Controller;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 
@@ -60,7 +58,7 @@ class JobAdminController extends Controller{
             $content->header('header');
             $content->description('listado');
 
-            $content->body($this->grid());
+            $content->body($this->list());
         });
     }
 
@@ -104,11 +102,11 @@ class JobAdminController extends Controller{
     }
 
     /**
-     * Make a grid builder.
+     * Admin init page
      *
      * @return Grid
      */
-    protected function grid()
+    protected function list()
     {
         return Admin::grid(JobModel::class, function (Grid $grid) {
 
