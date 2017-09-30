@@ -75,7 +75,7 @@ class InstallCommand extends Command
         $this->makeDir('Controllers');
 
         $this->createHomeController();
-        $this->createExampleController();
+        // $this->createExampleController();
 
         $this->createBootstrapFile();
         $this->createRoutesFile();
@@ -103,17 +103,17 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    public function createExampleController()
-    {
-        $exampleController = $this->directory.'/Controllers/ExampleController.php';
-        $contents = $this->getStub('ExampleController');
+    // public function createExampleController()
+    // {
+    //     $exampleController = $this->directory.'/Controllers/ExampleController.php';
+    //     $contents = $this->getStub('ExampleController');
 
-        $this->laravel['files']->put(
-            $exampleController,
-            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
-        );
-        $this->line('<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController));
-    }
+    //     $this->laravel['files']->put(
+    //         $exampleController,
+    //         str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+    //     );
+    //     $this->line('<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController));
+    // }
 
     /**
      * Create routes file.
