@@ -170,6 +170,8 @@ return [
 
         App\Modules\Job\JobServiceProvider::class,
         App\Modules\Tree\TreeServiceProvider::class,
+        App\Modules\User\UserServiceProvider::class,
+
 
 
 
