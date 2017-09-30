@@ -1,12 +1,12 @@
 <?php return [
-    
+
     /*
     |--------------------------------------------------------------------------
     | Package Configuration Option
     |--------------------------------------------------------------------------
-    | Describe what it does. 
+    | Describe what it does.
     */
 
-    //'key' => 'value',
+    'plural' => 'jobs',
 
 ];

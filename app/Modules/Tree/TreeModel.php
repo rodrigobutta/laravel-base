@@ -3,12 +3,12 @@
 namespace App\Modules\Tree;
 
 use RodrigoButta\Admin\Traits\AdminBuilder;
-use RodrigoButta\Admin\Traits\ModelTree;
+use RodrigoButta\Admin\Traits\CategoryTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class TreeModel extends \App\Models\Profiled
 {
-    use ModelTree, AdminBuilder;
+    use CategoryTrait, AdminBuilder;
 
     protected $table = 'tree';
 

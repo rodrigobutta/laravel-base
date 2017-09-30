@@ -3,7 +3,7 @@
 namespace RodrigoButta\Admin\Auth\Database;
 
 use RodrigoButta\Admin\Traits\AdminBuilder;
-use RodrigoButta\Admin\Traits\ModelTree;
+use RodrigoButta\Admin\Traits\CategoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Menu extends Model
 {
-    use ModelTree, AdminBuilder;
+    use CategoryTrait, AdminBuilder;
 
     /**
      * The attributes that are mass assignable.

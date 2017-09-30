@@ -5,8 +5,6 @@ namespace App\Modules\Tree;
 use App\Modules\Tree\TreeModel;
 use App\Modules\Tree\TreeRepositoryInterface;
 
-use App\Helpers\ResizeHelper;
-
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -26,7 +24,6 @@ class TreeRepository implements TreeRepositoryInterface
 
     public function getById($id)
     {
-        // return $this->posts()->where('id', $id)->with('user', 'comments', 'comments.replies', 'favorites', 'info')->firstOrFail();
         return $this->posts()->where('id', $id)->with('user', 'info')->firstOrFail();
     }
 
@@ -97,16 +94,6 @@ class TreeRepository implements TreeRepositoryInterface
             // return redirect()->route('admin')->with('flashSuccess', t('Insufficient permissions for this object'));
         }
 
-
-        // elimino el archivo fisico de la imagen
-        if(has($item->main_image)){
-            $delete = new ResizeHelper( $item->main_image, 'tasks');
-            $delete->delete();
-        }
-
-
-
-        $item->info()->delete();
 
 
         // elimino recursivamente
