@@ -6,13 +6,15 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "bogardo/mailgun": "^5.0",
         "fideloper/proxy": "~3.3",
         "jenssegers/agent": "^2.5",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "rodrigobutta/laravel-attachable-modules": ">=1.0.0",
+        "php-http/guzzle6-adapter": "^1.1",
         "rodrigobutta/laravel-admin": ">=2.1",
         "rodrigobutta/laravel-admin-ext-log-viewer": ">=1.0.0",
+        "rodrigobutta/laravel-attachable-modules": ">=1.0.0",
         "spatie/eloquent-sortable": "^3.4"
     },
     "require-dev": {

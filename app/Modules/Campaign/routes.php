@@ -11,6 +11,8 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         'prefix'        => config('admin.route.prefix')
     ], function (Router $router) {
 
+        $router->any('testmail', ['as' => 'mail.test', 'uses' => 'CampaignAdminController@testMail']);
+
         $router->resource('campaigns', CampaignAdminController::class);
 
     });

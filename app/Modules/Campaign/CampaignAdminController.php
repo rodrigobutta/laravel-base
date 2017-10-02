@@ -156,4 +156,31 @@ class CampaignAdminController extends Controller{
 
 
 
+    public function testMail(Request $request){
+
+        $data = [
+            'campaign' => 'Campaña de prueba 2',
+            'url' => 'http://muypunch.com'
+        ];
+
+        \Mailgun::send('campaign::emails.test', $data, function ($message) {
+
+            $message->to([
+                    'rbutta@gmail.com' => [
+                        'name' => 'Rodrigo Butta',
+                        'city' => 'New York'
+                    ],
+                    'info@muypunch.com' => [
+                        'name' => 'Empresa Muypunch',
+                        'city' => 'London'
+                    ]
+                ]);
+
+        });
+
+
+        return json_encode("mail enviado");
+    }
+
+
 }
