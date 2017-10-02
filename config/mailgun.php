@@ -16,19 +16,19 @@ return [
      * Domain name registered with Mailgun
      *
      */
-    'domain' => 'sandbox5d58da3dc1bb466ab15a637029e9e75a.mailgun.org',
+    'domain' => env('MAILGUN_DOMAIN', ''),
 
     /*
      * Mailgun (private) API key
      *
      */
-    'api_key' => 'key-737c064a4cb5cbf391f9af34f579f827',
+    'api_key' => env('MAILGUN_APIKEY', ''),
 
     /*
      * Mailgun public API key
      *
      */
-    'public_api_key' => 'pubkey-047712fb803c00a2f12f718b5cd760c1',
+    'public_api_key' => env('MAILGUN_PUBLIC_APIKEY', ''),
 
     /*
      * You may wish for all e-mails sent with Mailgun to be sent from
@@ -37,15 +37,15 @@ return [
      *
      */
     'from' => [
-        'address' => 'info@maquiel.muypunch.com',
-        'name' => 'Maquiel Muypunch'
+        'address' => env('MAILGUN_FROM_ADDRESS', ''),
+        'name' => env('MAILGUN_FROM_NAME', '')
     ],
 
     /*
      * Global reply-to e-mail address
      *
      */
-    'reply_to' => 'info@muypunch.com',
+    'reply_to' => env('MAILGUN_REPLYTO', ''),
 
     /*
      * Force the from address
