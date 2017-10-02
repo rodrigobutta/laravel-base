@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fad05ff1f79524de7b685f3e7b51695",
+    "content-hash": "926d7f9add6b24dd59140bede407fae5",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1077,16 +1077,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
             "require": {
@@ -1121,7 +1121,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "psr/container",
@@ -1424,16 +1424,16 @@
         },
         {
             "name": "rodrigobutta/laravel-admin",
-            "version": "v2.0.1",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigobutta/laravel-admin.git",
-                "reference": "ac7cd00fb79cf5a850b0094f232f81dd9c302807"
+                "reference": "fbc08a0cbf0c3784c39c20a53fad5984c303f546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigobutta/laravel-admin/zipball/ac7cd00fb79cf5a850b0094f232f81dd9c302807",
-                "reference": "ac7cd00fb79cf5a850b0094f232f81dd9c302807",
+                "url": "https://api.github.com/repos/rodrigobutta/laravel-admin/zipball/fbc08a0cbf0c3784c39c20a53fad5984c303f546",
+                "reference": "fbc08a0cbf0c3784c39c20a53fad5984c303f546",
                 "shasum": ""
             },
             "require": {
@@ -1499,9 +1499,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/rodrigobutta/laravel-admin/tree/v2.0.1"
+                "source": "https://github.com/rodrigobutta/laravel-admin/tree/v2.1.1"
             },
-            "time": "2017-09-20T00:50:58+00:00"
+            "time": "2017-09-30T20:12:34+00:00"
         },
         {
             "name": "rodrigobutta/laravel-admin-ext-log-viewer",

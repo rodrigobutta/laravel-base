@@ -15,7 +15,7 @@ class InstallTest extends TestCase
 
         $this->assertFileExists(admin_path('Controllers/HomeController.php'));
 
-        // $this->assertFileExists(admin_path('Controllers/ExampleController.php'));
+        $this->assertFileExists(admin_path('Controllers/ExampleController.php'));
 
         $this->assertFileExists(config_path('admin.php'));
 

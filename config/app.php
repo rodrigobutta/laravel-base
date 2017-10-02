@@ -168,9 +168,10 @@ return [
          * Package Service Providers...
          */
 
-        App\Modules\Job\JobServiceProvider::class,
+        App\Modules\Mailist\MailistServiceProvider::class,
         App\Modules\Tree\TreeServiceProvider::class,
         App\Modules\User\UserServiceProvider::class,
+        App\Modules\Campaign\CampaignServiceProvider::class,
 
 
 

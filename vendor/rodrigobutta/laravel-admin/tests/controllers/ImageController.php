@@ -3,7 +3,7 @@
 namespace Tests\Controllers;
 
 use App\Http\Controllers\Controller;
-use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
+use RodrigoButta\Admin\Controllers\ModelForm;
 use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Form;
 use RodrigoButta\Admin\Grid;
@@ -12,7 +12,7 @@ use Tests\Models\Image;
 
 class ImageController extends Controller
 {
-    use ResourceDispatcherTrait;
+    use ModelForm;
 
     /**
      * Index interface.
