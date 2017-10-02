@@ -10,6 +10,7 @@
         "jenssegers/agent": "^2.5",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "rodrigobutta/laravel-attachable-modules": ">=1.0.0",
         "rodrigobutta/laravel-admin": ">=2.1",
         "rodrigobutta/laravel-admin-ext-log-viewer": ">=1.0.0",
         "spatie/eloquent-sortable": "^3.4"
@@ -62,6 +63,11 @@
         "optimize-autoloader": true
     },
     "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rodrigobutta/laravel-attachable-modules.git",
+            "reference": "master"
+        },
         {
             "type": "vcs",
             "url": "https://github.com/rodrigobutta/laravel-admin.git",
