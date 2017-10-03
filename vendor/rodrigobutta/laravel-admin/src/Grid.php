@@ -1037,7 +1037,6 @@ class Grid extends Dispatchable
      */
      public function store()
      {
-        \Debugbar::info("Grid -> store()");
 
          $data = Input::all();
 

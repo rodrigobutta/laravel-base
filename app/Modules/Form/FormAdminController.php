@@ -160,13 +160,13 @@ class FormAdminController extends Controller{
 
 
 
-    public function testForm(Request $request){
+    public function schemaEditor($formid){
 
         // TODO resolver esta mugre
         Admin::css(asset('modules/form/css/app.css'));
         Admin::css(asset('modules/form/css/editor.css'));
         Admin::css(asset('modules/form/css/formden.css'));
-        Admin::css(asset('modules/form/css/style.css'));
+        // Admin::css(asset('modules/form/css/style.css'));
         Admin::css('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css');
 
         Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js');
@@ -181,31 +181,37 @@ class FormAdminController extends Controller{
         Admin::js(asset('modules/form/js/builder.js'));
 
 
+        $form = FormModel::findOrFail($formid);
 
 
-
-        return Admin::content(function (Content $content) {
+        return Admin::content(function (Content $content) use($form){
 
             $content->header('formulario');
             $content->description('editando');
 
-            $str = "contenido";
+            $schema = $form->schema;
 
-            // $content->row(function (Row $row) {
+            \Debugbar::info($schema);
 
-            //     $row->column(6, function (Column $column) {
-            //         $column->append(Dashboard::environment());
-            //     });
-
-            //     $row->column(6, function (Column $column) {
-            //         $column->append(Dashboard::extensions());
-            //     });
-
-            // });
-
-            $content->body(view('form::admin.schema.edit', compact('str')));
+            $content->body(view('form::admin.schema.edit', compact('schema')));
 
         });
+
+    }
+
+
+    public function schemaUpdate($formid, Request $request){
+
+        $form = FormModel::findOrFail($formid);
+
+        $form->schema = $request->get('schema');
+
+        $form->save();
+
+        return response([
+            'status'  => true,
+            'message' => trans('admin.update_succeeded'),
+        ]);
 
     }
 

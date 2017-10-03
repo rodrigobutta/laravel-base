@@ -11,7 +11,8 @@ Route::group(['namespace' => '\App\Modules\Form'], function () {
         'prefix'        => config('admin.route.prefix')
     ], function (Router $router) {
 
-        $router->any('testform', ['as' => 'mail.test', 'uses' => 'FormAdminController@testForm']);
+        $router->get('forms/{formid}/schema', ['as' => 'mail.test', 'uses' => 'FormAdminController@schemaEditor']);
+        $router->patch('forms/{formid}/schema', ['as' => 'mail.test', 'uses' => 'FormAdminController@schemaUpdate']);
 
         $router->resource('forms', FormAdminController::class);
 

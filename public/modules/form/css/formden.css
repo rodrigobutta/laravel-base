@@ -9,7 +9,7 @@
 .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active{
 	background-color: #2980b9;
     border-color: #2980b9;
-	
+
 }
 
 
@@ -19,7 +19,7 @@
 
 /*All of these added by Chris */
 .howitworks ol li{
-font-size: 18px; 
+font-size: 18px;
 color: white !important;
 line-height: 1.7;
 }
@@ -38,8 +38,8 @@ color: white !important;
 
 .borderless td, .borderless th {
 	border: none !important;
-}	
-.underline{text-decoration: underline}	
+}
+.underline{text-decoration: underline}
 .read{color: #c9c9c9}
 .categorize{cursor: pointer}
 pre{color: #027fc4; white-space: pre-wrap; padding-left: 10px;}
@@ -50,7 +50,7 @@ pre{color: #027fc4; white-space: pre-wrap; padding-left: 10px;}
 .keyword:hover{color: #ccd2d7;}
 .noborder{border: none !important;}
 .instructions{font-style: italic; float: left; margin-left: 20px;}
-a.model_link:focus{		
+a.model_link:focus{
 	background-color: #fff !important;
 	color: #555;
 
@@ -82,8 +82,8 @@ border-left: 0 !important;
 
 /*End ---- All of these added by Chris */
 
-a:focus, 
-a:hover, 
+a:focus,
+a:hover,
 a:active {
 	color: #3498db;
 }
@@ -92,8 +92,8 @@ a:active {
 	color: #3498db;
 }
 
-a.read-more:hover { 
-	color:#3498db; 
+a.read-more:hover {
+	color:#3498db;
 }
 
 .linked:hover {
@@ -133,7 +133,7 @@ a.read-more:hover {
 }
 .purchase a.btn-buy:hover {
 	background:#2980b9;
-} 
+}
 
 /*Buttons
 ------------------------------------*/
@@ -148,13 +148,13 @@ a.read-more:hover {
 /*Service
 ------------------------------------*/
 .service .service-icon {
-	color:#3498db;	
+	color:#3498db;
 }
 
 /*Service Blocks*/
-.service-alternative .service:hover { 
+.service-alternative .service:hover {
 	background:#3498db;
-} 
+}
 
 /*Thumbnail (Recent Work)
 ------------------------------------*/
@@ -184,15 +184,15 @@ a.read-more:hover {
 /*Typography
 ------------------------------------*/
 /*Heading*/
-.headline h2, 
-.headline h3, 
+.headline h2,
+.headline h3,
 .headline h4 {
 	border-bottom:2px solid #3498db;
 }
 
 /*Blockquote*/
 blockquote:hover {
-	border-left-color:#3498db; 
+	border-left-color:#3498db;
 }
 
 .hero {
@@ -221,60 +221,32 @@ blockquote:hover {
 
 /*Blog Posts
 ------------------------------------*/
-.posts .dl-horizontal a:hover { 
-	color:#3498db; 
+.posts .dl-horizontal a:hover {
+	color:#3498db;
 }
 
 .posts .dl-horizontal:hover dt img,
-.posts .dl-horizontal:hover dd a { 
+.posts .dl-horizontal:hover dd a {
 	color: #3498db;
 	border-color: #3498db !important;
 }
 
 /*Post Comment*/
-.post-comment h3, 
+.post-comment h3,
 .blog-item .media h3,
 .blog-item .media h4.media-heading span a {
 	color: #3498db;
 }
 
-/*Tabs
-------------------------------------*/
-/*Tabs v1*/
-.tab-v1 .nav-tabs { 
-	border-bottom: solid 2px #3498db; 	
-}
-
-.tab-v1 .nav-tabs > .active > a, 
-.tab-v1 .nav-tabs > .active > a:hover, 
-.tab-v1 .nav-tabs > .active > a:focus { 
-	background: #3498db; 
-}
-
-.tab-v1 .nav-tabs > li > a:hover { 
-	background: #3498db; 
-}
-
-/*Tabs v2*/
-.tab-v2 .nav-tabs li.active a {
-	border-top: solid 2px #3498db;
-}
-
-/*Tabs v3*/
-.tab-v3 .nav-pills li a:hover,
-.tab-v3 .nav-pills li.active a {
-	background: #3498db;
-	border: solid 1px #2980b9;
-}
 
 /*Accardion
 ------------------------------------*/
 .acc-home a.active,
-.acc-home a.accordion-toggle:hover { 
-	color:#3498db; 
+.acc-home a.accordion-toggle:hover {
+	color:#3498db;
 }
-.acc-home .collapse.in { 
-	border-bottom:solid 1px #3498db; 
+.acc-home .collapse.in {
+	border-bottom:solid 1px #3498db;
 }
 
 /*Testimonials
@@ -300,78 +272,29 @@ blockquote:hover {
 	color:#3498db;
 }
 
-/*About Page
-------------------------------------*/
-.team .thumbnail-style:hover h3 a {
-	color:#3498db !important;
+
+.tab-content{
+	background-color: #fff;
+	padding: 30px;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }
 
-/*Social Icons*/
-.team ul.team-socail li i:hover {
-	background: #3498db;
-}
-
-/*Pricing Page
-------------------------------------*/
-/*Pricing Head*/
-.pricing:hover h4 {
-	color:#3498db;
-}
-
-.pricing-head h3 {
-	background:#3498db;
-	text-shadow:0 1px 0 #2980b9;
-	border-bottom:solid 1px #2980b9;
-}
-.pricing-head h4 {
-	color:#999;
-	background:#fcfcfc;
-	border-bottom:solid 1px #daf0ff;
-}
-	
-/*Pricing Content*/
-.pricing-content li {
-	border-bottom:solid 1px #daf0ff;
-}
-.pricing-content li i {
-	color:#3498db;
-}
-
-/*Pricing Footer*/
-.pricing-footer a,
-.pricing-footer button {
-	background:#3498db;
-	text-shadow:0 1px 0 #2980b9;
-	border-bottom:solid 2px #2980b9;
-}
-.pricing-footer a:hover,
-.pricing-footer button:hover {
-	background:#2980b9;
-}
-
-/*Priceing Active*/
-.price-active h4 {
-	color:#3498db;
-}
-
-.no-space-pricing .price-active .pricing-head h4,
-.no-space-pricing .pricing:hover .pricing-head h4 {
-	color:#3498db;
-}
 
 /*Right Sidebar
 ------------------------------------*/
 /*Right Sidebar*/
 .who li i,
-.who li:hover i, 
-.who li:hover a { 
-	color:#3498db; 
+.who li:hover i,
+.who li:hover a {
+	color:#3498db;
 }
 
 /*Privacy Page
 ------------------------------------*/
 .privacy a:hover {
-	color:#3498db; 
+	color:#3498db;
 }
 
 /*Portfolio Page
@@ -417,10 +340,10 @@ ul.blog-tags a:hover {
 /*Blog Latest Tweets*/
 .blog-twitter .blog-twitter-inner:hover {
 	border-color: #3498db;
-	border-top-color: #3498db;	
+	border-top-color: #3498db;
 }
 .blog-twitter .blog-twitter-inner:hover:after {
-	border-top-color: #3498db;	
+	border-top-color: #3498db;
 }
 
 .blog-twitter .blog-twitter-inner a {
@@ -447,7 +370,7 @@ ul.blog-tags a:hover {
 
 /*Icons Page
 ------------------------------------*/
-.icon-page li:hover { 
+.icon-page li:hover {
 	color:#3498db;
 }
 
@@ -500,12 +423,12 @@ ul.blog-tags a:hover {
 }
 
 /*Font Awesome Icon Page Style*/
-.fa-icons li:hover { 
+.fa-icons li:hover {
    color: #3498db;
 }
 
 .fa-icons li:hover i {
-   background: #3498db; 
+   background: #3498db;
 }
 
 /*GLYPHICONS Icons Page Style*/
@@ -516,11 +439,11 @@ ul.blog-tags a:hover {
 /*Navigation
 ------------------------------------*/
 /*Pagination*/
-.pagination > .active > a, 
-.pagination > .active > span, 
-.pagination > .active > a:hover, 
-.pagination > .active > span:hover, 
-.pagination > .active > a:focus, 
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
 .pagination > .active > span:focus {
    background-color: #3498db;
    border-color: #3498db;
@@ -528,14 +451,14 @@ ul.blog-tags a:hover {
 
 .pagination li a:hover {
    background: #2980b9;
-   border-color: #2980b9;   
+   border-color: #2980b9;
 }
 
 /*Pager*/
-.pager li > a:hover, 
+.pager li > a:hover,
 .pager li > a:focus {
    background: #2980b9;
-   border-color: #2980b9;   
+   border-color: #2980b9;
 }
 
 /*Registration and Login Page v2
