@@ -162,15 +162,12 @@ class FormAdminController extends Controller{
 
     public function schemaEditor($formid){
 
-        // TODO resolver esta mugre
-        Admin::css(asset('modules/form/css/app.css'));
         Admin::css(asset('modules/form/css/editor.css'));
-        Admin::css(asset('modules/form/css/formden.css'));
-        // Admin::css(asset('modules/form/css/style.css'));
-        Admin::css('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css');
 
+        Admin::css('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css');
         Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js');
         Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-es.min.js');
+
         Admin::js(asset('modules/form/js/jquery.hotkeys.js'));
 
         Admin::js(asset('modules/form/js/knockout-3.4.2.js'));

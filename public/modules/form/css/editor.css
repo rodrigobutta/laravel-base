@@ -1,20 +1,18 @@
 
 
-
-/* Give a quick and non-cross-browser friendly divider */
-.content .span5 {
-  margin-left: 0;
-  padding-left: 19px;
-  border-right: 1px solid #eee;
-}
-
-.topbar .btn {
-  border: 0;
-}
-
 .btn.xsmall{padding:3px 6px 3px;font-size:10px;}
+
 .form-stacked{
   padding-left: 0;
+}
+
+
+.tab-content{
+  background-color: #fff;
+  padding: 30px;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 
 
@@ -29,15 +27,12 @@
      -moz-border-radius: 6px;
           border-radius: 6px;
 }
-
 .field-wrapper * {
   cursor: pointer;
 }
-
 .field-wrapper:hover {
   border: 1px dashed #4da4eb;
 }
-
 .field-wrapper.selected {
   border: 1px solid #4da4eb;
   background-color: #bce2ff;
@@ -48,19 +43,6 @@ span.required {
 }
 
 .add-field-pane .btn {
-  width: 45%;
-  margin: 0px 5px 5px 0px;
-}
-
-.form_builder_general{
-font-size: .8em;
-}
-
-/*cjy*/
-.add-field-pane .btn-default {
-	/*border: 1px solid black;*/
-}
-
-.form-builder-preview .form-control{
-	width: auto;
+  width: calc(50% - 20px);
+  margin: 0px 10px 5px 0px;
 }
