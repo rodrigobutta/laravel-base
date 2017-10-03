@@ -18,7 +18,7 @@ class MailistServiceProvider extends ServiceProvider {
 
         // Register your asset's publisher
         $this->publishes([
-            __DIR__.'/assets' => public_path('vendor/'.$this->packageName),
+            __DIR__.'/assets' => public_path('modules/'.$this->packageName),
         ], 'public');
 
         // Register your migration's publisher

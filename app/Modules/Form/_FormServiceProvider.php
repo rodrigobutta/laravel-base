@@ -1,12 +1,12 @@
 <?php
-namespace App\Modules\User;
+namespace App\Modules\Form;
 
 use Illuminate\Support\ServiceProvider;
 
 
-class UserServiceProvider extends ServiceProvider {
+class FormServiceProvider extends ServiceProvider {
 
-    protected $packageName = 'user';
+    protected $packageName = 'form';
 
 
     public function boot()
@@ -14,8 +14,8 @@ class UserServiceProvider extends ServiceProvider {
         include __DIR__.'/routes.php';
 
         $this->app->bind(
-            'App\Modules\User\UserRepositoryInterface',
-            'App\Modules\User\UserRepository'
+            'App\Modules\Form\FormRepositoryInterface',
+            'App\Modules\Form\FormRepository'
         );
 
         // Register Views from your package
