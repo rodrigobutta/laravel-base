@@ -178,15 +178,15 @@ class FormAdminController extends Controller{
         Admin::js(asset('modules/form/js/builder.js'));
 
 
-        $form = FormModel::findOrFail($formid);
+        $item = FormModel::findOrFail($formid);
 
 
-        return Admin::content(function (Content $content) use($form){
+        return Admin::content(function (Content $content) use($item){
 
             $content->header('formulario');
             $content->description('editando');
 
-            $schema = $form->schema;
+            $schema = $item->schema;
 
             \Debugbar::info($schema);
 

@@ -22,6 +22,7 @@ use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\Mailist\MailistModel;
+use App\Modules\Event\EventModel;
 
 
 class CampaignAdminController extends Controller{
@@ -77,14 +78,17 @@ class CampaignAdminController extends Controller{
      *
      * @return Content
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Admin::content(function (Content $content) {
+
+        $eventid = $request->get('eventid') || 0;
+
+        return Admin::content(function (Content $content) use($eventid) {
 
             $content->header('Campaña');
             $content->description('creando');
 
-            $content->body($this->form());
+            $content->body($this->form($eventid));
         });
     }
 
@@ -101,6 +105,20 @@ class CampaignAdminController extends Controller{
 
             $grid->column('name', 'Nombre');
             $grid->column('slug', 'Slug');
+
+
+
+            $grid->event()->display(function ($event) {
+
+                if($event){
+                    return $event['name'];
+                }
+                return '';
+
+            });
+
+
+
 
             $grid->note()->editable('textarea');
 
@@ -127,14 +145,28 @@ class CampaignAdminController extends Controller{
      *
      * @return Form
      */
-    protected function form()
+    protected function form($eventid = 0)
     {
-        return Admin::form(CampaignModel::class, function (Form $form) {
+        return Admin::form(CampaignModel::class, function (Form $form) use($eventid) {
 
             $form->display('id', 'ID');
 
+            if($eventid!=0){
+
+                $event = EventModel::findOrFail($eventid);
+
+
+                $form->hidden('event_id')->value($eventid);
+
+                $form->display('Evento')->value($event->name);
+            }
+
+
+
             $form->text('name');
             $form->text('slug');
+
+
 
             $form->textarea('note');
 
@@ -181,6 +213,27 @@ class CampaignAdminController extends Controller{
 
         return json_encode("mail enviado");
     }
+
+
+
+
+
+    // /**
+    //  * Create interface.
+    //  *
+    //  * @return Content
+    //  */
+    // public function createForevent($eventid)
+    // {
+    //     return Admin::content(function (Content $content) use($eventid){
+
+    //         $content->header('Campaña');
+    //         $content->description('creando');
+
+    //         $content->body($this->form($eventid));
+    //     });
+    // }
+
 
 
 }

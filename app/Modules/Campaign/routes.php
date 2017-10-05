@@ -11,7 +11,10 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         'prefix'        => config('admin.route.prefix')
     ], function (Router $router) {
 
-        $router->any('testmail', ['as' => 'mail.test', 'uses' => 'CampaignAdminController@testMail']);
+        $router->any('testmail', ['as' => 'mails.test', 'uses' => 'CampaignAdminController@testMail']);
+
+        // $router->get('campaigns/create/{eventid}', ['as' => 'campaigns.createforevent', 'uses' => 'CampaignAdminController@createForEvent']);
+        // $router->get('campaigns/create', ['as' => 'campaigns.createforevent', 'uses' => 'CampaignAdminController@createForEvent']);
 
         $router->resource('campaigns', CampaignAdminController::class);
 

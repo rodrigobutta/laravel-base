@@ -14,6 +14,7 @@
         "php-http/guzzle6-adapter": "^1.1",
         "rodrigobutta/laravel-admin": ">=2.1",
         "rodrigobutta/laravel-admin-ext-log-viewer": ">=1.0.0",
+        "rodrigobutta/laravel-admin-ext-run-n-schedule": ">=1.0.0",
         "rodrigobutta/laravel-attachable-modules": ">=1.0.0",
         "spatie/eloquent-sortable": "^3.4"
     },
@@ -78,6 +79,11 @@
         {
             "type": "vcs",
             "url": "https://github.com/rodrigobutta/laravel-admin-ext-log-viewer.git",
+            "reference": "master"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/rodrigobutta/laravel-admin-ext-run-n-schedule.git",
             "reference": "master"
         }
     ]
