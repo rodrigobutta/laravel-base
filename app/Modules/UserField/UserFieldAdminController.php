@@ -24,127 +24,126 @@ use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 class UserFieldAdminController extends Controller{
 
-    use ResourceDispatcherTrait;
+	use ResourceDispatcherTrait;
 
 
 
-    public function __construct(){
+	public function __construct(){
 
-    }
-
-
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
-    public function index()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('listado');
-
-            $content->body($this->list());
-        });
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-
-        // fix reb por resources que no interpretan bien el method del controller
-        if($id=="create"){
-            return $this->create();
-        }
-
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('header');
-            $content->description('editando');
-
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('creando');
-
-            $content->body($this->form());
-        });
-    }
-
-    /**
-     * Admin init page
-     *
-     * @return Grid
-     */
-    protected function list()
-    {
-
-        return Admin::grid(UserFieldModel::class, function (Grid $grid) {
-
-            $grid->id('ID');
-
-            $grid->column('name', 'Nombre');
-            $grid->column('title', 'Etiqueta');
-
-            $grid->column('type')->display(function () {
-                return $this->getFieldTypes($this->type);
-            });
-
-            $grid->help()->editable('textarea');
-
-            $required_states = [
-                'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $grid->required()->switch($required_states);
-
-        });
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        return Admin::form(UserFieldModel::class, function (Form $form) {
-
-            $form->display('id', 'ID');
-
-            $form->text('name', 'Nombre');
-            $form->text('title', 'Etiqueta');
+	}
 
 
-            $form->select('type', 'Tipo')->options($form->model()->getFieldTypes());
+	/**
+	 * Index interface.
+	 *
+	 * @return Content
+	 */
+	public function index()
+	{
+		return Admin::content(function (Content $content) {
 
-            $form->textarea('help');
+			$content->header('header');
+			$content->description('listado');
 
-            $required_states = [
-                'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $form->switch("required")->states($required_states);
+			$content->body($this->list());
+		});
+	}
 
-        });
-    }
+	/**
+	 * Edit interface.
+	 *
+	 * @param $id
+	 * @return Content
+	 */
+	public function edit($id)
+	{
+
+		// fix reb por resources que no interpretan bien el method del controller
+		if($id=="create"){
+			return $this->create();
+		}
+
+		return Admin::content(function (Content $content) use ($id) {
+
+			$content->header('header');
+			$content->description('editando');
+
+			$content->body($this->form()->edit($id));
+		});
+	}
+
+	/**
+	 * Create interface.
+	 *
+	 * @return Content
+	 */
+	public function create()
+	{
+		return Admin::content(function (Content $content) {
+
+			$content->header('header');
+			$content->description('creando');
+
+			$content->body($this->form());
+		});
+	}
+
+	/**
+	 * Admin init page
+	 *
+	 * @return Grid
+	 */
+	protected function list()
+	{
+
+		return Admin::grid(UserFieldModel::class, function (Grid $grid) {
+
+			$grid->id('ID');
+
+			$grid->column('name', 'Nombre');
+			$grid->column('title', 'Etiqueta');
+
+			$grid->column('type')->display(function () {
+				return $this->getFieldTypes($this->type);
+			});
+
+			// $grid->help()->editable('textarea');
+
+			// $required_states = [
+			// 	'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+			// 	'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+			// ];
+			// $grid->required()->switch($required_states);
+
+		});
+	}
+
+	/**
+	 * Make a form builder.
+	 *
+	 * @return Form
+	 */
+	protected function form()
+	{
+		return Admin::form(UserFieldModel::class, function (Form $form) {
+
+			$form->display('id', 'ID');
+
+			$form->text('name', 'Nombre');
+			$form->text('title', 'Etiqueta');
+
+			$form->select('type', 'Tipo')->options($form->model()->getFieldTypes());
+
+			// $form->textarea('help');
+
+			// $required_states = [
+			// 	'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+			// 	'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+			// ];
+			// $form->switch("required")->states($required_states);
+
+		});
+	}
 
 
 

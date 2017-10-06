@@ -43,6 +43,6 @@ span.required {
 }
 
 .add-field-pane .btn {
-  width: calc(50% - 20px);
-  margin: 0px 10px 5px 0px;
+  width: calc(100% - 00px);
+  margin: 0px 0px 5px 0px;
 }

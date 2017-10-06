@@ -26,7 +26,18 @@ class UserFieldModel extends \App\Models\Profiled
             return $this->fieldTypes[$key];
         }
 
+    }
 
+
+    public function getSchema(){
+
+        // return '{"title": "'.$this->title.'"}';
+
+        return '{
+          "type": "'.$this->type.'",
+          "title": "'.$this->title.'",
+          "id_name": "userfield_'.$this->id.'"
+        }';
 
     }
 
