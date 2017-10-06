@@ -26,6 +26,8 @@ class UserFieldAdminController extends Controller{
 
     use ResourceDispatcherTrait;
 
+
+
     public function __construct(){
 
     }
@@ -93,12 +95,17 @@ class UserFieldAdminController extends Controller{
      */
     protected function list()
     {
+
         return Admin::grid(UserFieldModel::class, function (Grid $grid) {
 
             $grid->id('ID');
 
             $grid->column('name', 'Nombre');
-            $grid->column('label', 'Etiqueta');
+            $grid->column('title', 'Etiqueta');
+
+            $grid->column('type')->display(function () {
+                return $this->getFieldTypes($this->type);
+            });
 
             $grid->help()->editable('textarea');
 
@@ -122,8 +129,11 @@ class UserFieldAdminController extends Controller{
 
             $form->display('id', 'ID');
 
-            $form->text('name');
-            $form->text('label');
+            $form->text('name', 'Nombre');
+            $form->text('title', 'Etiqueta');
+
+
+            $form->select('type', 'Tipo')->options($form->model()->getFieldTypes());
 
             $form->textarea('help');
 

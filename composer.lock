@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e635395acf51d61a921de23a268876a",
+    "content-hash": "dde02957114364b713d710d3641bc617",
     "packages": [
         {
             "name": "bogardo/mailgun",
@@ -815,16 +815,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.13",
+            "version": "v5.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "bfbe20d32ee9f98c89df852847827407a5127be4"
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/bfbe20d32ee9f98c89df852847827407a5127be4",
-                "reference": "bfbe20d32ee9f98c89df852847827407a5127be4",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/26c700eb79e5bb55b59df2c495c9c71f16f43302",
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302",
                 "shasum": ""
             },
             "require": {
@@ -943,7 +943,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-24T19:09:38+00:00"
+            "time": "2017-10-03T17:41:03+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2419,6 +2419,65 @@
                 "issues": "https://github.com/rodrigobutta/laravel-admin-ext-log-viewer/issues"
             },
             "time": "2017-09-20T02:16:41+00:00"
+        },
+        {
+            "name": "rodrigobutta/laravel-admin-ext-run-n-schedule",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rodrigobutta/laravel-admin-ext-run-n-schedule.git",
+                "reference": "639351969ee11e8a8c42161a6c5a48d5111b2249"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rodrigobutta/laravel-admin-ext-run-n-schedule/zipball/639351969ee11e8a8c42161a6c5a48d5111b2249",
+                "reference": "639351969ee11e8a8c42161a6c5a48d5111b2249",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.5.*",
+                "php": ">=7.0.0",
+                "rodrigobutta/laravel-admin": ">1.0"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.*",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RodrigoButta\\Admin\\RunSchedule\\RunScheduleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RodrigoButta\\Admin\\RunSchedule\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rodrigo Butta",
+                    "email": "rbutta@gmail.com"
+                }
+            ],
+            "description": "Extension: Task run & schedule",
+            "homepage": "https://github.com/rodrigobutta/laravel-admin-ext-run-n-schedule",
+            "keywords": [
+                "laravel-admin",
+                "run",
+                "schedule",
+                "task"
+            ],
+            "support": {
+                "source": "https://github.com/rodrigobutta/laravel-admin-ext-run-n-schedule/tree/v1.0.2",
+                "issues": "https://github.com/rodrigobutta/laravel-admin-ext-run-n-schedule/issues"
+            },
+            "time": "2017-10-05T18:21:23+00:00"
         },
         {
             "name": "rodrigobutta/laravel-attachable-modules",

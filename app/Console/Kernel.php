@@ -26,6 +26,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('inspire')->everyTenMinutes();
+
+        $schedule->command('route:list')->dailyAt('02:00');
+
+        // $schedule->command('composer dump-autoload')->yearlyAt('02:00');;
+
     }
 
     /**

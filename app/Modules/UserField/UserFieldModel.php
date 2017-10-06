@@ -10,4 +10,24 @@ class UserFieldModel extends \App\Models\Profiled
     protected $table = 'user_field';
 
 
+    private $fieldTypes = [
+                'text' => 'Texto',
+                'number' => 'Numérico',
+                'textarea' => 'Area de Texto'
+            ];
+
+
+    public function getFieldTypes($key = ""){
+
+        if($key==""){
+            return $this->fieldTypes;
+        }
+        else{
+            return $this->fieldTypes[$key];
+        }
+
+
+
+    }
+
 }
