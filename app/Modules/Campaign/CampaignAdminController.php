@@ -106,8 +106,6 @@ class CampaignAdminController extends Controller{
             $grid->column('name', 'Nombre');
             $grid->column('slug', 'Slug');
 
-
-
             $grid->event()->display(function ($event) {
 
                 if($event){
@@ -116,9 +114,6 @@ class CampaignAdminController extends Controller{
                 return '';
 
             });
-
-
-
 
             $grid->note()->editable('textarea');
 

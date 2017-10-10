@@ -48,9 +48,9 @@ function remove(arr, what) {
 var formjson='';
 
 var Tabs = {
-	ADD_FIELD_TAB: 0,
-	FIELD_SETTINGS_TAB: 1,
-	FORM_SETTINGS_TAB: 2
+	// ADD_FIELD_TAB: 0,
+	FIELD_SETTINGS_TAB: 0,
+	FORM_SETTINGS_TAB: 1
 };
 
 
@@ -61,7 +61,7 @@ var FIELD_TYPES = [
 	"checkbox",
 	"radio",
 	"select",
-	// "email",
+	"email",
 	// "subject",
 	// "name",
 	// "message",
@@ -76,7 +76,7 @@ var EditorViewModel = function(data) {
 
 	// Data
 	this.form = new FormViewModel(data);
-	this.currentTab = ko.observable(Tabs.ADD_FIELD_TAB);
+	this.currentTab = ko.observable(Tabs.FIELD_SETTINGS_TAB);
 	this.selectedField = ko.observable(null);
 
 	// Helper data
@@ -241,11 +241,11 @@ var getDefaultDataForType = function(type) {
 	return {
 		title: "Phone"
 	};
-	// case 'email':
-	// return {
-	// 	title: "Email",
-	// 	is_required: true
-	// };
+	case 'email':
+	return {
+		title: "Email",
+		// is_required: true
+	};
 	// case 'subject':
 	// return {
 	// 	title: "Subject",
@@ -476,7 +476,7 @@ owner: this
 	this.placeholderNeeded = ko.computed(function() {
 	 var type=this.type();
 	 var allowed_types=[
-	 	// 'email',
+	 	'email',
 	 	'text',
 	 	// 'name',
 	 	'number',
@@ -503,7 +503,7 @@ owner: this
 		var type=this.type();
 
 		var allowed_types=[
-			// 'email',
+			'email',
 			'text',
 			// 'name',
 			'number',
@@ -544,27 +544,35 @@ owner: this
 
 
 FieldViewModel.prototype.toJSON = function() {
-	return {
+
+    var res = {
+
+        type: ko.utils.unwrapObservable(this.type),
+        schema: ko.utils.unwrapObservable(this.schema),
+        nature: ko.utils.unwrapObservable(this.nature),
+        title: ko.utils.unwrapObservable(this.title),
+        is_required: ko.utils.unwrapObservable(this.is_required),
+        inline: ko.utils.unwrapObservable(this.inline),
+        id_name: ko.utils.unwrapObservable(this.id_name),
+        append: ko.utils.unwrapObservable(this.append),
+        prepend: ko.utils.unwrapObservable(this.prepend),
+        prepend_text: ko.utils.unwrapObservable(this.prepend_text),
+        prepend_icon: ko.utils.unwrapObservable(this.prepend_icon),
+        append_text: ko.utils.unwrapObservable(this.append_text),
+        append_icon: ko.utils.unwrapObservable(this.append_icon),
+        placeholder: ko.utils.unwrapObservable(this.placeholder),
+        instructions: ko.utils.unwrapObservable(this.instructions),
+        // choices: ko.utils.unwrapObservable(this.choices),
+        id: this.id
+    };
+
+    // los choices de un select de userfield no los guardo porque despues se recuperan automaticamente al momento de imprimir el form en el FrontController
+    if(res.nature!='userfield'){
+        res.choices = ko.utils.unwrapObservable(this.choices);
+    }
 
 
-		type: ko.utils.unwrapObservable(this.type),
-		schema: ko.utils.unwrapObservable(this.schema),
-		nature: ko.utils.unwrapObservable(this.nature),
-		title: ko.utils.unwrapObservable(this.title),
-		is_required: ko.utils.unwrapObservable(this.is_required),
-		inline: ko.utils.unwrapObservable(this.inline),
-		id_name: ko.utils.unwrapObservable(this.id_name),
-		append: ko.utils.unwrapObservable(this.append),
-		prepend: ko.utils.unwrapObservable(this.prepend),
-		prepend_text: ko.utils.unwrapObservable(this.prepend_text),
-		prepend_icon: ko.utils.unwrapObservable(this.prepend_icon),
-		append_text: ko.utils.unwrapObservable(this.append_text),
-		append_icon: ko.utils.unwrapObservable(this.append_icon),
-		placeholder: ko.utils.unwrapObservable(this.placeholder),
-		instructions: ko.utils.unwrapObservable(this.instructions),
-		choices: ko.utils.unwrapObservable(this.choices),
-		id: this.id
-	};
+    return res
 };
 
 // Custom ko bindings

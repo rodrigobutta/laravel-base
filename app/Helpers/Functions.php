@@ -39,6 +39,33 @@ function siteSettings($request){
 }
 
 
+// buscar un objeto en un array de objetos especificando el array, la propiedad por la que se quiere buscar y el valor a buscar
+// devuelve unnnnn.....
+function findObjectInArray($arr,$property,$value){
+    $res_obj = NULL;
+    $res_key = -1;
+
+    foreach($arr as $key => $obj) {
+        if ($value == $obj->{$property}) {
+            $res_obj = $obj;
+            $res_key = $key;
+            break;
+        }
+    }
+
+    if(!is_null($res_obj)){
+        // return [$res_key, $res_obj];
+        return $res_obj;
+    }
+    else{
+        return false;
+    }
+
+}
+
+
+
+
 // REB: http://laravel-tricks.com/tricks/using-bootstrap-error-classes-for-flash-message
 
   // |  #Usage in the controller

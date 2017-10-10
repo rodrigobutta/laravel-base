@@ -1,15 +1,10 @@
 <?php
 namespace App\Modules\Form;
 
-use App\Modules\Form\FormRepositoryInterface;
-
-
-use App\Helpers\Resize;
-use App\Helpers\ResizeHelper;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+// use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 
 use App\Http\Requests;
@@ -17,90 +12,93 @@ use App\Http\Controllers\Controller;
 use Exception;
 use MP;
 
+use App\Modules\Form\FormRepositoryInterface;
+use App\Modules\Lead\LeadRepositoryInterface;
+
+use App\Modules\UserField\UserFieldModel;
+
 class FormFrontController extends Controller
 {
 
-    public function __construct(FormRepositoryInterface $form)
+    public function __construct(
+            FormRepositoryInterface $form,
+            LeadRepositoryInterface $lead
+    )
     {
-
         // view()->addNamespace('form', app_path('Modules/form/views/'));
-
-
         $this->form = $form;
+        $this->lead = $lead;
     }
 
 
-    // public function getList(Request $request){
-
-    //     $breadcrumb = [];
+    public function getView(Request $request, $formslug = null){
 
 
-    //     $items = FormModel::where('parent_id', '=', 0)->wherePublished(1)->orderBy('lft', 'asc')->get();
+        $c = explode('/', $formslug);
 
-    //     $page = $this->page->getBySlug('form');
-    //     $title = $page->title;
-
-    //     // filtrar solo los formos publicados
-    //     // $form = $form->filter(function ($item) {
-    //     //     return $item->isPublished();
-    //     // })->values();
+        try {
+            $item = $this->form->getBySlug(end($c));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('home')->with('flashError', 'no encontrado');
+        }
 
 
-
-    //     return iView('form::front.index', compact( 'items', 'page', 'title'));
-
-    // }
+        $schema = json_decode($item->schema);
 
 
-
-    // public function getView(Request $request, $mslug = null){
-
-
-    //     if($mslug==null){
-    //         return $this->getList();
-    //     }
-
-    //     $c = explode('/', $mslug);
-
-    //     try {
-    //         $item = $this->form->getBySlug(end($c));
-    //     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-    //         return redirect()->route('home')->with('flashError', 'no encontrado');
-    //     }
+        $fields = $schema->fields;
 
 
-    //     $ancestors = $item->getAncestors();
+        foreach ($fields as &$field) {
 
-    //     if ($item){
+            if($field->type == 'select' && isset($field->nature) && $field->nature == 'userfield'){
+
+                $userfieldId = str_replace('userfield_','',$field->id_name);
+
+                $userfield = UserFieldModel::findOrFail($userfieldId);
 
 
-    //         \Event::fire('App\Events', $item);
+                $field->choices = $userfield->choices;
+
+
+            }
+        }
+
+        // \Event::fire('App\Events', $item);
+
+        $title = $item->title;
+
+        return view('form::front.view', compact('item', 'title', 'fields'));
+
+    }
 
 
 
-    //         $breadcrumb = [];
+    public function pushLead(Request $request, $formslug = null){
 
-    //         foreach ($ancestors as $i => $cat){
-
-    //             $bc = new \stdClass();
-    //                 $bc->link = $cat->getLink();
-    //                 $bc->target = $cat->getLinkTarget();
-    //                 $bc->title = $cat->title;
-    //             array_push($breadcrumb, $bc);
-
-    //         }
-    //         array_pop($breadcrumb);
-
-    //         $childs = FormModel::where('parent_id', '=', $item->id)->wherePublished(1)->orderBy('lft', 'asc')->get();
-
-    //         $brothers = FormModel::where('parent_id', '=', $item->parent_id)->wherePublished(1)->orderBy('lft', 'asc')->get();
+        try {
+            $form = $this->form->getBySlug($formslug);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'ERROR' => 'form not found'
+            ]);
+        }
 
 
-    //         $title = $item->title;
+        $fields = $request->all();
+
+        $this->lead->put($fields,$form->id);
 
 
-    //         return iView('form::front.view', compact('item', 'title', 'breadcrumb', 'childs', 'brothers'));
-    //     }
-    // }
+        // \Event::fire('App\Events', $item);
+
+        return response()->json([
+            'response' => true,
+            'state' => 'CA'
+        ]);
+
+    }
+
+
 
 }

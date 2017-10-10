@@ -27,32 +27,41 @@ class FormRepository implements FormRepositoryInterface
     public function getById($id)
     {
         // return $this->posts()->where('id', $id)->with('form', 'comments', 'comments.replies', 'favorites', 'info')->firstOrFail();
-        return $this->posts()->where('id', $id)->with('form', 'info')->firstOrFail();
+        return $this->posts()->where('id', $id)->with('event')->firstOrFail();
     }
 
 
     public function getBySlug($slug)
     {
-        return $this->posts()->where('slug', $slug)->with('form', 'info')->firstOrFail();
+        return $this->posts()->where('slug', $slug)->with('event')->firstOrFail();
     }
+
+
+
+    public function getAll(){
+        $form = $this->posts()->orderBy('id'); //->with('form', 'comments', 'favorites');
+        return $form->paginate(perPage());
+    }
+
+
+
+
+
+    // *************************************************************************
+
+
 
     private function posts(){
 
         // si es admin o superadmin no limitar el universo a los aprobados
-        if(auth()->check() && (auth()->form()->isSuper() || auth()->form()->isAdmin())){
-            $posts = $this->form->published();
-        }
-        else{
-            $posts = $this->form->approved()->published();
-        }
+        // if(auth()->check() && (auth()->form()->isSuper() || auth()->form()->isAdmin())){
+            $posts = $this->form->public();
+        // }
+        // else{
+        //     $posts = $this->form->approved()->published();
+        // }
 
         return $posts;
-    }
-
-
-    public function getAll(){
-        $form = $this->posts()->orderBy('sort'); //->with('form', 'comments', 'favorites');
-        return $form->paginate(perPage());
     }
 
 

@@ -20,12 +20,9 @@ class CampaignModel extends \App\Models\Profiled
         return $this->belongsToMany(MailistModel::class, 'campaign_mailist', 'campaign_id', 'mailist_id');
     }
 
-
-
-
-   public function event()
-   {
-       return $this->belongsTo(EventModel::class, 'event_id');
-   }
+    public function event()
+    {
+        return $this->belongsTo(EventModel::class, 'event_id');
+    }
 
 }

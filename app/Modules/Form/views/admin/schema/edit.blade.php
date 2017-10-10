@@ -1,20 +1,68 @@
-
-<button type="button" class="btn btn-info pull-right" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Submit</button>
-
-
 <div class="row" >
 
-	<div class="col-md-4 tab-v1 form_builder_general" id="left-tabs">
+
+
+	<div class="col-md-6" data-bind="with: form">
+
+		<div class="box box-info">
+		    <div class="box-header with-border">
+		        <h3 class="box-title">{{$item->name}}</h3>
+		        <div class="box-tools">
+		          	<button type="button" class="btn btn-info pull-right" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Save</button>
+
+					<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" aria-expanded="true">Add
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu test" role="menu" aria-labelledby="menu1" data-bind="click: $root.addField">
+
+
+                        @foreach($userFields as $field)
+                          <li role="presentation"><a role="menuitem" href="javascript:void(0);" data-nature="userfield" data-type="{{$field->type}}" data-schema='{{$field->getSchema()}}'>{{$field->name}}</a></li>
+                        @endforeach
+
+
+						<li role="presentation" class="divider"></li>
+
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="text">Single Line Text</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="number">Number</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="textarea">Paragraph Text</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="checkbox">Checkboxes</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="select">Dropdown</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="radio">Radio Buttons</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="tel">Telephone #</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="url">URL</a></li>
+						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="date">Date</a></li>
+
+					</ul>
+
+		        </div>
+		    </div>
+		    <div class="box-body">
+
+				<span data-bind="ifnot: hide_intro"></span>
+				<form data-bind="sortable: {template: &#39;tmpl-field-preview&#39;, data: fields}" class="form-stacked form-builder-preview ko_container ui-sortable">
+				</form>
+				<div data-bind="ifnot: hasFields">
+			    	El formulario aun no tiene campos
+			    </div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="col-md-6 tab-v1 form_builder_general" id="left-tabs">
 		<ul class="nav nav-tabs" data-bind="tab: $root.currentTab">
-			<li class=""><a href="#add-field-pane" data-toggle="tab" aria-expanded="false">Add Field</a></li>
-			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Edit Fields</a></li>
-			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Settings</a></li>
+			{{-- <li class=""><a href="#add-field-pane" data-toggle="tab" aria-expanded="false">Add Field</a></li> --}}
+			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Field Settings</a></li>
+			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Form Settings</a></li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active" id="add-field-pane">
+			{{-- <div class="tab-pane active" id="add-field-pane">
 				<div data-bind="template: &#39;tmpl-add-field&#39;">
 				</div>
-			</div>
+			</div> --}}
 			<div class="tab-pane" id="field-settings-pane">
 				<div data-bind="template: {name: &#39;tmpl-field-settings&#39;, data: selectedField }">
 				</div>
@@ -26,24 +74,6 @@
 		</div>
 	</div>
 
-	<div class="col-md-8" data-bind="with: form">
-		<div class="tab-v2" id="right-tabs">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#tab_editor" data-toggle="tab" aria-expanded="true">Editor</a></li>
-				<li class=""><a href="#tab_preview" data-toggle="tab" aria-expanded="false">Preview</a></li>
-			</ul>
-			<div class="tab-content" style="padding-left: 0; padding-right: 0;">
-				<div class="tab-pane form_builder_general active" id="tab_editor" style="margin-left: 15px; margin-right: 15px;">
-					<span data-bind="ifnot: hide_intro"></span>
-					<form data-bind="sortable: {template: &#39;tmpl-field-preview&#39;, data: fields}" class="form-stacked form-builder-preview ko_container ui-sortable">
-					</form>
-					<div data-bind="ifnot: hasFields"></div>
-				</div>
-				<div class="tab-pane" id="tab_preview">
-				</div>
-			</div>
-		</div>
-	</div>
 
 </div>
 <!-- end row -->
@@ -217,36 +247,6 @@
 </script>
 
 
-<!-- Add Field Pane -->
-<script type="text/html" id="tmpl-add-field">
-	<div id="add_a_field" class="add-field-pane" data-bind="click: $root.addField">
-
-		<p>Campos de usuario:</p>
-		{{-- <button style="font-weight: bold" class="btn btn-default" data-type="name">Name</button> --}}
-		{{-- <button style="font-weight: bold" class="btn btn-default" data-type="email">Email</button> --}}
-		{{-- <button style="font-weight: bold" class="btn btn-default" data-type="subject">Subject</button> --}}
-		{{-- <button style="font-weight: bold" class="btn btn-default" data-type="message">Message</button> --}}
-
-		@foreach($userfields as $userfield)
-		  <button style="font-weight: bold" class="btn btn-default" data-nature="userfield" data-type="{{$userfield->type}}" data-schema='{{$userfield->getSchema()}}'>{{$userfield->name}}</button>
-		@endforeach
-
-		<div style="margin-top: 15px">
-			<p>Campos genéricos:</p>
-			<button class="btn btn-default" data-type="text">Single Line Text</button>
-			<button class="btn btn-default" data-type="number">Number</button>
-			<button class="btn btn-default" data-type="textarea">Paragraph Text</button>
-			<button class="btn btn-default" data-type="checkbox">Checkboxes</button>
-			<button class="btn btn-default" data-type="select">Dropdown</button>
-			<button class="btn btn-default" data-type="radio">Radio Buttons</button>
-			<button class="btn btn-default" data-type="tel">Telephone #</button>
-			<button class="btn btn-default" data-type="url">URL</button>
-			<button class="btn btn-default" data-type="date">Date</button>
-		</div>
-
-	</div>
-</script>
-
 
 <!-- Generic field preview template -->
 <script type="text/html" id="tmpl-field-preview">
@@ -264,7 +264,7 @@
 			<span data-bind="text: instructions == '' ? '' : instructions " class="help-block"></span>
 		</div>
 		<div class="col-md-2" style="margin-top: 28px">
-			<button data-bind="click: $root.removeField" class="btn xsmall btn-default"><span style="color: #d9534f" class="fa fa-minus"></span></button>
+			<button data-bind="click: $root.removeField" class="btn xsmall btn-danger"><span class="fa fa-minus"></span></button>
 		</div>
 		<div class="clearfix"></div>
 	</div>
@@ -322,7 +322,7 @@
 			</div>
 
 
-			<div data-bind="if: addonsNeeded" class="row" >
+			{{-- <div data-bind="if: addonsNeeded" class="row" >
 				<div class="col-sm-12">
 					<label class="control-label">Prepend</label>
 				</div>
@@ -352,13 +352,13 @@
 						<span class="input-group-addon"></span>
 					</div>
 				</div>
-			</div>
+			</div> --}}
 
 			<div data-bind="template: settingsTemplateName"></div>
 		</form>
 	</div>
 	<div data-bind="ifnot: $data">
-		Click on a field in the "Editor Panel" to edit it.
+
 	</div>
 </script>
 
@@ -435,6 +435,13 @@
 </script>
 <script type="text/html" id="tmp-field-settings-text"></script>
 
+<!-- Email field -->
+<script type="text/html" id="tmp-field-preview-email">
+    <input class="xlarge form-control" data-bind="attr: {placeholder: placeholder}" />
+</script>
+<script type="text/html" id="tmp-field-settings-email"></script>
+
+
 <!-- Checkboxes field -->
 <script type="text/html" id="tmp-field-preview-checkbox">
 	<ul data-bind="foreach: choices" class="unstyled">
@@ -481,23 +488,27 @@
 <script type="text/html" id="tmp-field-settings-url"></script>
 
 
-<!-- Helpers -->
+<!-- Helpers, por ahora para el select -->
 <script type="text/html" id="tmp-choices">
-	<div class="clearfix">
+	<div class="clearfix" data-bind="ifnot: hasNature">
 		<label>Choices</label>
 		<ul data-bind="foreach: choices" class="list-unstyled"s>
 			<li>
 				<div class="form-group">
 					<input class="form-control" style="width: auto; display: inline" data-bind="value: choice" class="">
+					{{-- <input class="form-control" style="width: auto; display: inline" data-bind="value: id" class=""> --}}
 					<button data-bind="click: $parent.addChoice" class="btn xsmall btn-default" style="border: none"><span style="color: #5cb85c;" class=" fa fa-plus"></button>
-						<button data-bind="click: $parent.removeChoice" class="xsmall btn btn-default" style="border: none"><span style="color: #d9534f" class="fa fa-minus"></span></button>
-					</div>
-				</li>
-			</ul>
-			<div data-bind="ifnot: hasChoices">
-				<button data-bind="click: addChoice" class="btn small btn-default">+ Add a Choice</button>
-			</div>
+					<button data-bind="click: $parent.removeChoice" class="xsmall btn btn-default" style="border: none"><span style="color: #d9534f" class="fa fa-minus"></span></button>
+				</div>
+			</li>
+		</ul>
+		<div data-bind="ifnot: hasChoices">
+			<button data-bind="click: addChoice" class="btn small btn-default">+ Add a Choice</button>
 		</div>
+	</div>
+	<div class="clearfix" data-bind="if: hasNature">
+		<label>(choices aredefined in User Field)</label>
+	</div>
 </script>
 
 

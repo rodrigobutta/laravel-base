@@ -47,7 +47,7 @@ class FormAdminController extends Controller{
 	{
 		return Admin::content(function (Content $content) {
 
-			$content->header('Campañas');
+			$content->header('Formularios');
 			$content->description('listado');
 
 			$content->body($this->list());
@@ -115,6 +115,17 @@ class FormAdminController extends Controller{
 			];
 			$grid->enabled()->switch($published_states);
 
+
+			$grid->event()->display(function ($event) {
+
+			    if($event){
+			        return $event['name'];
+			    }
+			    return '';
+
+			});
+
+
 			$grid->mailists()->display(function ($mailists) {
 
 				$mailists = array_map(function ($mailist) {
@@ -122,6 +133,12 @@ class FormAdminController extends Controller{
 				}, $mailists);
 
 				return join('&nbsp;', $mailists);
+			});
+
+			$grid->actions(function ($actions) {
+
+			    $actions->prepend('<a href="'.route('forms.schema', ['formid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
+
 			});
 
 		});
@@ -191,12 +208,9 @@ class FormAdminController extends Controller{
 
 			// \Debugbar::info($schema);
 
+			$userFields = UserFieldModel::all();
 
-			$userfields = UserFieldModel::all();
-
-
-
-			$content->body(view('form::admin.schema.edit', compact('schema', 'userfields')));
+			$content->body(view('form::admin.schema.edit', compact('item', 'schema', 'userFields')));
 
 		});
 

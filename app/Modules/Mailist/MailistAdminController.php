@@ -45,7 +45,7 @@ class MailistAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
+            $content->header('Lista de receptores');
             $content->description('mailistado');
 
             $content->body($this->mailist());
@@ -68,7 +68,7 @@ class MailistAdminController extends Controller{
 
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
+            $content->header('Lista de receptores');
             $content->description('editando');
 
             $content->body($this->form()->edit($id));
@@ -84,7 +84,7 @@ class MailistAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
+            $content->header('Lista de receptores');
             $content->description('creando');
 
             $content->body($this->form());

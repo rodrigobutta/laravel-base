@@ -24,6 +24,7 @@ use RodrigoButta\Admin\Layout\Row;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\Campaign\CampaignModel;
+use App\Modules\Form\FormModel;
 
 
 use App\Admin\Extensions\Tools\ReleasePost;
@@ -118,6 +119,15 @@ class EventAdminController extends Controller{
                 return join('&nbsp;', $campaigns);
             });
 
+            $grid->forms()->display(function ($forms) {
+
+                $forms = array_map(function ($form) {
+                    return "<span class='label label-primary'>{$form['name']}</span>";
+                }, $forms);
+
+                return join('&nbsp;', $forms);
+            });
+
             $grid->actions(function ($actions) {
 
                 $actions->prepend('<a href="'.route('events.manage', ['eventid' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
@@ -183,7 +193,7 @@ class EventAdminController extends Controller{
 
             $content->row(function (Row $row) use($item) {
 
-                $row->column(8, function (Column $column) use($item) {
+                $row->column(6, function (Column $column) use($item) {
                     $column->append(
 
 
@@ -201,6 +211,16 @@ class EventAdminController extends Controller{
                             $grid->disableFilter();
                             $grid->disableExport();
                             $grid->disableCreation();
+
+                            $grid->mailists()->display(function ($mailists) {
+
+                                $mailists = array_map(function ($mailist) {
+                                    return '<a href="'.route('mailists.edit', ['id' => $mailist['id']]).'"><span class="label label-primary">'.$mailist["name"].'</span></a>';
+                                }, $mailists);
+
+                                return join('&nbsp;', $mailists);
+                            });
+
 
                             $grid->tools(function ($tools) {
                                 $tools->append(new UserGender());
@@ -220,9 +240,46 @@ class EventAdminController extends Controller{
                     );
                 });
 
-                $row->column(4, function (Column $column) {
-                    $column->append("222");
+                $row->column(6, function (Column $column) use($item) {
+                    // $column->append("222");
+
+                    $column->append(
+
+
+                        Admin::grid(FormModel::class, function (Grid $grid) use($item) {
+
+                            $grid->id('ID');
+
+                            $grid->column('name', 'Nombre');
+
+                            $grid->model()->where('event_id', '=', $item->id);
+
+                            $grid->disablePagination();
+                            $grid->disableFilter();
+                            $grid->disableExport();
+                            $grid->disableCreation();
+
+                            $grid->actions(function ($actions) {
+
+                                $actions->prepend('<a href="'.route('forms.schema', ['formid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
+
+                            });
+
+                        })
+
+
+                    );
+
+
                 });
+
+
+                // $row->column(2, function (Column $column) use($item) {
+                //     $column->append("222");
+
+                // });
+
+
 
             });
 

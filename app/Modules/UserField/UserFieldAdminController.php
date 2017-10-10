@@ -26,8 +26,6 @@ class UserFieldAdminController extends Controller{
 
 	use ResourceDispatcherTrait;
 
-
-
 	public function __construct(){
 
 	}
@@ -107,14 +105,6 @@ class UserFieldAdminController extends Controller{
 				return $this->getFieldTypes($this->type);
 			});
 
-			// $grid->help()->editable('textarea');
-
-			// $required_states = [
-			// 	'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-			// 	'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-			// ];
-			// $grid->required()->switch($required_states);
-
 		});
 	}
 
@@ -134,13 +124,10 @@ class UserFieldAdminController extends Controller{
 
 			$form->select('type', 'Tipo')->options($form->model()->getFieldTypes());
 
-			// $form->textarea('help');
-
-			// $required_states = [
-			// 	'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-			// 	'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-			// ];
-			// $form->switch("required")->states($required_states);
+			$form->hasMany('choices', function (Form\NestedForm $form) {
+			    $form->text('title');
+			    $form->text('name');
+			});
 
 		});
 	}
