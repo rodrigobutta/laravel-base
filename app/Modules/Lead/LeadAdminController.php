@@ -69,11 +69,17 @@ class LeadAdminController extends Controller{
 		return Admin::content(function (Content $content) use ($id) {
 
 			$content->header('Conversion');
-			$content->description('editando');
+			$content->description('Resumen');
 
             $item = LeadModel::findOrFail($id);
 
-            var_dump($item->getFields());
+            $fields = $item->getFields();
+
+
+            $content->row(
+                view('lead::admin.resume', compact('fields'))
+            );
+
 
 			// $content->body($this->form()->edit($id));
 		});
