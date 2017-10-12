@@ -4,7 +4,7 @@ namespace App\Modules\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-use App\Modules\Mailist\MailistModel;
+use App\Modules\UserList\UserListModel;
 
 
 class UserModel extends \App\Models\Profiled
@@ -12,9 +12,9 @@ class UserModel extends \App\Models\Profiled
 
     protected $table = 'user';
 
-    public function mailists()
+    public function userlists()
     {
-        return $this->belongsToMany(MailistModel::class, 'mailist_user', 'user_id', 'mailist_id');
+        return $this->belongsToMany(UserListModel::class, 'userlist_user', 'user_id', 'userlist_id');
     }
 
 }

@@ -162,7 +162,7 @@ class LeadAdminController extends Controller{
 
             var_dump($form->model()->data);
 
-            // $form->multipleSelect('mailists')->options(MailistModel::all()->pluck('name', 'id'));
+            // $form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
 
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');

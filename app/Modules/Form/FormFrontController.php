@@ -101,4 +101,29 @@ class FormFrontController extends Controller
 
 
 
+
+// HASH ENCRYPT QUE VA EN MAIL
+
+
+    // define('AES_256_CBC', 'aes-256-cbc');
+
+
+    // $encryption_key = "rbutta83key";
+
+
+    // $data = '{"valid":1,"campaign":1,"form":"1","user":1}';
+
+    // // Generate an initialization vector
+    // // This *MUST* be available for decryption as well
+    // $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(AES_256_CBC));
+
+    // $encrypted = openssl_encrypt($data, AES_256_CBC, $encryption_key, 0, $iv);
+
+    // echo "Encrypted: $encrypted\n";
+
+
+
+    // $decrypted = openssl_decrypt($encrypted, AES_256_CBC, $encryption_key, 0, $iv);
+    // echo "Decrypted: $decrypted\n";
+
 }

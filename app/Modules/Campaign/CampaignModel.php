@@ -4,7 +4,7 @@ namespace App\Modules\Campaign;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-use App\Modules\Mailist\MailistModel;
+use App\Modules\UserList\UserListModel;
 use App\Modules\Event\EventModel;
 
 class CampaignModel extends \App\Models\Profiled
@@ -15,9 +15,9 @@ class CampaignModel extends \App\Models\Profiled
     protected $fillable = ['name', 'slug'];
 
 
-    public function mailists()
+    public function userlists()
     {
-        return $this->belongsToMany(MailistModel::class, 'campaign_mailist', 'campaign_id', 'mailist_id');
+        return $this->belongsToMany(UserListModel::class, 'campaign_userlist', 'campaign_id', 'userlist_id');
     }
 
     public function event()

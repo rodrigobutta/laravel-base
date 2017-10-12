@@ -1,12 +1,12 @@
 <?php
-namespace App\Modules\Mailist;
+namespace App\Modules\UserList;
 
 use Illuminate\Support\ServiceProvider;
 
 
-class MailistServiceProvider extends ServiceProvider {
+class UserListServiceProvider extends ServiceProvider {
 
-    protected $packageName = 'mailist';
+    protected $packageName = 'userlist';
 
 
     public function boot()

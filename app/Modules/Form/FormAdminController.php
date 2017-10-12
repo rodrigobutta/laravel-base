@@ -21,7 +21,7 @@ use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
-use App\Modules\Mailist\MailistModel;
+use App\Modules\UserList\UserListModel;
 use App\Modules\UserField\UserFieldModel;
 
 
@@ -126,13 +126,13 @@ class FormAdminController extends Controller{
 			});
 
 
-			$grid->mailists()->display(function ($mailists) {
+			$grid->userlists()->display(function ($userlists) {
 
-				$mailists = array_map(function ($mailist) {
-					return "<span class='label label-primary'>{$mailist['name']}</span>";
-				}, $mailists);
+				$userlists = array_map(function ($userlist) {
+					return "<span class='label label-primary'>{$userlist['name']}</span>";
+				}, $userlists);
 
-				return join('&nbsp;', $mailists);
+				return join('&nbsp;', $userlists);
 			});
 
 			$grid->actions(function ($actions) {
@@ -166,7 +166,7 @@ class FormAdminController extends Controller{
 			];
 			$form->switch("enabled")->states($enabled_states);
 
-			$form->multipleSelect('mailists')->options(MailistModel::all()->pluck('name', 'id'));
+			$form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
 
 			$form->display('created_at', 'Created At');
 			$form->display('updated_at', 'Updated At');

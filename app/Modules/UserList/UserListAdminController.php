@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\Mailist;
+namespace App\Modules\UserList;
 
 
 // TODO revisar que use no se usan
@@ -27,7 +27,7 @@ use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 use App\Modules\User\UserModel;
 
 
-class MailistAdminController extends Controller{
+class UserListAdminController extends Controller{
 
     use ResourceDispatcherTrait;
 
@@ -46,9 +46,9 @@ class MailistAdminController extends Controller{
         return Admin::content(function (Content $content) {
 
             $content->header('Lista de receptores');
-            $content->description('mailistado');
+            $content->description('userlistado');
 
-            $content->body($this->mailist());
+            $content->body($this->userlist());
         });
     }
 
@@ -96,9 +96,9 @@ class MailistAdminController extends Controller{
      *
      * @return Grid
      */
-    protected function mailist()
+    protected function userlist()
     {
-        return Admin::grid(MailistModel::class, function (Grid $grid) {
+        return Admin::grid(UserListModel::class, function (Grid $grid) {
 
             // $grid->id('ID')->sortable();
 
@@ -131,7 +131,7 @@ class MailistAdminController extends Controller{
      */
     protected function form()
     {
-        return Admin::form(MailistModel::class, function (Form $form) {
+        return Admin::form(UserListModel::class, function (Form $form) {
 
             $form->display('id', 'ID');
 

@@ -212,13 +212,13 @@ class EventAdminController extends Controller{
                             $grid->disableExport();
                             $grid->disableCreation();
 
-                            $grid->mailists()->display(function ($mailists) {
+                            $grid->userlists()->display(function ($userlists) {
 
-                                $mailists = array_map(function ($mailist) {
-                                    return '<a href="'.route('mailists.edit', ['id' => $mailist['id']]).'"><span class="label label-primary">'.$mailist["name"].'</span></a>';
-                                }, $mailists);
+                                $userlists = array_map(function ($userlist) {
+                                    return '<a href="'.route('userlists.edit', ['id' => $userlist['id']]).'"><span class="label label-primary">'.$userlist["name"].'</span></a>';
+                                }, $userlists);
 
-                                return join('&nbsp;', $mailists);
+                                return join('&nbsp;', $userlists);
                             });
 
 

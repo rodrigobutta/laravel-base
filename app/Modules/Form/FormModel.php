@@ -4,7 +4,7 @@ namespace App\Modules\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-use App\Modules\Mailist\MailistModel;
+use App\Modules\UserList\UserListModel;
 use App\Modules\Event\EventModel;
 
 class FormModel extends \App\Models\Profiled
@@ -12,9 +12,9 @@ class FormModel extends \App\Models\Profiled
 
     protected $table = 'form';
 
-    public function mailists()
+    public function userlists()
     {
-        return $this->belongsToMany(MailistModel::class, 'form_mailist', 'form_id', 'mailist_id');
+        return $this->belongsToMany(UserListModel::class, 'form_userlist', 'form_id', 'userlist_id');
     }
 
     public function event()
