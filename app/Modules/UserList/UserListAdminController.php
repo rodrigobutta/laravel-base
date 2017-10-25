@@ -48,7 +48,7 @@ class UserListAdminController extends Controller{
             $content->header('Lista de receptores');
             $content->description('userlistado');
 
-            $content->body($this->userlist());
+            $content->body($this->grid());
         });
     }
 
@@ -96,7 +96,7 @@ class UserListAdminController extends Controller{
      *
      * @return Grid
      */
-    protected function userlist()
+    protected function grid()
     {
         return Admin::grid(UserListModel::class, function (Grid $grid) {
 

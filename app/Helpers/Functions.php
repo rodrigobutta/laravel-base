@@ -66,6 +66,23 @@ function findObjectInArray($arr,$property,$value){
 
 
 
+function getFixedFieldsCollection(){
+
+    // return Cache::rememberForever('userfield-fixed-map', function () {
+
+        // $res = DB::table('user_field')->whereFixed('1')->pluck('id', 'fixed_field_name');
+        $res = collect(DB::table('user_field')->whereFixed('1')->get())->keyBy('id');
+      
+
+        return $res;
+    // });
+
+
+}
+
+
+
+
 // REB: http://laravel-tricks.com/tricks/using-bootstrap-error-classes-for-flash-message
 
   // |  #Usage in the controller

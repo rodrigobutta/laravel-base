@@ -12,6 +12,8 @@ class UserModel extends \App\Models\Profiled
 
     protected $table = 'user';
 
+    protected $fillable = ['email','name','surname','dni'];
+
     public function userlists()
     {
         return $this->belongsToMany(UserListModel::class, 'userlist_user', 'user_id', 'userlist_id');

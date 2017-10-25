@@ -5,6 +5,8 @@ namespace App\Modules\Lead;
 use App\Modules\Lead\LeadModel;
 use App\Modules\Lead\LeadRepositoryInterface;
 
+use App\Modules\User\UserModel;
+
 use App\Helpers\ResizeHelper;
 
 use Auth;
@@ -32,6 +34,8 @@ class LeadRepository implements LeadRepositoryInterface
         $data = serialize($fields);
 
 
+        // SALVAR LEAD CON TODOS LOS CAMPOS ENCODEADOS
+
         $item = new LeadModel();
 
         $item->form_id = $form_id;
@@ -39,36 +43,54 @@ class LeadRepository implements LeadRepositoryInterface
 
         $item->save();
 
-        // if ($request->get('category')) {
-        //     $categories = $request->get('category');
-        //     $item->categories()->attach($categories);
-        // }
 
-        // $info_data = [
-        //     'cover_image' => '',
-        //     'cover_image_front' => '',
-        //     'cover_title_image' => '',
-        //     'cover_title' => $item->title
-        // ];
-        // $item->info()->create($info_data);
+        // ***********************************
+        // BASE UNICA DE USUARIOS
 
-        // // prepopulo las propiedades que se heredan de las categorias seleccionadas
-        // $tmp_arr = [];
-        // foreach ($item->inheritedProperties() as $key => $i) {
-        //     $tmp_arr[$i->id]['value'] = '';//$i->value;
-        //     $tmp_arr[$i->id]['order'] = $key;
-        // }
-        // $item->properties()->sync($tmp_arr);
+        $fixedMap = getFixedFieldsCollection();
 
-        // // Grilla interna
-        // $grid = new Grid();
-        // $grid->title = 'PRODUCT_' . $item->id;
-        // $grid->shared = false;
-        // $grid->user_id = auth()->user()->id;
-        // $grid->save();
+        // armo array con campos key dinamicos por los que despues voy a buscar en el firstOrNew
+        $key_fields = [];
 
-        // $item->grid_id = $grid->id;
-        // $item->save();
+        foreach ($fields as $key => $value) {
+            
+            if (strpos($key, 'userfield_') !== false) {
+
+                $userfieldId = str_replace('userfield_','',$key);
+
+                $fixedFieldItem = $fixedMap->get($userfieldId);
+
+                if($fixedFieldItem->is_fixed_key==1){
+                    $key_fields[$fixedFieldItem->fixed_field_name] = $value;
+                }
+                
+            }
+        }
+            
+        // ejecuto create or update en base a sabiduria laravel con los campos armados
+        $item = UserModel::firstOrNew($key_fields);
+
+
+        // armo mapa de campos a actualizar en el objeto
+
+        foreach ($fields as $key => $value) {
+
+            if (strpos($key, 'userfield_') !== false) {
+                $userfieldId = str_replace('userfield_','',$key);
+
+                // del mapa de campos fixed del userfield, busco los campos reales de la tabla users en base al id concatenado con _
+                $fieldName = $fixedMap->get($userfieldId)->fixed_field_name;
+
+                $item{$fieldName} = $value;
+            }
+        }
+
+        // actualizo los campos del objeto en la base
+        $item->save();
+
+        // ***********************************
+
+
 
         return true;
      }

@@ -71,6 +71,17 @@ class FormModel extends \App\Models\Profiled
     }
 
 
+
+    // public function getFieldByName($fieldName)
+    // {
+    //     $fields = $this->getFields();
+
+
+
+    //     return findObjectInArray($fields,'id');
+    // }
+
+
     public static function scopePublic(){
         return static::where('enabled',1);
     }

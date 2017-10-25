@@ -1,7 +1,5 @@
 <div class="row" >
 
-
-
 	<div class="col-md-6" data-bind="with: form">
 
 		<div class="box box-info">
