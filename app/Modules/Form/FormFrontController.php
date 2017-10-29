@@ -87,14 +87,15 @@ class FormFrontController extends Controller
 
         $fields = $request->all();
 
-        $this->lead->put($fields,$form->id);
+        // $this->lead->put($fields,$form->id);
 
 
         // \Event::fire('App\Events', $item);
 
         return response()->json([
             'response' => true,
-            'state' => 'CA'
+            'message' => 'Los datos se enviaron perrrrfecto',
+            'status' => 'success'
         ]);
 
     }

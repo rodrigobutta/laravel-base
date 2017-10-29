@@ -30,9 +30,7 @@ class LeadRepository implements LeadRepositoryInterface
 
      public function put($fields,$form_id){
 
-
         $data = serialize($fields);
-
 
         // SALVAR LEAD CON TODOS LOS CAMPOS ENCODEADOS
 
@@ -53,7 +51,7 @@ class LeadRepository implements LeadRepositoryInterface
         $key_fields = [];
 
         foreach ($fields as $key => $value) {
-            
+
             if (strpos($key, 'userfield_') !== false) {
 
                 $userfieldId = str_replace('userfield_','',$key);
@@ -63,10 +61,10 @@ class LeadRepository implements LeadRepositoryInterface
                 if($fixedFieldItem->is_fixed_key==1){
                     $key_fields[$fixedFieldItem->fixed_field_name] = $value;
                 }
-                
+
             }
         }
-            
+
         // ejecuto create or update en base a sabiduria laravel con los campos armados
         $item = UserModel::firstOrNew($key_fields);
 

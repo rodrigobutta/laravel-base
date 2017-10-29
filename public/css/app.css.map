@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "app.css",
+	"sources": [
+		"../../resources/assets/sass/app.scss",
+		"../../resources/assets/sass/_variables.scss"
+	],
+	"names": [],
+	"mappings": "AAEA,OAAO,CAAC,kEAAI,CAQZ,AAAA,YAAY,AAAA,CACR,OAAO,CAAE,IAAI,CAChB"
+}

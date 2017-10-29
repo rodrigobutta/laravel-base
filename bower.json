@@ -1,0 +1,26 @@
+{
+  "name": "mevent",
+  "version": "1.0.0",
+  "authors": [
+    "Rodrigo Butta <rbutta@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "ssssresources/assets/vendor"
+  ],
+  "dependencies": {
+    "moment": "momentjs#^2.19.1",
+    "bootstrap-daterangepicker": "^2.1.25",
+    "font-awesome-animation": "^0.1.0",
+    "ckeditor": "^4.7.3",
+    "jquery-validation": "^1.17.0",
+    "jquery-form": "^4.2.2",
+    "sweetalert2": "^6.11.2"
+  },
+  "resolutions": {
+    "jquery": "^3.1.0"
+  }
+}

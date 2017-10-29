@@ -89,25 +89,51 @@
 
 
 
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+
 @endsection
 
 
 @section('extra-js')
 
 
-    {!! HTML::script('/vendor/front/jquery.mockjax.min.js') !!}
-    {!! HTML::script('/vendor/front/jquery.validate.min.js') !!}
-    {!! HTML::script('/vendor/front/additional-methods.js') !!}
-    {!! HTML::script('/vendor/front/jquery.form.js') !!}
+    {!! HTML::script('/vendor/jquery-validation/dist/jquery.validate.min.js') !!}
+    {!! HTML::script('/vendor/jquery-validation/src/localization/messages_es_AR.js') !!}
+    {!! HTML::script('/vendor/jquery-validation/dist/additional-methods.min.js') !!}
 
+    {!! HTML::script('/vendor/jquery-form/dist/jquery.form.min.js') !!}
+
+    {!! HTML::script('/vendor/sweetalert2/dist/sweetalert2.all.min.js') !!}
+    {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
+
+
+    {!! HTML::style('/css/app.css') !!}
 
     <script>
-
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
 
 
         $(document).ready(function () {
@@ -158,42 +184,76 @@
                 submitHandler: function(form) {
 
 
+                    swal({
+                      title: 'Confirmas enviar el formulario?',
+                      html: '<strong>Email</strong> asdasasd',
+                      // input: 'email',
+                      showCancelButton: true,
+                      confirmButtonText: 'Aceptar!',
+                      showLoaderOnConfirm: true,
+                      preConfirm: function () {
+                        return new Promise(function (resolve, reject) {
 
-                    $(form).ajaxSubmit({
 
-                        // data: function() {
-                        //   return $(this).serialize();
-                        // },
-                        // hideInvalid: function(input) {
-                        //   $(input).closest('.form-group').removeClass('has-warning');
-                        // },
-                        loader: '.form-loader',
-                        message: '.form-message',
-                        messageErrorClasses: 'message-error',
-                        messageSuccessClasses: 'message-success',
-                        // method: function() {
-                        //   return $(this).attr('method');
-                        // },
-                        // showInvalid: function(input) {
-                        //   $(input).closest('.form-group').addClass('has-warning');
-                        // },
-                        // url: function() {
-                        //   return $(this).attr('action');
-                        // },
+                                $(form).ajaxSubmit({
+                                    // data: function() {
+                                    //   return $(this).serialize();
+                                    // },
+                                    // hideInvalid: function(input) {
+                                    //   $(input).closest('.form-group').removeClass('has-warning');
+                                    // },
+                                    loader: '.form-loader',
+                                    message: '.form-message',
+                                    messageErrorClasses: 'message-error',
+                                    messageSuccessClasses: 'message-success',
+                                    // method: function() {
+                                    //   return $(this).attr('method');
+                                    // },
+                                    // showInvalid: function(input) {
+                                    //   $(input).closest('.form-group').addClass('has-warning');
+                                    // },
+                                    // url: function() {
+                                    //   return $(this).attr('action');
+                                    // },
+                                    // after: function(response) {
+                                    // },
+                                    // before: function() {
+                                    // },
+                                    error: function(response) {
+                                        console.log(response)
+                                        reject('Error al enviar formulario')
+                                     },
+                                    success: function(response) {
+                                        console.log(response)
 
-                        after: function(response) {
-                            console.log(response)
-                         },
-                        before: function() {
+                                        if (typeof response === 'object') {
+                                            if (response.status=='success') {
+                                                resolve(response)
+                                            } else {
+                                                reject(response.message)
+                                            }
+                                        }
 
-                        },
-                        error: function(response) {
-                            console.log(response)
-                         },
-                        success: function(response) {
-                            console.log(response)
-                         }
-                    });
+                                     }
+                                });
+
+
+                        })
+                      },
+                      allowOutsideClick: false
+                    }).then(function (response) {
+
+                        swal({
+                            type: 'success',
+                            title: response.message,
+                            html: 'Hacé click en OK para visitar la página de <strong>Maquiel</strong>'
+                        }).then(function () {
+
+                            window.open('http://www.maquiel.com.ar')
+
+                        })
+
+                    })
 
 
                 }
