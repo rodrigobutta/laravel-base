@@ -16,12 +16,13 @@
 @section('content')
 
 
-<div class="cover">
+<div class="cover" style="--background-image:url('/storage/admin/{!!$item->cover_image!!}')">
 
     <div class="container">
 
         <div class="row">
             <div class="col-md-12">
+                <img class="cover-image" src="/storage/admin/{!!$item->cover_image!!}">
                 <br>
             </div>
         </div>
@@ -29,7 +30,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-left">
-                    <h1>{{$item->name}}</h1>
+                    <h1 class="title">{{$item->name}}</h1>
+                    <div class="description">{!!$item->description!!}</div>
                 </div>
                 <div class="pull-right">
                     {{-- <button class="btn btn-primary customize_form" style="margin-top: 5px;" data-name="1">Customize with Form Builder</button> --}}

@@ -160,12 +160,13 @@ class FormAdminController extends Controller{
 
 			$form->textarea('note');
 
+            $form->ckeditor('description','Descripción');
+            $form->image('cover_image','Imagen de portada')->help('1920px x 400px', 'fa-image')->uniqueName();;
 
             $form->textarea('confirm_title','Confirmación: Título');
             $form->ckeditor('confirm_content','Confirmación: Contenido');
             $form->text('confirm_button_ok','Confirmación: Boton Aceptar');
             $form->text('confirm_button_cancel','Confirmación: Boton Cancelar');
-
 
             $form->textarea('success_title','Formulario Enviado: Título');
             $form->ckeditor('success_content','Formulario Enviado: Contenido');

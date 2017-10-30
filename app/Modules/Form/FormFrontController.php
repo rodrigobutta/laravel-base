@@ -87,7 +87,36 @@ class FormFrontController extends Controller
 
         $fields = $request->all();
 
-        $this->lead->put($fields,$form->id);
+        // $this->lead->put($fields,$form->id);
+
+
+        $email_tmp = $request->get('userfield_1');
+        $name_tmp = $request->get('userfield_3');
+
+
+        $to_mail = $email_tmp;
+
+
+        try {
+
+
+            \Mail::to($to_mail)->queue(new ConfirmMail($form,$name_tmp,$email_tmp));
+            // ->bcc($adminEmails)
+
+
+            $mailResponse = 'SENT ' . $to_mail;
+
+        } catch (Exception $e) {
+
+            $mailResponse = $e->xdebug_message;
+
+            // if (count(\Mail::failures()) > 0) {
+            //     $response = 1;
+            // }
+        }
+
+
+
 
 
         // \Event::fire('App\Events', $item);
@@ -96,7 +125,8 @@ class FormFrontController extends Controller
             'response' => true,
             'message' => $form->success_title,
             'content' => $form->success_content,
-            'status' => 'success'
+            'status' => 'success',
+            'mail' => $mailResponse
         ]);
 
     }

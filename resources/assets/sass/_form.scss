@@ -7,11 +7,26 @@
 .cover{
     width: 100%;
     left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    .cover-image{
+        width: 100%;
+    }
 }
 
 #form {
     // padding:20px 0px;
     // background-color:#0f0;
+
+    h1.title{
+
+    }
+
+    div.description{
+
+    }
 
 
     label.error{
