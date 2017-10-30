@@ -30,7 +30,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-left">
-                    <h1 class="title">{{$item->name}}</h1>
+                    <h1 class="title">{{$item->event->name}}</h1>
+                    <h2 class="subtitle">{{$item->name}}</h2>
                     <div class="description">{!!$item->description!!}</div>
                 </div>
                 <div class="pull-right">
@@ -306,7 +307,8 @@
                             confirmButtonText: '{!!$item->success_button_ok!!}',
                         }).then(function () {
 
-                            window.open('{!!$item->success_button_ok_action!!}')
+                            // window.open('{!!$item->success_button_ok_action!!}')
+                            window.location = '{!!$item->success_button_ok_action!!}';
 
                         })
 

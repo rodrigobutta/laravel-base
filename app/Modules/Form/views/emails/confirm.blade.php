@@ -135,7 +135,7 @@
                                 <tbody>
                                 <tr>
                                     <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                        Hola <strong>{{$name}}</strong>, Gracias por inscribirte al evento {{$form->name}}.<br><br><br>Email enviado a {{$email}}
+                                        Hola <strong>{{$name}}</strong>, Gracias por inscribirte al evento {{$form->event->name}}.<br><br><br>Email enviado a {{$email}}
                                     </td>
                                 </tr>
                                 </tbody>
