@@ -87,7 +87,7 @@ class FormFrontController extends Controller
 
         $fields = $request->all();
 
-        // $this->lead->put($fields,$form->id);
+        $this->lead->put($fields,$form->id);
 
 
         $email_tmp = $request->get('userfield_1');
