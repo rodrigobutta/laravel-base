@@ -1,16 +1,17 @@
 @extends('front/master/index')
-{{--
-@section('meta')
 
+@section('title')
+    {{$item->name}}
+@overwrite
+
+@section('meta')
     <meta name="description" content="{!! $item->getDescription() !!}">
     <meta name="keywords" content="{!! $item->getKeywords() !!}">
-
     <meta property="og:title" content="{!! str_replace('"', '', strip_tags($item->title)) !!} - {!! siteSettings('siteName') !!}"/>
     <meta property="og:url" content="{{ Request::url() }}"/>
     <meta property="og:description" content="{!! str_replace('"', '', $item->getOgDescription()) !!}"/>
     <meta property="og:image" content="{{ $item->getOgImage() }}"/>
-
-@overwrite --}}
+@overwrite
 
 @section('content')
 
@@ -25,12 +26,6 @@
          <h1>{{$item->name}}</h1>
         </br>
         <form method="POST" action="{!!route('form.view',['formslug'=>$item->slug])!!}" class="form-horizontal" id="form">
-           {{--  {{ csrf_field() }}
-            <meta name="csrf-token" content="{{ csrf_token() }}">
- --}}
-
-{{--
-            {!! var_dump($fields) !!} --}}
 
             @foreach($fields as $field)
 
@@ -75,8 +70,6 @@
                 </div>
 
             @endforeach
-
-
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-success">Aceptar</button>
@@ -185,11 +178,11 @@
 
 
                     swal({
-                      title: 'Confirmas enviar el formulario?',
-                      html: '<strong>Email</strong> asdasasd',
+                      title: '{!!$item->confirm_title!!}',
+                      html: '{!!$item->confirm_content!!}',
                       // input: 'email',
                       showCancelButton: true,
-                      confirmButtonText: 'Aceptar!',
+                      confirmButtonText: '{!!$item->confirm_button_ok!!}',
                       showLoaderOnConfirm: true,
                       preConfirm: function () {
                         return new Promise(function (resolve, reject) {
@@ -246,10 +239,11 @@
                         swal({
                             type: 'success',
                             title: response.message,
-                            html: 'Hacé click en OK para visitar la página de <strong>Maquiel</strong>'
+                            html: response.content,
+                            confirmButtonText: '{!!$item->success_button_ok!!}',
                         }).then(function () {
 
-                            window.open('http://www.maquiel.com.ar')
+                            window.open('{!!$item->success_button_ok_action!!}')
 
                         })
 

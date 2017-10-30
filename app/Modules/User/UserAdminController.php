@@ -106,7 +106,8 @@ class UserAdminController extends Controller{
             $grid->id('ID');
 
             $grid->column('name', 'Nombre');
-            $grid->column('email', 'Email');
+            $grid->column('surname', 'Apellido');
+            $grid->column('email', 'E-mail');
 
             $grid->note()->editable('textarea');
 
@@ -130,8 +131,10 @@ class UserAdminController extends Controller{
 
             $form->display('id', 'ID');
 
-            $form->text('name');
-            $form->text('email');
+            $form->text('name', 'Nombre');
+            $form->text('surname', 'Apellido');
+            $form->text('email', 'E-mail');
+            $form->text('dni', 'DNI');
 
             $form->textarea('note');
 
@@ -140,6 +143,14 @@ class UserAdminController extends Controller{
                 'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
             ];
             $form->switch("enabled")->states($enabled_states);
+
+
+
+            // $form->hasMany('fields', function (Form\NestedForm $form) {
+            //     $form->text('title');
+            //     $form->text('type');
+            // });
+
 
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');

@@ -64,21 +64,21 @@ function findObjectInArray($arr,$property,$value){
 }
 
 
+// TODO USEFIELD, y si meto otra supercoleccion?
 
 
+// todos los campos de la base de usuarios que correspondan a un campo real de la tabla
 function getFixedFieldsCollection(){
-
     // return Cache::rememberForever('userfield-fixed-map', function () {
 
         // $res = DB::table('user_field')->whereFixed('1')->pluck('id', 'fixed_field_name');
         $res = collect(DB::table('user_field')->whereFixed('1')->get())->keyBy('id');
-      
 
         return $res;
     // });
-
-
 }
+
+
 
 
 

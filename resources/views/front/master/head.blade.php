@@ -7,7 +7,7 @@
     @include('front.master.meta_default')
     @yield('meta')
 
-    <title>@yield('title', "aaaaaaaa") - {{ siteSettings('siteName') }} {{ siteSettings('siteSubname') }}</title>
+    <title>@yield('title', siteSettings('siteName'))</title>
 
     <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico?v=1" type="image/x-icon"/>
 

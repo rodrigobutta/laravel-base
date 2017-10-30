@@ -47,19 +47,27 @@ class LeadRepository implements LeadRepositoryInterface
 
         $fixedMap = getFixedFieldsCollection();
 
-        // armo array con campos key dinamicos por los que despues voy a buscar en el firstOrNew
+        // campos que van a guardarse en usuario pero no en la tabla directo (no fixed)
+        $notfixed_fields = [];
+
+        // BUSCAR CAMPOS KEY
+
+        // array con campos key dinamicos por los que despues voy a buscar en el firstOrNew
         $key_fields = [];
 
         foreach ($fields as $key => $value) {
-
             if (strpos($key, 'userfield_') !== false) {
 
                 $userfieldId = str_replace('userfield_','',$key);
 
-                $fixedFieldItem = $fixedMap->get($userfieldId);
+                // me fijo si el userfield que vino es parte de un fixed, si es null es un campo de usuario pero no fixed
+                if($fixedFieldItem = $fixedMap->get($userfieldId)){
 
-                if($fixedFieldItem->is_fixed_key==1){
-                    $key_fields[$fixedFieldItem->fixed_field_name] = $value;
+                    // si es key es el que voy a usar para tomar como clave compuesta de usuario
+                    if($fixedFieldItem->is_fixed_key==1){
+                        $key_fields[$fixedFieldItem->fixed_field_name] = $value;
+                    }
+
                 }
 
             }
@@ -74,17 +82,37 @@ class LeadRepository implements LeadRepositoryInterface
         foreach ($fields as $key => $value) {
 
             if (strpos($key, 'userfield_') !== false) {
-                $userfieldId = str_replace('userfield_','',$key);
 
-                // del mapa de campos fixed del userfield, busco los campos reales de la tabla users en base al id concatenado con _
-                $fieldName = $fixedMap->get($userfieldId)->fixed_field_name;
+                $userfieldId = intval(str_replace('userfield_','',$key));
 
-                $item{$fieldName} = $value;
+                if($fixedFieldItem = $fixedMap->get($userfieldId)){
+                    // son campos fixed (que tienen correspondiente entabla real de usuario)
+
+                    $fieldName = $fixedFieldItem->fixed_field_name;
+
+                    $item{$fieldName} = $value;
+
+                }
+                else{
+                    // es un campo de usuario pero no fixed, asi que lo mano a la relacion many to many
+
+                    $notfixed_fields[$userfieldId]['value'] = $value;
+
+                }
+
             }
         }
 
         // actualizo los campos del objeto en la base
         $item->save();
+
+        $item->fields()->sync($notfixed_fields);
+
+
+
+
+
+
 
         // ***********************************
 

@@ -7,8 +7,11 @@ use Illuminate\Support\Collection;
 use App\Modules\UserList\UserListModel;
 use App\Modules\Event\EventModel;
 
+use \App\Traits\MetaTrait;
+
 class FormModel extends \App\Models\Profiled
 {
+    use MetaTrait;
 
     protected $table = 'form';
 

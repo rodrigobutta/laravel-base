@@ -160,6 +160,20 @@ class FormAdminController extends Controller{
 
 			$form->textarea('note');
 
+
+            $form->textarea('confirm_title','Confirmación: Título');
+            $form->ckeditor('confirm_content','Confirmación: Contenido');
+            $form->text('confirm_button_ok','Confirmación: Boton Aceptar');
+            $form->text('confirm_button_cancel','Confirmación: Boton Cancelar');
+
+
+            $form->textarea('success_title','Formulario Enviado: Título');
+            $form->ckeditor('success_content','Formulario Enviado: Contenido');
+            $form->text('success_button_ok','Formulario Enviado: Boton Aceptar');
+            $form->text('success_button_ok_action','Formulario Enviado: Acción del botón aceptar');
+
+
+
 			$enabled_states = [
 				'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
 				'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],

@@ -22,6 +22,7 @@ use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\UserField\UserFieldModel;
+use App\Modules\User\UserModel;
 
 
 class LeadAdminController extends Controller{
@@ -76,8 +77,13 @@ class LeadAdminController extends Controller{
             $fields = $item->getFields();
 
 
+            $user = UserModel::findOrFail(1);
+
+            $userfields = $user->getFields();
+
+
             $content->row(
-                view('lead::admin.resume', compact('fields'))
+                view('lead::admin.resume', compact('fields','userfields'))
             );
 
 
