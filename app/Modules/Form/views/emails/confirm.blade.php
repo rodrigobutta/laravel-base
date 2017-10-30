@@ -135,7 +135,13 @@
                                 <tbody>
                                 <tr>
                                     <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                        Hola <strong>{{$name}}</strong>, Gracias por inscribirte al evento {{$form->event->name}}.<br><br><br>Email enviado a {{$email}}
+                                        Hola <strong>{{$name}}</strong>,
+
+                                        Tu suscripción a la charla Qué nos cambia con los cambios de Cambiemos?  está confirmada.
+                                        Te esperamos el próximo 22 de Noviembre, a las 09:00 Horas en Rodizio Costanera.
+
+                                        Podés descargar la agenda del evento en el siguiente <a href="http://eventos.maquiel.com.ar/storage/admin/files/GE_Itinerario_Charla_Styropek.pdf" target="_blank">link</a>
+
                                     </td>
                                 </tr>
                                 </tbody>
