@@ -81,6 +81,10 @@
 
                             <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}">
 
+                        @elseif ($field->type == 'phone')
+
+                            <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="phone">
+
                         @elseif ($field->type == 'textarea')
 
                             <textarea name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" rows="8" class="span5"></textarea>
@@ -187,6 +191,8 @@
     {!! HTML::script('/vendor/sweetalert2/dist/sweetalert2.all.min.js') !!}
     {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
 
+    {!! HTML::script('/vendor/jquery-mask-plugin/dist/jquery.mask.min.js') !!}
+
 
     {!! HTML::style('/css/app.css') !!}
 
@@ -194,6 +200,9 @@
 
 
         $(document).ready(function () {
+
+
+            $('.phone').mask('(000) 0000-0000').attr('placeholder','(000) 0000-0000');
 
 
             $('#form').validate({
