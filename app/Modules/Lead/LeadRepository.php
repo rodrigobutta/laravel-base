@@ -34,12 +34,12 @@ class LeadRepository implements LeadRepositoryInterface
 
         // SALVAR LEAD CON TODOS LOS CAMPOS ENCODEADOS
 
-        $item = new LeadModel();
+        $lead = new LeadModel();
 
-        $item->form_id = $form_id;
-        $item->data = $data;
+        $lead->form_id = $form_id;
+        $lead->data = $data;
 
-        $item->save();
+        $lead->save();
 
 
         // ***********************************
@@ -74,7 +74,7 @@ class LeadRepository implements LeadRepositoryInterface
         }
 
         // ejecuto create or update en base a sabiduria laravel con los campos armados
-        $item = UserModel::firstOrNew($key_fields);
+        $user = UserModel::firstOrNew($key_fields);
 
 
         // armo mapa de campos a actualizar en el objeto
@@ -90,7 +90,7 @@ class LeadRepository implements LeadRepositoryInterface
 
                     $fieldName = $fixedFieldItem->fixed_field_name;
 
-                    $item{$fieldName} = $value;
+                    $user{$fieldName} = $value;
 
                 }
                 else{
@@ -104,21 +104,12 @@ class LeadRepository implements LeadRepositoryInterface
         }
 
         // actualizo los campos del objeto en la base
-        $item->save();
+        $user->save();
 
-        $item->fields()->sync($notfixed_fields);
-
-
+        $user->fields()->sync($notfixed_fields);
 
 
-
-
-
-        // ***********************************
-
-
-
-        return true;
+        return $lead;
      }
 
 

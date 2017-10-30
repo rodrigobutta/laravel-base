@@ -87,7 +87,7 @@ class FormFrontController extends Controller
 
         $fields = $request->all();
 
-        $this->lead->put($fields,$form->id);
+        $lead = $this->lead->put($fields,$form->id);
 
 
         $email_tmp = $request->get('userfield_1');
@@ -103,6 +103,7 @@ class FormFrontController extends Controller
             \Mail::to($to_mail)->queue(new ConfirmMail($form,$name_tmp,$email_tmp));
             // ->bcc($adminEmails)
 
+            \Mail::to(env('MAIL_NOTIFY_ADDRESS'))->queue(new NotificationMail($form,$lead));
 
             $mailResponse = 'SENT ' . $to_mail;
 
