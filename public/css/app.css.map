@@ -3,8 +3,9 @@
 	"file": "app.css",
 	"sources": [
 		"../../resources/assets/sass/app.scss",
-		"../../resources/assets/sass/_variables.scss"
+		"../../resources/assets/sass/_variables.scss",
+		"../../resources/assets/sass/_form.scss"
 	],
 	"names": [],
-	"mappings": "AAEA,OAAO,CAAC,kEAAI,CAQZ,AAAA,YAAY,AAAA,CACR,OAAO,CAAE,IAAI,CAChB"
+	"mappings": "AACA,OAAO,CAAC,kEAAI,CEDZ,AAAA,QAAQ,AAAA,CACN,UAAU,CAAG,IACf,CAAE,AAIF,AAAA,MAAM,AAAA,CACF,KAAK,CAAE,IAAI,CACX,IAAI,CAAE,CAAC,CACV,AAED,AAKI,KALC,CAKD,KAAK,AAAA,MAAM,AAAA,CACP,QAAQ,CAAE,QAAQ,CAErB,AARL,AAUI,KAVC,CAUD,cAAc,AAAC,CAEX,UAAU,CAAE,IAAI,CACnB,AAML,AAAA,MAAM,AAAA,CACF,KAAK,CAAE,IAAI,CAEd"
 }
