@@ -175,7 +175,7 @@ class FormAdminController extends Controller{
             $form->text('success_button_ok','Formulario Enviado: Boton Aceptar');
             $form->text('success_button_ok_action','Formulario Enviado: Acción del botón aceptar');
 
-
+            $form->file('attach','Documento de descarga');
 
 			$enabled_states = [
 				'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],

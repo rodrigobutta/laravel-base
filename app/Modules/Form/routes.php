@@ -18,7 +18,7 @@ Route::group(['namespace' => '\App\Modules\Form'], function () {
         $router->resource('forms', FormAdminController::class);
 
 
-        $router->get('forms/{formid}/preview/{mail}', ['as' => 'forms.schema', 'uses' => 'FormAdminController@previewEmail']);
+        $router->get('forms/{formid}/preview/{mail}', ['as' => 'forms.preview', 'uses' => 'FormAdminController@previewEmail']);
 
     });
 
