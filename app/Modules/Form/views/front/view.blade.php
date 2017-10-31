@@ -222,7 +222,22 @@
         $(document).ready(function () {
 
 
-            $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
+            // $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
+
+
+            var options =  {
+              onKeyPress: function(cep, e, field, options) {
+                var masks = ['(000) 0000-0000', '(0000) 0000-0000'];
+                var mask = (cep.length>14) ? masks[1] : masks[0];
+
+                console.log(cep.length)
+
+                $('.phone').mask(mask, options);
+            }};
+
+            $('.phone').mask('(000) 0000-0000', options).attr('placeholder','(0000) 0000-0000');
+
+
 
 
             $('#form').validate({
