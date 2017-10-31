@@ -23,6 +23,7 @@ use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\UserList\UserListModel;
 use App\Modules\UserField\UserFieldModel;
+use App\Modules\Lead\LeadModel;
 
 
 class FormAdminController extends Controller{
@@ -247,6 +248,27 @@ class FormAdminController extends Controller{
 		]);
 
 	}
+
+
+
+
+    public function previewEmail($formid, $email){
+
+        $form = FormModel::findOrFail($formid);
+
+        $lead = LeadModel::findOrFail(40);
+
+        // return view('form::emails.notification')->with([
+        //             'lead' => $lead,
+        //             'form' => $form
+        //           ]);
+
+        return view('form::emails.confirm')->with([
+                    'name' => 'Test',
+                    'form' => $form
+                  ]);
+
+    }
 
 
 }

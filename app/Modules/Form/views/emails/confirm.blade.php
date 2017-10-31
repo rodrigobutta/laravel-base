@@ -1,157 +1,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Confirmacion del mail</title>
-
-
-    <!--[if gte mso 6]>
-    <style>
-        table.kmButtonBarContent {width:100% !important;}
-    </style>
-    <![endif]-->
-    <style type="text/css">
-        @media only screen and (max-width: 480px) {
-            body, table, td, p, a, li, blockquote {
-                -webkit-text-size-adjust: none !important;
-            }
-            body{
-                width: 100% !important;
-                min-width: 100% !important;
-            }
-            td[id=bodyCell] {
-                padding: 10px !important;
-            }
-            table[class=kmTextContentContainer] {
-                width: 100% !important;
-            }
-            table[class=kmBoxedTextContentContainer] {
-                width: 100% !important;
-            }
-            td[class=kmImageContent] {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-            img[class=kmImage] {
-                width:100% !important;
-            }
-            table[class=kmSplitContentLeftContentContainer],
-            table[class=kmSplitContentRightContentContainer],
-            table[class=kmColumnContainer] {
-                width:100% !important;
-            }
-            table[class=kmSplitContentLeftContentContainer] td[class=kmTextContent],
-            table[class=kmSplitContentRightContentContainer] td[class=kmTextContent],
-            table[class="kmColumnContainer"] td[class=kmTextContent] {
-                padding-top:9px !important;
-            }
-            td[class="rowContainer kmFloatLeft"],
-            td[class="rowContainer kmFloatLeft firstColumn"],
-            td[class="rowContainer kmFloatLeft lastColumn"] {
-                float:left;
-                clear: both;
-                width: 100% !important;
-            }
-            table[id=templateContainer],
-            table[class=templateRow],
-            table[id=templateHeader],
-            table[id=templateBody],
-            table[id=templateFooter] {
-                max-width:600px !important;
-                width:100% !important;
-            }
-
-            h1 {
-                font-size:24px !important;
-                line-height:100% !important;
-            }
-
-
-            h2 {
-                font-size:20px !important;
-                line-height:100% !important;
-            }
-
-
-            h3 {
-                font-size:18px !important;
-                line-height:100% !important;
-            }
-
-
-            h4 {
-                font-size:16px !important;
-                line-height:100% !important;
-            }
-
-
-            td[class=rowContainer] td[class=kmTextContent] {
-                font-size:18px !important;
-                line-height:100% !important;
-                padding-right:18px !important;
-                padding-left:18px !important;
-            }
-
-
-            td[class=headerContainer] td[class=kmTextContent] {
-                font-size:18px !important;
-                line-height:100% !important;
-                padding-right:18px !important;
-                padding-left:18px !important;
-            }
-
-
-            td[class=bodyContainer] td[class=kmTextContent] {
-                font-size:18px !important;
-                line-height:100% !important;
-                padding-right:18px !important;
-                padding-left:18px !important;
-            }
-
-
-            td[class=footerContent] {
-                font-size:18px !important;
-                line-height:100% !important;
-            }
-
-            td[class=footerContent] a {
-                display:block !important;
-            }
-        }
-    </style>
-
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Demystifying Email Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body style="margin: 0; padding: 0; background-color: #F6F6F6">
-<center>
-    <table align="center" border="0" cellpadding="0" cellspacing="0" id="bodyTable" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding: 0; background-color: #F6F6F6; height: 100%; margin: 0; width: 100%">
-        <tbody>
-        <tr>
-            <td align="center" id="bodyCell" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding-top: 50px; padding-left: 20px; padding-bottom: 20px; padding-right: 20px; border-top: 0; height: 100%; margin: 0; width: 100%">
-                <table border="0" cellpadding="0" cellspacing="0" id="templateContainer" width="700" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; border: 1px solid #F0F0F0; background-color: #FFF">
-                    <tbody>
-                    <tr>
-                        <td align="center" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                            <table border="0" cellpadding="0" cellspacing="0" class="templateRow" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                <tbody>
-                                <tr>
-                                    <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                        Hola <strong>{{$name}}</strong>,<br>
-                                        Tu suscripción a la charla Qué nos cambia con los cambios de Cambiemos?  está confirmada.<br>
-                                        Te esperamos el próximo 22 de Noviembre, a las 09:00 Horas en Rodizio Costanera.<br><br>
-                                        Podés descargar la agenda del evento en el siguiente <a href="http://eventos.maquiel.com.ar/storage/admin/files/agenda_evento_22_noviembre.pdf" target="_blank">link</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
+<body style="margin: 0; padding: 0;">
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+   <td>
+     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+       <tr>
+         <td align="center" bgcolor="#70bbd9" >
+          <img src="/storage/admin/{!!$form->cover_image!!}" alt="Creating Email Magic" width="600" height="180" style="display: block;" >
+         </td>
+       </tr>
+       <tr>
+         <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;font-size: 16px; font-family: Arial">
 
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</center>
+                  Hola <strong>{{$name}}</strong>,<br>
+                  Tu suscripción a la charla está confirmada.<br><br>
+                  Te esperamos el próximo 22 de Noviembre, a las 09:00 Horas en Rodizio Costanera.<br><br>
+                  Podés descargar la agenda del evento en el siguiente <a href="http://eventos.maquiel.com.ar/storage/admin/files/agenda_evento_22_noviembre.pdf" target="_blank">link</a>
+
+         </td>
+       </tr>
+       <tr>
+         <td align="center" bgcolor="#70bbd9" >
+          <img src="/storage/admin/{!!$form->footer_image!!}" alt="Creating Email Magic" width="600" height="106" style="display: block;" >
+         </td>
+       </tr>
+       {{-- <tr>
+         <td bgcolor="#ee4c50" style="padding: 30px 30px 30px 30px;">
+           <table border="1" cellpadding="0" cellspacing="0" width="100%">
+             <td width="75%">
+             asdjksakdjakldjaskjaskjskajdkajksdjakljdl
+             </td>
+             <td align="right">
+              <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                <td>
+                 <a href="http://www.twitter.com/">
+                  <img src="images/tw.gif" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+                 </a>
+                </td>
+                <td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+                <td>
+                 <a href="http://www.twitter.com/">
+                  <img src="images/fb.gif" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
+                 </a>
+                </td>
+               </tr>
+              </table>
+             </td>
+           </table>
+         </td>
+       </tr> --}}
+     </table>
+   </td>
+  </tr>
+ </table>
 </body>
 </html>
