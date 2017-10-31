@@ -2,6 +2,12 @@
   margin-top : 20px
 }
 
+@media (min-width: 1200px){
+    .container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+        width: 800px;
+    }
+}
+
 
 
 .cover{
@@ -15,6 +21,21 @@
         width: 100%;
     }
 }
+
+
+.footer{
+    width: 100%;
+    left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    .footer-image{
+        width: 100%;
+    }
+}
+
+
 
 #form {
     // padding:20px 0px;
@@ -47,3 +68,5 @@ footer{
     width: 100%;
     // background-color: #f0f;
 }
+
+

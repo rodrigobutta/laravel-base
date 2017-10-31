@@ -21,12 +21,15 @@
     <div class="container">
 
         <div class="row">
+{{--             <div class="col-md-2 ">
+
+            </div> --}}
             <div class="col-md-12">
                 <img class="cover-image" src="/storage/admin/{!!$item->cover_image!!}">
                 <br>
             </div>
         </div>
-
+{{--
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-left">
@@ -35,10 +38,10 @@
                     <div class="description">{!!$item->description!!}</div>
                 </div>
                 <div class="pull-right">
-                    {{-- <button class="btn btn-primary customize_form" style="margin-top: 5px;" data-name="1">Customize with Form Builder</button> --}}
+
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row">
             <div class="col-md-12">
@@ -149,6 +152,23 @@
 
 </footer>
  --}}
+
+
+ <div class="footer" style="--background-image:url('/storage/admin/{!!$item->footer_image!!}')">
+
+     <div class="container">
+
+         <div class="row">
+             <div class="col-md-12">
+                 <img class="footer-image" src="/storage/admin/{!!$item->footer_image!!}">
+                 <br>
+             </div>
+         </div>
+
+     </div>
+
+ </div>
+
 
 
 

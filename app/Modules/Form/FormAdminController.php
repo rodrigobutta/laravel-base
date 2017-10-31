@@ -162,6 +162,7 @@ class FormAdminController extends Controller{
 
             $form->ckeditor('description','Descripción');
             $form->image('cover_image','Imagen de portada')->help('1920px x 400px', 'fa-image')->uniqueName();;
+            $form->image('footer_image','Imagen de pié')->help('1920px x 400px', 'fa-image')->uniqueName();;
 
             $form->textarea('confirm_title','Confirmación: Título');
             $form->ckeditor('confirm_content','Confirmación: Contenido');
