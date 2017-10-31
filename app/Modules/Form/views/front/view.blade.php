@@ -222,7 +222,7 @@
         $(document).ready(function () {
 
 
-            $('.phone').mask('(000) 0000-0000').attr('placeholder','(000) 0000-0000');
+            $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
 
 
             $('#form').validate({
