@@ -222,7 +222,9 @@
         $(document).ready(function () {
 
 
-            $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
+            // $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
+
+            $('.phone').attr('placeholder','característica + teléfono');
 
 
             // var options =  {
@@ -235,7 +237,26 @@
             //     $('.phone').mask(mask, options);
             // }};
 
-            // $('.phone').mask('(000) 0000-0000', options).attr('placeholder','(0000) 0000-0000');
+
+            // var options =  {
+            //   onKeyPress: function(cep, e, field, options) {
+            //     var masks = ['(0000) 0000-0000', '(000) 0000-0000'];
+
+            //     var car = cep.slice(1, 4);
+
+            //     // console.log(car)
+
+            //     var mask = ''
+            //     if(cep.slice(1, 4)=='011'){
+            //         mask =
+            //     }
+
+            //     var mask = (car=='011') ? masks[1] : masks[0];
+
+            //     $('.phone').mask(mask, options);
+            // }};
+
+            // $('.phone').mask('(000) 0000-0000', options);
 
 
 
