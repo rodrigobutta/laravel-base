@@ -378,7 +378,8 @@
                             showConfirmButton: false,
                             closeOnConfirm: false, //It does close the popup when I click on close button
                             closeOnCancel: false,
-                            allowOutsideClick: false
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
 
                         }).then(function () {
 
