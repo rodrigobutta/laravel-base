@@ -310,10 +310,12 @@
                       title: '{!!$item->confirm_title!!}',
                       html: '{!!$item->confirm_content!!}',
                       // input: 'email',
-                      showCancelButton: true,
                       confirmButtonText: '{!!$item->confirm_button_ok!!}',
                       cancelButtonText: 'Cancelar',
+                      showCancelButton: false,
                       showLoaderOnConfirm: true,
+                      closeOnCancel: true,
+                      allowOutsideClick: true,
                       preConfirm: function () {
                         return new Promise(function (resolve, reject) {
 
@@ -371,10 +373,20 @@
                             title: response.message,
                             html: response.content,
                             confirmButtonText: '{!!$item->success_button_ok!!}',
+
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            closeOnConfirm: false, //It does close the popup when I click on close button
+                            closeOnCancel: false,
+                            allowOutsideClick: false
+
                         }).then(function () {
 
                             // window.open('{!!$item->success_button_ok_action!!}')
-                            window.location = '{!!$item->success_button_ok_action!!}';
+                            // window.location = '{!!$item->success_button_ok_action!!}';
+
+                            //document.getElementById("form").reset();
+
 
                         })
 
