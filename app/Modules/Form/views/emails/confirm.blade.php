@@ -12,7 +12,7 @@
      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
        <tr>
          <td align="center" bgcolor="#70bbd9" >
-          <img src="/storage/admin/{!!$form->cover_image!!}" alt="Creating Email Magic" width="600" height="180" style="display: block;" >
+          <img src="{{env('APP_URL')}}/storage/admin/{!!$form->cover_image!!}" alt="{!!$form->name!!}" width="600" height="180" style="display: block;" >
          </td>
        </tr>
        <tr>
@@ -27,7 +27,7 @@
        </tr>
        <tr>
          <td align="center" bgcolor="#70bbd9" >
-          <img src="/storage/admin/{!!$form->footer_image!!}" alt="Creating Email Magic" width="600" height="106" style="display: block;" >
+          <img src="{{env('APP_URL')}}/storage/admin/{!!$form->footer_image!!}" alt="{!!$form->name!!}" width="600" height="106" style="display: block;" >
          </td>
        </tr>
        {{-- <tr>
