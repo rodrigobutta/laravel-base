@@ -256,6 +256,7 @@
                       // input: 'email',
                       showCancelButton: true,
                       confirmButtonText: '{!!$item->confirm_button_ok!!}',
+                      cancelButtonText: 'Cancelar',
                       showLoaderOnConfirm: true,
                       preConfirm: function () {
                         return new Promise(function (resolve, reject) {
