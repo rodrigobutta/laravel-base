@@ -231,6 +231,12 @@ class LeadAdminController extends Controller{
                 });
 
 
+                $sheet->setColumnFormat(array(
+                   'E' => '0',
+                   'F' => '0'
+                ));
+
+
 
             });
 
