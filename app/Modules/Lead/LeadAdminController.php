@@ -221,7 +221,7 @@ class LeadAdminController extends Controller{
 
                 }
 
-                $sheet->cells('A1:Z1', function($cells) {
+                $sheet->cells('A1:F1', function($cells) {
 
                     $cells->setBackground('#000000');
                     $cells->setFontColor('#ffffff');
