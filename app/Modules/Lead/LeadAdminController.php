@@ -22,6 +22,7 @@ use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\UserField\UserFieldModel;
+use App\Modules\Form\FormModel;
 use App\Modules\User\UserModel;
 
 
@@ -176,6 +177,67 @@ class LeadAdminController extends Controller{
         });
 
 	}
+
+
+    public function export($formId)
+    {
+
+        $form = FormModel::findOrFail($formId);
+
+        \Excel::create($form->event->name . '-' . $form->name . '- Conversiones', function($excel) use($form){
+
+            $excel->sheet('Datos', function($sheet) use($form){
+
+                $sheet->setOrientation('landscape');
+
+                $leads = LeadModel::where('form_id', '=',  $form->id)->with('campaign')->get();
+
+
+				$first=true;
+
+                foreach ($leads as $key => $lead) {
+
+					$fields = $lead->getfields();
+
+					// $row = [
+                    //     'appended', 'appended', $lead->created_at,
+					// ];
+
+					if($first){
+						$first=false;
+						$row = array_column($fields, 'title');
+						$sheet->appendRow($row);
+					}
+
+					$row = array_column($fields, 'value');
+
+                    $sheet->appendRow($row);
+
+
+                    // $sheet->appendRow([
+                    //     'appended', 'appended', $lead->created_at
+                    // ]);
+
+
+                }
+
+                $sheet->cells('A1:Z1', function($cells) {
+
+                    $cells->setBackground('#000000');
+                    $cells->setFontColor('#ffffff');
+                    $cells->setFontSize(12);
+                    $cells->setFontWeight('bold');
+
+                });
+
+
+
+            });
+
+        })->export('xls');
+
+    }
+
 
 
 

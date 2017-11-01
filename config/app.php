@@ -164,18 +164,12 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        // agregadas despues para blade plus
-        Collective\Html\HtmlServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
 
         RodrigoButta\AttachableModules\AttachableModulesServiceProvider::class,
 
+        Collective\Html\HtmlServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
-
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,11 +229,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        // agregadas despues para blade plus
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
-
-        'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class
+        'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
