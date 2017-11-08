@@ -205,11 +205,19 @@ class LeadAdminController extends Controller{
 
 					if($first){
 						$first=false;
+
 						$row = array_column($fields, 'title');
+
+                        // append de campos
+                        array_push($row,'Fecha');
+
 						$sheet->appendRow($row);
 					}
 
 					$row = array_column($fields, 'value');
+
+                    // append de campos
+                    array_push($row,$lead->created_at);
 
                     $sheet->appendRow($row);
 
@@ -221,7 +229,7 @@ class LeadAdminController extends Controller{
 
                 }
 
-                $sheet->cells('A1:F1', function($cells) {
+                $sheet->cells('A1:G1', function($cells) {
 
                     $cells->setBackground('#000000');
                     $cells->setFontColor('#ffffff');
