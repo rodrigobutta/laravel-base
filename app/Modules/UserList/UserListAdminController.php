@@ -106,11 +106,11 @@ class UserListAdminController extends Controller{
 
             $grid->description()->editable('textarea');
 
-            $enabled_states = [
-                'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $grid->enabled()->switch($enabled_states);
+            // $enabled_states = [
+            //     'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+            //     'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            // ];
+            // $grid->enabled()->switch($enabled_states);
 
             $grid->users()->display(function ($users) {
 
@@ -133,16 +133,25 @@ class UserListAdminController extends Controller{
     {
         return Admin::form(UserListModel::class, function (Form $form) {
 
-            $form->display('id', 'ID');
+            // $form->display('id', 'ID');
+
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
+
 
             $form->text('name');
             $form->text('description');
 
-            $enable_states = [
-                'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $form->switch("enabled")->states($enable_states);
+            // $enable_states = [
+            //     'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+            //     'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            // ];
+            // $form->switch("enabled")->states($enable_states);
 
             $form->multipleSelect('users')->options(UserModel::all()->pluck('name', 'id'));
 

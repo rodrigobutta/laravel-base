@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'      => 'HUB',
+    'name'      => 'Laravel-admin',
 
     /*
      * Logo in admin panel header.
      */
-    'logo'      => '<b>HUB</b>',
+    'logo'      => '<b>Laravel</b> admin',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => '<b>HUB</b>',
+    'logo-mini' => '<b>La</b>',
 
     /*
      * Route configration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'  => 'HUB',
+    'title'  => 'Admin',
 
     /*
      * Use `https`.
@@ -129,7 +129,7 @@ return [
     /*
      * @see https://adminlte.io/docs/2.4/layout
      */
-    'skin'    => 'skin-black-light',
+    'skin'    => 'skin-blue-light',
 
     /*
     |---------------------------------------------------------|
@@ -140,8 +140,7 @@ return [
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
      */
-    // 'layout'  => ['sidebar-mini', 'fixed'],
-    'layout'  => ['sidebar-mini',  'fixed'],
+    'layout'  => ['sidebar-mini', 'sidebar-collapse'],
 
     /*
      * Version displayed in footer.

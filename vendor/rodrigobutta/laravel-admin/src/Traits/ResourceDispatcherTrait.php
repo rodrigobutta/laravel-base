@@ -59,7 +59,6 @@ trait ResourceDispatcherTrait
      */
     public function store()
     {
-        \Debugbar::info("ResourceDispatcherTrait -> store()");
 
         $data = Input::all();
 

@@ -18,6 +18,24 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
 
+        // reb cambio el idioma en base a la configuracion de la tabla settings
+        \Config::set('app.locale', siteSettings('locale'));
+
+        app()->setLocale(\Config::get('app.locale'));
+        setlocale(LC_TIME, \Config::get('app.locale'));
+        \Carbon\Carbon::setLocale(\Config::get('app.locale'));
+        \Carbon\Carbon::setUtf8(true);
+
+        \Carbon\Carbon::setWeekStartsAt(\Carbon\Carbon::SUNDAY);
+        \Carbon\Carbon::setWeekEndsAt(\Carbon\Carbon::SATURDAY);
+
+        // https://github.com/rappasoft/laravel-5-boilerplate/issues/211
+
+        // reb cambio el UTM en base a la configuracion de la tabla settings
+        \Config::set('app.timezone', siteSettings('timezone'));
+        date_default_timezone_set(\Config::get('app.timezone'));
+
+
     }
 
     /**

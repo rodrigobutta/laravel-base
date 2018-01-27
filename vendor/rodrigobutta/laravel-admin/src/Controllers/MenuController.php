@@ -112,16 +112,23 @@ class MenuController extends Controller
     public function form()
     {
         return Menu::form(function (Form $form) {
-            $form->display('id', 'ID');
+            // $form->display('id', 'ID');
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
 
             $form->select('parent_id', trans('admin.parent_id'))->options(Menu::selectOptions());
             $form->text('title', trans('admin.title'))->rules('required');
-            $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
+            $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required');
             $form->text('uri', trans('admin.uri'));
             $form->multipleSelect('roles', trans('admin.roles'))->options(Role::all()->pluck('name', 'id'));
 
-            $form->display('created_at', trans('admin.created_at'));
-            $form->display('updated_at', trans('admin.updated_at'));
+            // $form->display('created_at', trans('admin.created_at'));
+            // $form->display('updated_at', trans('admin.updated_at'));
         });
     }
 

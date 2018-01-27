@@ -46,7 +46,7 @@ class Tools implements Renderable
     {
         $this->append(new BatchActions());
 
-        $this->append(new RefreshButton());
+        // $this->append(new RefreshButton());
     }
 
     /**

@@ -57,11 +57,11 @@ EOT;
 
         Admin::script($script);
 
-        $text = trans('admin.back');
+        // $text = trans('admin.back');
 
         return <<<EOT
 <div class="btn-group pull-right" style="margin-right: 10px">
-    <a class="btn btn-sm btn-default form-history-back"><i class="fa fa-arrow-left"></i>&nbsp;$text</a>
+    <a class="btn btn-sm btn-default form-history-back"><i class="fa fa-close"></i></a>
 </div>
 EOT;
     }

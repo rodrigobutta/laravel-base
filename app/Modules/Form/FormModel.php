@@ -90,4 +90,13 @@ class FormModel extends \App\Models\Profiled
     }
 
 
+    public function setDummy()
+    {
+        $this->id = -1;
+        $this->name = "";
+
+        return $this;
+    }
+
+
 }

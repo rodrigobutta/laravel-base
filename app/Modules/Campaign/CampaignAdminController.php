@@ -144,7 +144,15 @@ class CampaignAdminController extends Controller{
     {
         return Admin::form(CampaignModel::class, function (Form $form) use($eventid) {
 
-            $form->display('id', 'ID');
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
+
+            // $form->display('id', 'ID');
 
             if($eventid!=0){
 

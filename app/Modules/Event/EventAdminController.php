@@ -104,35 +104,52 @@ class EventAdminController extends Controller{
     {
         return Admin::grid(EventModel::class, function (Grid $grid) {
 
-            $grid->id('ID');
+            // $grid->id('ID');
 
-            $grid->column('name', 'Nombre');
+            $grid->disableExport();
+            $grid->disablePagination();
+            $grid->disableRowSelector();
 
-            $grid->note()->editable('textarea');
-
-            $grid->campaigns()->display(function ($campaigns) {
-
-                $campaigns = array_map(function ($campaign) {
-                    return "<span class='label label-primary'>{$campaign['name']}</span>";
-                }, $campaigns);
-
-                return join('&nbsp;', $campaigns);
+            $grid->filter(function($filter){
+                $filter->disableIdFilter();
+                // $filter->equal('column')->placeholder('Please input...');
+                $filter->like('name', 'Nombre');
             });
 
-            $grid->forms()->display(function ($forms) {
 
-                $forms = array_map(function ($form) {
-                    return "<span class='label label-primary'>{$form['name']}</span>";
-                }, $forms);
 
-                return join('&nbsp;', $forms);
+            // $grid->column('name', 'Nombre');
+
+
+            $grid->column('name',' ')->display(function () {
+                return '<a href="' . route('events.manage', ['eventid' => $this->id]) . '">' . $this->name . '</a>';
             });
 
-            $grid->actions(function ($actions) {
+            // $grid->note()->editable('textarea');
 
-                $actions->prepend('<a href="'.route('events.manage', ['eventid' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
+            // $grid->campaigns()->display(function ($campaigns) {
 
-            });
+            //     $campaigns = array_map(function ($campaign) {
+            //         return "<span class='label label-primary'>{$campaign['name']}</span>";
+            //     }, $campaigns);
+
+            //     return join('&nbsp;', $campaigns);
+            // });
+
+            // $grid->forms()->display(function ($forms) {
+
+            //     $forms = array_map(function ($form) {
+            //         return "<span class='label label-primary'>{$form['name']}</span>";
+            //     }, $forms);
+
+            //     return join('&nbsp;', $forms);
+            // });
+
+            // $grid->actions(function ($actions) {
+
+            //     $actions->prepend('<a href="'.route('events.manage', ['eventid' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
+
+            // });
 
         });
     }
@@ -173,118 +190,16 @@ class EventAdminController extends Controller{
         // Admin::css(asset('modules/form/css/editor.css'));
         // Admin::js(asset('modules/form/js/jquery.hotkeys.js'));
 
-
         $item = EventModel::findOrFail($eventid);
-
 
         return Admin::content(function (Content $content) use($item,$eventid){
 
-            $content->header('evento');
-            $content->description('editando');
-
-            $campaigns = $item->campaigns;
-
-            // \Debugbar::info($campaigns);
-
+            $content->header($item->name);
+            // $content->description('editando');
 
             $content->row(
-                view('event::admin.manage.startup', compact('item'))
+                view('event::admin.manage', compact('item'))
             );
-
-            $content->row(function (Row $row) use($item) {
-
-                $row->column(6, function (Column $column) use($item) {
-                    $column->append(
-
-
-                        Admin::grid(CampaignModel::class, function (Grid $grid) use($item) {
-
-                            $grid->id('ID');
-
-                            $grid->column('name', 'Nombre');
-
-                            $grid->note()->editable('textarea');
-
-                            $grid->model()->where('event_id', '=', $item->id);
-
-                            $grid->disablePagination();
-                            $grid->disableFilter();
-                            $grid->disableExport();
-                            $grid->disableCreation();
-
-                            $grid->userlists()->display(function ($userlists) {
-
-                                $userlists = array_map(function ($userlist) {
-                                    return '<a href="'.route('userlists.edit', ['id' => $userlist['id']]).'"><span class="label label-primary">'.$userlist["name"].'</span></a>';
-                                }, $userlists);
-
-                                return join('&nbsp;', $userlists);
-                            });
-
-
-                            $grid->tools(function ($tools) {
-                                $tools->append(new UserGender());
-                            });
-
-                            $grid->tools(function ($tools) {
-                                $tools->batch(function ($batch) {
-                                    $batch->add('Release post', new ReleasePost(1));
-                                    $batch->add('Unrelease post', new ReleasePost(0));
-                                });
-                            });
-
-
-                        })
-
-
-                    );
-                });
-
-                $row->column(6, function (Column $column) use($item) {
-                    // $column->append("222");
-
-                    $column->append(
-
-
-                        Admin::grid(FormModel::class, function (Grid $grid) use($item) {
-
-                            $grid->id('ID');
-
-                            $grid->column('name', 'Nombre');
-
-                            $grid->model()->where('event_id', '=', $item->id);
-
-                            $grid->disablePagination();
-                            $grid->disableFilter();
-                            $grid->disableExport();
-                            $grid->disableCreation();
-
-                            $grid->actions(function ($actions) {
-
-                                $actions->prepend('<a href="'.route('forms.schema', ['formid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
-
-                            });
-
-                        })
-
-
-                    );
-
-
-                });
-
-
-                // $row->column(2, function (Column $column) use($item) {
-                //     $column->append("222");
-
-                // });
-
-
-
-            });
-
-
-            // $content->body(view('event::admin.manage.campaigns', compact('campaigns')));
 
         });
 

@@ -68,9 +68,21 @@ class PermissionController extends Controller
     protected function grid()
     {
         return Admin::grid(Permission::class, function (Grid $grid) {
-            $grid->id('ID')->sortable();
+            // $grid->id('ID')->sortable();
             $grid->slug(trans('admin.slug'));
             $grid->name(trans('admin.name'));
+
+            // $grid->disableFilter();
+            $grid->disableExport();
+            $grid->disablePagination();
+
+            $grid->filter(function($filter){
+                $filter->disableIdFilter();
+                // $filter->equal('column')->placeholder('Please input...');
+                $filter->like('name', 'Nombre');
+            });
+
+
 
             $grid->http_path(trans('admin.route'))->display(function ($path) {
                 return collect(explode("\r\n", $path))->map(function ($path) {
@@ -112,18 +124,25 @@ class PermissionController extends Controller
     public function form()
     {
         return Admin::form(Permission::class, function (Form $form) {
-            $form->display('id', 'ID');
+            // $form->display('id', 'ID');
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
 
             $form->text('slug', trans('admin.slug'))->rules('required');
             $form->text('name', trans('admin.name'))->rules('required');
 
             $form->multipleSelect('http_method', trans('admin.http.method'))
                 ->options($this->getHttpMethodsOptions())
-                ->help('ayudita reb');
+                ->help('ayudita de rodri');
             $form->textarea('http_path', trans('admin.http.path'));
 
-            $form->display('created_at', trans('admin.created_at'));
-            $form->display('updated_at', trans('admin.updated_at'));
+            // $form->display('created_at', trans('admin.created_at'));
+            // $form->display('updated_at', trans('admin.updated_at'));
         });
     }
 

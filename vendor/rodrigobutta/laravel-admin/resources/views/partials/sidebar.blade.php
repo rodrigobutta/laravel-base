@@ -4,7 +4,7 @@
     <section class="sidebar">
 
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
+        {{-- <div class="user-panel">
             <div class="pull-left image">
                 <img src="{{ Admin::user()->avatar }}" class="img-circle" alt="User Image">
             </div>
@@ -14,7 +14,7 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</a>
             </div>
         </div>
-
+ --}}
         <!-- search form (Optional) -->
         <!--<form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -29,7 +29,7 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">{{ trans('admin.menu') }}</li>
+            {{-- <li class="header">{{ trans('admin.menu') }}</li> --}}
 
             @each('admin::partials.menu', Admin::menu(), 'item')
 

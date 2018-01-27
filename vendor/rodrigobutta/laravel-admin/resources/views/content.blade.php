@@ -1,13 +1,16 @@
 @extends('admin::index')
 
 @section('content')
+
+    @if($header!='' && $description =!'')
     <section class="content-header">
         <h1>
             {{ $header or trans('admin.title') }}
-            <small>{{ $description or trans('admin.description') }}</small>
+            {{-- <small>{{ $description or trans('admin.description') }}</small> --}}
         </h1>
 
     </section>
+    @endif
 
     <section class="content">
 

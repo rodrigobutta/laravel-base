@@ -1,15 +1,15 @@
+
+
 <div class="row" >
 
 	<div class="col-md-6" data-bind="with: form">
 
-		<div class="box box-info">
+		<div class="box box-default box-solid">
 		    <div class="box-header with-border">
-		        <h3 class="box-title">{{$item->name}}</h3>
+		        <h3 class="box-title">Campos Activos</h3>
 		        <div class="box-tools">
-		          	<button type="button" class="btn btn-info pull-right" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Save</button>
 
-					<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" aria-expanded="true">Add
-					<span class="caret"></span></button>
+					<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" aria-expanded="true">Agregar Campo<span class="caret"></span></button>
 					<ul class="dropdown-menu test" role="menu" aria-labelledby="menu1" data-bind="click: $root.addField">
 
 
@@ -53,8 +53,8 @@
 	<div class="col-md-6 tab-v1 form_builder_general" id="left-tabs">
 		<ul class="nav nav-tabs" data-bind="tab: $root.currentTab">
 			{{-- <li class=""><a href="#add-field-pane" data-toggle="tab" aria-expanded="false">Add Field</a></li> --}}
-			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Field Settings</a></li>
-			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Form Settings</a></li>
+			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Porpiedades del Campo</a></li>
+			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Estilo del Formulario</a></li>
 		</ul>
 		<div class="tab-content">
 			{{-- <div class="tab-pane active" id="add-field-pane">
@@ -74,10 +74,15 @@
 
 
 </div>
-<!-- end row -->
 
+<div class="row" >
 
+    <div class="col-md-12" data-bind="with: form">
+        <button type="button" class="btn btn-primary pull-right22" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Aceptar</button>&nbsp;
+        <button type="button" class="btn btn-default pull-right22" onclick="history.back()">Cancelar</button>&nbsp;
+    </div>
 
+</div>
 
 
 {{-- script form --}}

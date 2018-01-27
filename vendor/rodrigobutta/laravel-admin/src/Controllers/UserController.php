@@ -69,12 +69,23 @@ class UserController extends Controller
     protected function grid()
     {
         return Administrator::grid(function (Grid $grid) {
-            $grid->id('ID')->sortable();
+
+            $grid->disableExport();
+            $grid->disablePagination();
+
+            $grid->filter(function($filter){
+                $filter->disableIdFilter();
+                // $filter->equal('column')->placeholder('Please input...');
+                $filter->like('username', 'Email');
+                $filter->like('name', 'Nombre');
+            });
+
+            // $grid->id('ID')->sortable();
             $grid->username(trans('admin.username'));
             $grid->name(trans('admin.name'));
             $grid->roles(trans('admin.roles'))->pluck('name')->label();
-            $grid->created_at(trans('admin.created_at'));
-            $grid->updated_at(trans('admin.updated_at'));
+            // $grid->created_at(trans('admin.created_at'));
+            // $grid->updated_at(trans('admin.updated_at'));
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->getKey() == 1) {
@@ -98,9 +109,17 @@ class UserController extends Controller
     public function form()
     {
         return Administrator::form(function (Form $form) {
-            $form->display('id', 'ID');
+            // $form->display('id', 'ID');
 
-            $form->text('username', trans('admin.username'))->rules('required');
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
+
+
+            $form->text('username', 'E-mail')->rules('required');
             $form->text('name', trans('admin.name'))->rules('required');
             $form->image('avatar', trans('admin.avatar'));
             $form->password('password', trans('admin.password'))->rules('required|confirmed');

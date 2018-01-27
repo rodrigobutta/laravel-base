@@ -13,7 +13,7 @@
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Activar navegación</span>
         </a>
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
@@ -37,15 +37,19 @@
 
                             <p>
                                 {{ Admin::user()->name }}
-                                <small>Member since admin {{ Admin::user()->created_at }}</small>
+                                <small><strong>Equipos: </strong>
+                                    @foreach(Admin::user()->roles as $role)
+                                        {{$role->name}},&nbsp;
+                                    @endforeach
+                                </small>
                             </p>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ admin_base_path('auth/setting') }}" class="btn btn-default btn-flat">{{ trans('admin.setting') }}</a>
+                                <a href="{{ admin_base_path('auth/setting') }}" class="btn btn-default btn-flat">Configuración</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ admin_base_path('auth/logout') }}" class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
+                                <a href="{{ admin_base_path('auth/logout') }}" class="btn btn-default btn-flat">Salir</a>
                             </div>
                         </li>
                     </ul>

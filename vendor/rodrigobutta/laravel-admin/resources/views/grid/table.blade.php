@@ -22,7 +22,7 @@
             <thead>
                 <tr>
                     @foreach($grid->columns() as $column)
-                    <th>{{$column->getLabel()}}{!! $column->sorter() !!}</th>
+                    <th>{{$column->getLabel() }}{!! $column->sorter() !!}</th>
                     @endforeach
                 </tr>
             </thead>

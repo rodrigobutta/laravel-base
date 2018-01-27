@@ -293,7 +293,7 @@ trait CategoryTrait
         static::saving(function (Model $branch) {
             $parentColumn = $branch->getParentColumn();
 
-            if (Request::has($parentColumn) && Request::input($parentColumn) == $branch->getKey()) {
+            if (Request::has($parentColumn) && Request::input($parentColumn) == $branch->getKey() && Request::input($parentColumn) != 0) {
                 throw new \Exception(trans('admin.parent_select_error'));
             }
 

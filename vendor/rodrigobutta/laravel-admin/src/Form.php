@@ -488,7 +488,6 @@ class Form extends Dispatchable
      */
     public function update($id)
     {
-        \Debugbar::info("Form -> update()");
 
         $data = Input::all();
 
@@ -714,6 +713,7 @@ class Form extends Dispatchable
     protected function prepareUpdate(array $updates, $oneToOneRelation = false)
     {
         $prepared = [];
+
 
         foreach ($this->builder->fields() as $field) {
             $columns = $field->column();

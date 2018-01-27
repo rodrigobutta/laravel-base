@@ -189,7 +189,7 @@ class Admin
      *
      * @return mixed
      */
-    public function user()
+    public static function user()
     {
         return Auth::guard('admin')->user();
     }

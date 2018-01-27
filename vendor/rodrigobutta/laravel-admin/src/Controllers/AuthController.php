@@ -28,7 +28,10 @@ class AuthController extends Controller
             return redirect(config('admin.route.prefix'));
         }
 
-        return view('admin::login');
+        // return view('admin::login');
+
+        // REB redirect automatico a google
+        return redirect(route('admin.auth.social.google'));
     }
 
     /**
@@ -68,7 +71,10 @@ class AuthController extends Controller
 
         session()->forget('url.intented');
 
-        return redirect(config('admin.route.prefix'));
+
+
+        // return redirect(config('admin.route.prefix'));
+        return redirect('/');
     }
 
     /**
@@ -118,23 +124,40 @@ class AuthController extends Controller
 
         return Administrator::form(function (Form $form) {
 
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
+
             $form->display('username', trans('admin.username'));
             $form->text('name', trans('admin.name'))->rules('required');
             $form->image('avatar', trans('admin.avatar'))->uniqueName();
-            $form->password('password', trans('admin.password'))->rules('confirmed|required');
-            $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
-                ->default(function ($form) {
-                    return $form->model()->password;
-                });
+
+            // $form->password('password', trans('admin.password'))->rules('confirmed|required');
+            // $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
+            //     ->default(function ($form) {
+            //         return $form->model()->password;
+            //     });
+
+            // $form->password('password', trans('admin.password'))->rules('confirmed');
+            // $form->password('password_confirmation', trans('admin.password_confirmation'))
+            //     ->default(function ($form) {
+            //         return $form->model()->password;
+            //     });
+
+
 
             $form->setAction(admin_base_path('auth/setting'));
 
-            $form->ignore(['password_confirmation']);
+            // $form->ignore(['password_confirmation']);
 
             $form->saving(function (Form $form) {
-                if ($form->password && $form->model()->password != $form->password) {
-                    $form->password = bcrypt($form->password);
-                }
+                // if ($form->password && $form->model()->password != $form->password) {
+                //     $form->password = bcrypt($form->password);
+                // }
             });
 
             $form->saved(function () {

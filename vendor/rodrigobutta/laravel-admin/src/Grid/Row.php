@@ -48,7 +48,9 @@ class Row
         $this->gridOptions = $gridOptions;
 
         $this->attributes = [
-            "item-id" => $data["id"]
+            "item-id" => $data["id"],
+            "class" => "treegrid-" . $data["id"]
+
         ];
 
         if( $this->gridOptions["isSortable"]==true ){

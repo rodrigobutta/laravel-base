@@ -24,6 +24,8 @@ use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 use App\Modules\UserList\UserListModel;
 use App\Modules\UserField\UserFieldModel;
 use App\Modules\Lead\LeadModel;
+use App\Modules\Event\EventModel;
+
 
 
 class FormAdminController extends Controller{
@@ -71,10 +73,13 @@ class FormAdminController extends Controller{
 
 		return Admin::content(function (Content $content) use ($id) {
 
-			$content->header('formulario');
+
+            $item = FormModel::findOrFail($id);
+
+			$content->header($item->name);
 			$content->description('editando');
 
-			$content->body($this->form()->edit($id));
+			$content->body($this->form($item->event_id)->edit($id));
 		});
 	}
 
@@ -83,14 +88,17 @@ class FormAdminController extends Controller{
 	 *
 	 * @return Content
 	 */
-	public function create()
-	{
-		return Admin::content(function (Content $content) {
+	public function create(Request $request)
+    {
 
-			$content->header('Campaña');
+        $eventid = $request->get('eventid') || 0;
+
+		return Admin::content(function (Content $content) use($eventid) {
+
+			$content->header('Formulario');
 			$content->description('creando');
 
-			$content->body($this->form());
+			$content->body($this->form($eventid));
 		});
 	}
 
@@ -150,16 +158,39 @@ class FormAdminController extends Controller{
 	 *
 	 * @return Form
 	 */
-	protected function form()
+	protected function form($eventid = 0)
 	{
-		return Admin::form(FormModel::class, function (Form $form) {
+		return Admin::form(FormModel::class, function (Form $form) use($eventid){
 
-			$form->display('id', 'ID');
+
+            $form->disableReset();
+            $form->tools(function (Form\Tools $tools) {
+                // $tools->disableBackButton();
+                $tools->disableListButton();
+                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+            });
+
+            // $form->display('id', 'ID');
+
+            if($eventid!=0){
+                $event = EventModel::findOrFail($eventid);
+                $form->hidden('event_id')->value($eventid);
+                $form->display('Evento')->value($event->name);
+            }
+            else{
+
+                // var_dump($form->model());
+
+                // $event = EventModel::findOrFail($eventid);
+                // $form->display('Evento')->value($event->name);
+            }
 
 			$form->text('name');
 			$form->text('slug');
 
 			$form->textarea('note');
+
+            $form->divide();
 
             $form->ckeditor('description','Descripción');
             $form->image('cover_image','Imagen de portada')->help('1920px x 400px', 'fa-image')->uniqueName();;
@@ -177,16 +208,19 @@ class FormAdminController extends Controller{
 
             $form->file('attach','Documento de descarga');
 
-			$enabled_states = [
-				'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-				'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-			];
-			$form->switch("enabled")->states($enabled_states);
 
-			$form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
+            $form->divide();
 
-			$form->display('created_at', 'Created At');
-			$form->display('updated_at', 'Updated At');
+			// $enabled_states = [
+			// 	'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+			// 	'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+			// ];
+			// $form->switch("enabled")->states($enabled_states);
+
+			$form->multipleSelect('userlists','Listas de destino')->options(UserListModel::all()->pluck('name', 'id'));
+
+			// $form->display('created_at', 'Created At');
+			// $form->display('updated_at', 'Updated At');
 
 		});
 	}
@@ -218,8 +252,8 @@ class FormAdminController extends Controller{
 
 		return Admin::content(function (Content $content) use($item){
 
-			$content->header('formulario');
-			$content->description('editando');
+			$content->header($item->name);
+			// $content->description('editando');
 
 			$schema = $item->schema;
 

@@ -144,7 +144,7 @@ class Editable extends AbstractDisplayer
 
         $options = json_encode($this->options);
 
-        $options = rtrim($options,"}"); // tengo que sacar la ultima llave que se armaba automaticamente linda, para poder concatenar los callbacks
+        $options = substr($options, 0, -1); // tengo que sacar la ultima llave que se armaba automaticamente linda, para poder concatenar los callbacks
 
         $options .= ",success: function(data) {
                         if (data.status) {
@@ -161,6 +161,8 @@ class Editable extends AbstractDisplayer
                     }";
 
         $options .= "}";
+
+
 
                 $script = <<<EOT
 
