@@ -36,7 +36,7 @@
 		    </div>
 		    <div class="box-body">
 
-				<span data-bind="ifnot: hide_intro"></span>
+				{{-- <span data-bind="ifnot: hide_intro"></span> --}}
 				<form data-bind="sortable: {template: &#39;tmpl-field-preview&#39;, data: fields}" class="form-stacked form-builder-preview ko_container ui-sortable">
 				</form>
 				<div data-bind="ifnot: hasFields">
@@ -99,12 +99,12 @@
 			<label class="control-label">Description</label>
 			<textarea class="form-control" name="description"  data-bind="value: description"></textarea>
 		</div>
-		<div class="form-group">
+	{{-- 	<div class="form-group">
 			<label class="control-label">
 				<input type="checkbox" name="hide_intro" data-bind="checked: hide_intro">
 				<span>Hide display name and description?</span>
 			</label>
-		</div>
+		</div> --}}
 		<div class="form-group">
 			<label class="control-label">Font Size</label>
 			<select class="form-control" name="font_size" >

@@ -22,18 +22,6 @@
 
 
 
-{!! HTML::script('/vendor/jquery-validation/dist/jquery.validate.min.js') !!}
-{!! HTML::script('/vendor/jquery-validation/src/localization/messages_es_AR.js') !!}
-{!! HTML::script('/vendor/jquery-validation/dist/additional-methods.min.js') !!}
-
-{!! HTML::script('/vendor/jquery-form/dist/jquery.form.min.js') !!}
-
-{!! HTML::script('/vendor/sweetalert2/dist/sweetalert2.all.min.js') !!}
-
-
-{!! HTML::script('/vendor/jquery-mask-plugin/dist/jquery.mask.min.js') !!}
-
-
 
 @include('front.master.includes')
 

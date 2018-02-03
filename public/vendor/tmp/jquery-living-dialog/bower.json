@@ -1,0 +1,29 @@
+{
+  "name": "jquery-living-dialog",
+  "version": "1.2.15",
+  "authors": [
+    "Rodrigo Butta <rbutta@gmail.com>"
+  ],
+  "description": "jquery bootstrap extended dialog",
+  "keywords": [
+    "jquery",
+    "plugins"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "main": [
+    "dist/jquery-living-dialog.css",
+    "dist/jquery-living-dialog.js"
+  ],
+  "dependencies": {
+      "jquery": ">=1.7.0"
+  },
+  "homepage":"https://github.com/rodrigobutta/jquery-living-dialog"
+}

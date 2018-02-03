@@ -68,7 +68,7 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="{{route('forms.create', ['eventid' => $item->id])}}" class="btn btn-sm btn-warning btn-flat pull-left">Nuevo Formulario</a>
+                <a href="{{route('forms.create', ['event_id' => $item->id])}}" class="btn btn-sm btn-warning btn-flat pull-left">Nuevo Formulario</a>
                 <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a>
               </div>
 
@@ -182,7 +182,7 @@
 
         <div class="box box-success box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">Registros</h3>
+                <h3 class="box-title">Listas</h3>
 
               {{--   <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -196,29 +196,28 @@
                   <table class="table no-margin">
                     <thead>
                     <tr>
-                      <th>Campaña responsable</th>
-                      <th>Registros</th>
-                      <th>Altas de Usuario</th>
-                      <th>Actualización de Usuario</th>
+                      <th>Nombre</th>
+                      {{-- <th>Formulario</th> --}}
+                      <th>Conversiones</th>
+                      {{-- <th>Altas de Usuario</th> --}}
+                      {{-- <th>Actualización de Usuario</th> --}}
                     </tr>
                     </thead>
                     <tbody>
 
-                          <tr>
-                              <td>
-                                  <a href="pages/examples/invoice.html">xxxxxxx</a>
-                              </td>
-                              <td>
-                                0
-                              </td>
-                              <td>
-                                0
-                              </td>
-                              <td>
-                                0
-                              </td>
-                          </tr>
+                        @foreach($item->privateUserLists as $c)
 
+                            <tr>
+                                <td>
+                                    <a href="pages/examples/invoice.html"><i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->fullname}}</a>
+                                </td>
+                                  <td>
+                                    0
+                                </td>
+
+                            </tr>
+
+                        @endforeach
 
                     </tbody>
                   </table>

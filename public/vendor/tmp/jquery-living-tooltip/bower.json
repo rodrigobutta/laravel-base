@@ -1,0 +1,29 @@
+{
+  "name": "jquery-living-tooltip",
+  "version": "1.2.15",
+  "authors": [
+    "Rodrigo Butta <rbutta@gmail.com>"
+  ],
+  "description": "jquery bootstrap extended tooltip",
+  "keywords": [
+    "jquery",
+    "plugins"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "main": [
+    "dist/jquery-living-tooltip.css",
+    "dist/jquery-living-tooltip.js"
+  ],
+  "dependencies": {
+      "jquery": ">=1.7.0"
+  },
+  "homepage":"https://github.com/rodrigobutta/jquery-living-tooltip"
+}

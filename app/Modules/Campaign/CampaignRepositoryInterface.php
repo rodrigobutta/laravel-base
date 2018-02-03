@@ -14,12 +14,8 @@ interface CampaignRepositoryInterface{
 
     public function getBySlug($slug);
 
-    public function getAll();
-
-    public function incrementViews($campaign);
-
-    public function search($input);
-
     public function delete($id);
+
+    public function create($item,$eventId,$typeId);
 
 }

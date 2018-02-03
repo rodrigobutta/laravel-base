@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/sweetalert/dist/sweetalert.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/nestable/nestable.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/toastr/build/toastr.min.css") }}">
-    <!-- <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css") }}"> -->
+    <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/google-fonts/fonts.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.css") }}">
 
@@ -48,6 +48,53 @@
     <script src="{{ admin_asset ("/vendor/laravel-admin/AdminLTE/dist/js/app.min.js") }}"></script>
     <script src="{{ admin_asset ("/vendor/laravel-admin/jquery-pjax/jquery.pjax.js") }}"></script>
     <script src="{{ admin_asset ("/vendor/laravel-admin/nprogress/nprogress.js") }}"></script>
+
+
+
+    {!! HTML::style('vendor/font-awesome-animation/dist/font-awesome-animation.min.css') !!}
+
+    {!! HTML::script('vendor/tmp/jquery-living-tooltip/dist/jquery-living-tooltip.js') !!}
+    {!! HTML::style('vendor/tmp/jquery-living-tooltip/dist/jquery-living-tooltip.css') !!}
+
+    {!! HTML::script('vendor/tmp/jquery-living-editable/dist/jquery-living-editable.js') !!}
+    {!! HTML::style('vendor/tmp/jquery-living-editable/dist/jquery-living-editable.css') !!}
+
+    {!! HTML::script('vendor/tmp/jquery-living-editable/dist/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js') !!}
+    {!! HTML::style('vendor/tmp/jquery-living-editable/dist/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5.css') !!}
+    {!! HTML::script('vendor/tmp/jquery-living-editable/dist/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5.js') !!}
+    {!! HTML::script('vendor/tmp/jquery-living-editable/dist/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/locales/bootstrap-wysihtml5.es-AR.js') !!}
+    {!! HTML::script('vendor/tmp/jquery-living-editable/dist/inputs-ext/wysihtml5/wysihtml5-0.0.2.js') !!}
+
+    {!! HTML::script('vendor/tmp/jquery-living-dialog/dist/jquery-living-dialog.js') !!}
+    {!! HTML::style('vendor/tmp/jquery-living-dialog/dist/jquery-living-dialog.css') !!}
+
+    {!! HTML::script('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') !!}
+    {!! HTML::script('vendor/bootstrap-select/dist/js/i18n/defaults-es_ES.js') !!}
+    {!! HTML::style('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') !!}
+
+    {!! HTML::script('vendor/moment/moment.js') !!}
+
+    {!! HTML::script('vendor/chart.js/dist/Chart.js') !!}
+
+    {!! HTML::style('css/admin.css') !!}
+    {!! HTML::script('js/admin.js') !!}
+
+    {!! HTML::style('vendor/tmp/jquery-living-table2/dist/bootstrap-table.css') !!}
+    {!! HTML::style('//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css') !!}
+    {!! HTML::script('vendor/tmp/jquery-living-table2/dist/bootstrap-table.js') !!}
+    {!! HTML::script('vendor/tmp/jquery-living-table2/dist/locale/bootstrap-table-es-ES.js') !!}
+
+
+    {!! HTML::script('vendor/jquery-living-table/jquery.living.table.js') !!}
+    {!! HTML::script('vendor/bootstrap-daterangepicker/daterangepicker.js') !!}
+    {!! HTML::style('vendor/bootstrap-daterangepicker/daterangepicker.css') !!}
+
+
+
+    {!! HTML::script('vendor/tmp/jquery-living-gantt/dist/jquery-living-gantt.js') !!}
+
+
+
 
 
     {!! HTML::style('/css/admin.css') !!}
@@ -98,7 +145,7 @@
 
 <script src="{{ admin_asset ("/vendor/laravel-admin/nestable/jquery.nestable.js") }}"></script>
 <script src="{{ admin_asset ("/vendor/laravel-admin/toastr/build/toastr.min.js") }}"></script>
-<!-- <script src="{{ admin_asset ("/vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js") }}"></script> -->
+<script src="{{ admin_asset ("/vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js") }}"></script>
 <script src="{{ admin_asset ("/vendor/laravel-admin/sweetalert/dist/sweetalert.min.js") }}"></script>
 {!! Admin::js() !!}
 <script src="{{ admin_asset ("/vendor/laravel-admin/laravel-admin/laravel-admin.js") }}"></script>

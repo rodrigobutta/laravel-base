@@ -86,13 +86,14 @@ class FormFrontController extends Controller
 
     public function pushLead(Request $request, $eventSlug, $formSlug){
 
+
         try {
 
             $form = $this->form->getByComb($eventSlug,$formSlug);
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
-                'ERROR' => 'form not found'
+                'ERROR' => 'No se encontró el formulario'
             ]);
         }
 
@@ -100,15 +101,12 @@ class FormFrontController extends Controller
         $fields = $request->all();
 
 
+        // RECONOCIMIENTO DE CAMPAÑA
         if($request->has('campaign')){
 
             $campaign_slug = $request->get('campaign');
 
-
             $campaign = CampaignModel::where('slug', $campaign_slug)->where('event_id', $form->event_id)->first();
-
-            // var_dump($campaign->id);
-            // exit();
 
             if($campaign){
                 $lead = $this->lead->put($fields,$form->id, $campaign->id);
@@ -116,7 +114,6 @@ class FormFrontController extends Controller
             else{
                 $lead = $this->lead->put($fields,$form->id);
             }
-
 
         }
         else{
@@ -126,35 +123,27 @@ class FormFrontController extends Controller
         }
 
 
-
+        // TODO desharcodear esto
         $email_tmp = $request->get('userfield_1');
         $name_tmp = $request->get('userfield_3');
 
-
         $to_mail = $email_tmp;
-
 
         try {
 
-
+            // mail al usuario
             \Mail::to($to_mail)->queue(new ConfirmMail($form,$name_tmp,$email_tmp));
             // ->bcc($adminEmails)
 
-            \Mail::to(env('MAIL_NOTIFY_ADDRESS'))->queue(new NotificationMail($form,$lead));
+            // mail de notificación
+            \Mail::to(env('MAIL_NOTIFY_ADDRESS'))->queue(new NotificationMail($form,$lead)); // CREO QUE NO ESTA FUNCIONANDO *********************************************************************
 
             $mailResponse = 'SENT ' . $to_mail;
 
         } catch (Exception $e) {
-
-            $mailResponse = $e->xdebug_message;
-
-            // if (count(\Mail::failures()) > 0) {
-            //     $response = 1;
-            // }
+            // $mailResponse = $e->xdebug_message;
+            $mailResponse = $e->getMessage();
         }
-
-
-
 
 
         // \Event::fire('App\Events', $item);

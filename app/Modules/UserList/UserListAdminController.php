@@ -100,25 +100,50 @@ class UserListAdminController extends Controller{
     {
         return Admin::grid(UserListModel::class, function (Grid $grid) {
 
-            // $grid->id('ID')->sortable();
+            // $grid->disableFilter();
+            $grid->disableExport();
+            // $grid->disablePagination();
+
+            $grid->filter(function($filter){
+                $filter->disableIdFilter();
+
+
+                $filter->in('type_id','Tipo')->multipleSelect('/admin/api/userlisttypes');
+
+                // $filter->in('user_id','Usuario')->multipleSelect('/admin/api/users');
+
+                // $filter->equal('column')->placeholder('Please input...');
+                // $filter->like('date', 'Fecha');
+                // $filter->like('name', 'Nombre');
+
+                // $filter->between('date', 'Año')->date();
+                // $filter->year('date', 'Año');
+
+            });
 
             $grid->column('name', 'Nombre')->sortable();;
 
-            $grid->description()->editable('textarea');
+            $grid->description('Descripción')->editable('textarea');
 
-            // $enabled_states = [
-            //     'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-            //     'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            // ];
-            // $grid->enabled()->switch($enabled_states);
 
-            $grid->users()->display(function ($users) {
+            $grid->type('Tipo')->display(function ($item) {
+                if($item){
+                   return '<i class="fa ' . $item['icon'] . '"></i>&nbsp;' . $item['name'];
+                }
+                return '';
+            });
 
-                $users = array_map(function ($user) {
-                    return "<span class='label label-primary'>{$user['name']}</span>";
-                }, $users);
+            $grid->users('Cantidad de usuarios')->display(function ($users) {
 
-                return join('&nbsp;', $users);
+                // $users = array_map(function ($user) {
+                //     return "<span class='label label-primary'>{$user['name']}</span>";
+                // }, $users);
+
+                // return join('&nbsp;', $users);
+
+                return sizeof($users);
+
+
             });
 
         });

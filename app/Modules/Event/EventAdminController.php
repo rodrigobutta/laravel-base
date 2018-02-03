@@ -28,7 +28,10 @@ use RodrigoButta\Admin\Layout\Row;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\Campaign\CampaignModel;
+use App\Modules\Campaign\CampaignRepositoryInterface;
+
 use App\Modules\Form\FormModel;
+
 
 
 use App\Admin\Extensions\Tools\ReleasePost;
@@ -39,9 +42,10 @@ class EventAdminController extends Controller{
 
     use ResourceDispatcherTrait;
 
-    public function __construct(){
+    public function __construct(CampaignRepositoryInterface $c){
+         $this->campaignRepository = $c;
+     }
 
-    }
 
 
     /**
@@ -51,21 +55,39 @@ class EventAdminController extends Controller{
      */
     public function index()
     {
-        return Admin::content(function (Content $content) {
+
+        return Admin::content(function (Content $content){
+
+            $items = EventModel::all();
 
             $content->header('Eventos');
-            $content->description('listado');
+            $content->description('adasad');
 
-            $content->body($this->list());
+            $content->row(
+                view('event::admin.common', compact('item'))->render()
+            );
+
+            $content->row(
+                view('event::admin.navigator', compact('items'))->render()
+            );
+
+
         });
+
+
+
+        // return Admin::content(function (Content $content) {
+
+        //     $content->header('Eventos');
+        //     $content->description('listado');
+
+        //     $content->body($this->list());
+        // });
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
+
+
+
     public function edit($id)
     {
 
@@ -83,11 +105,7 @@ class EventAdminController extends Controller{
         });
     }
 
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
+
     public function create()
     {
         return Admin::content(function (Content $content) {
@@ -99,11 +117,7 @@ class EventAdminController extends Controller{
         });
     }
 
-    /**
-     * Admin init page
-     *
-     * @return Grid
-     */
+
     protected function list()
     {
         return Admin::grid(EventModel::class, function (Grid $grid) {
@@ -126,7 +140,7 @@ class EventAdminController extends Controller{
 
 
             $grid->column('name',' ')->display(function () {
-                return '<a href="' . route('events.manage', ['eventid' => $this->id]) . '">' . $this->name . '</a>';
+                return '<a href="' . route('events.manage', ['itemId' => $this->id]) . '">' . $this->name . '</a>';
             });
 
             // $grid->note()->editable('textarea');
@@ -151,18 +165,13 @@ class EventAdminController extends Controller{
 
             // $grid->actions(function ($actions) {
 
-            //     $actions->prepend('<a href="'.route('events.manage', ['eventid' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
+            //     $actions->prepend('<a href="'.route('events.manage', ['itemId' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
 
             // });
 
         });
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
     protected function form()
     {
         return Admin::form(EventModel::class, function (Form $form) {
@@ -177,9 +186,18 @@ class EventAdminController extends Controller{
 
 
             $form->text('name');
-            $form->text('slug');
+            // $form->text('slug');
+
+            $form->text('slug')->value('');
 
             $form->textarea('note');
+
+            // $form->saving(function (Form $form) {
+
+            //     $form->model()->slug = @str_slug($form->model()->name);
+
+            // });
+
 
             $form->saved(function ($form) {
 
@@ -189,14 +207,12 @@ class EventAdminController extends Controller{
                 ]);
 
 
-
                 $campaign = new CampaignModel();
-                $campaign->name = 'Test';
-                $campaign->slug = 'test';
-                $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
-                $campaign->event_id = $form->model()->id;
-                $campaign->type_id = 1;
-                $campaign->save();
+                    $campaign->name = 'Test';
+                    // $campaign->slug = 'test';
+                    $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
+                $this->campaignRepository->create($campaign,$form->model()->id,1);
+
 
                 return redirect(route('events.manage',['eventid'=>$form->model()->id]));
 
@@ -211,17 +227,43 @@ class EventAdminController extends Controller{
 
 
 
-    public function manage($eventid){
+    public function manage($itemId){
 
         // Admin::css(asset('modules/form/css/editor.css'));
         // Admin::js(asset('modules/form/js/jquery.hotkeys.js'));
 
-        $item = EventModel::findOrFail($eventid);
+        $item = EventModel::findOrFail($itemId);
 
-        return Admin::content(function (Content $content) use($item,$eventid){
+        return Admin::content(function (Content $content) use($item,$itemId){
 
             $content->header($item->name);
             // $content->description('editando');
+
+
+
+
+            // $leadsRs =  DB::select("
+            //      select compute.date,
+            //             assign.role_id as role_id,
+            //             admin_roles.name as role_name,
+            //             sum(compute.hours) as total_hours
+            //      from compute, assign
+            //      inner join admin_roles on admin_roles.id = assign.role_id
+            //      where compute.assign_id = assign.id
+            //         and (assign.event_id in({$bindingsfamilyIds})
+            //         or assign.event_id in(select dd.id from event as dd where dd.parent_id= assign.event_id))
+            //         group by compute.date, role_id, role_name
+            //     ", $familyIds);
+
+
+            // $chronComputes = [];
+            // foreach($period as $date){
+            //     foreach ($roleList as $role) {
+            //         $chronComputes[$date->format("Y-m-d")][$role->id] = 0;
+            //     }
+            // }
+
+
 
             $content->row(
                 view('event::admin.manage', compact('item'))
@@ -230,6 +272,45 @@ class EventAdminController extends Controller{
         });
 
     }
+
+
+
+
+
+
+
+    protected function partialsCreate($parentId=0)
+    {
+
+        return view('event::admin.partials.form')->render();
+    }
+
+    protected function partialsSave(Request $request)
+    {
+
+        $item = new EventModel();
+
+        $item->name = $request->get("name");
+        $item->description = $request->get("description");
+        $item->slug = @str_slug($item->name);
+
+        $item->save();
+
+
+        $campaign = new CampaignModel();
+            $campaign->name = 'Test';
+            // $campaign->slug = 'test';
+            $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
+        $this->campaignRepository->create($campaign,$item->id,1);
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->id]),
+            'state' => '200'
+        ]);
+
+    }
+
+
 
 
 

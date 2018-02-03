@@ -22,10 +22,12 @@ use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\UserList\UserListModel;
+use App\Modules\UserList\UserListTypeModel;
 use App\Modules\UserField\UserFieldModel;
 use App\Modules\Lead\LeadModel;
 use App\Modules\Event\EventModel;
 
+use Illuminate\Support\MessageBag;
 
 
 class FormAdminController extends Controller{
@@ -74,12 +76,14 @@ class FormAdminController extends Controller{
 		return Admin::content(function (Content $content) use ($id) {
 
 
-            $item = FormModel::findOrFail($id);
+            // $item = FormModel::findOrFail($id);
 
-			$content->header($item->name);
+			// $content->header($item->name);
+            $content->header('Formulario');
 			$content->description('editando');
 
-			$content->body($this->form($item->event_id)->edit($id));
+            $content->body($this->form()->edit($id));
+			// $content->body($this->form($item->event_id)->edit($id));
 		});
 	}
 
@@ -91,15 +95,29 @@ class FormAdminController extends Controller{
 	public function create(Request $request)
     {
 
-        $eventid = $request->get('eventid') || 0;
+        if($request->has('event_id')){
+            $eventId = $request->get('event_id');
+        }
+        else{
+            $eventId = 0;
+        }
 
-		return Admin::content(function (Content $content) use($eventid) {
 
-			$content->header('Formulario');
-			$content->description('creando');
 
-			$content->body($this->form($eventid));
-		});
+        return Admin::content(function (Content $content) use($eventId) {
+
+        		if($eventId!=0){
+                      $event = EventModel::find($eventId);
+                      $content->header('Crear tarea para evente: ' . $event->name);
+                  }
+                  else{
+                     $content->header('Tareas');
+                     $content->description('creando');
+                  }
+
+                  $content->body($this->form($eventId));
+
+          });
 	}
 
 	/**
@@ -158,9 +176,10 @@ class FormAdminController extends Controller{
 	 *
 	 * @return Form
 	 */
-	protected function form($eventid = 0)
+	protected function form($eventId = 0)
 	{
-		return Admin::form(FormModel::class, function (Form $form) use($eventid){
+
+		return Admin::form(FormModel::class, function (Form $form) use($eventId){
 
 
             $form->disableReset();
@@ -170,20 +189,30 @@ class FormAdminController extends Controller{
                 // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
             });
 
-            // $form->display('id', 'ID');
+            // dd($eventId);
 
-            if($eventid!=0){
-                $event = EventModel::findOrFail($eventid);
-                $form->hidden('event_id')->value($eventid);
-                $form->display('Evento')->value($event->name);
+            if($eventId==0){
+
+                $form->select('event_id','Evento')->options(function ($id) {
+                    $event = EventModel::find($id);
+                    if ($event) {
+                        return [$event->id => $event->name];
+                    }
+                })->ajax('/admin/api/events');
+
             }
             else{
 
-                // var_dump($form->model());
+                $event = EventModel::findOrFail($eventId);
 
-                // $event = EventModel::findOrFail($eventid);
-                // $form->display('Evento')->value($event->name);
+                $form->hidden('event_id')->value($event->id);
+
+                $form->display('Evento')->value($event->name);
+
+
             }
+
+            $form->hidden('schema')->value("{}");
 
 			$form->text('name');
 			$form->text('slug');
@@ -221,6 +250,41 @@ class FormAdminController extends Controller{
 
 			// $form->display('created_at', 'Created At');
 			// $form->display('updated_at', 'Updated At');
+
+
+            $form->saved(function ($form){
+
+                $success = new MessageBag([
+                    'title'   => 'Formulario Creado',
+                    // 'message' => 'Feriados actualizados',
+                ]);
+
+
+                $event = EventModel::findOrFail($form->model()->event_id);
+
+               // CREO LISTA ASOCIADA
+
+               $userlist = new UserListModel();
+
+                   // $userlist->name = $item->name;
+                   $userlist->description = 'Lista creada para alojar las conversiones del formulario';
+
+                   $userlistType = UserListTypeModel::find(1);
+                   $userlist->type()->associate($userlistType);
+
+                   $userlist->form()->associate($form->model());
+
+                   $userlist->event()->associate($event);
+
+               $userlist->save();
+
+
+
+
+                return redirect(route('events.manage',['eventid' => $event->id]));
+
+            });
+
 
 		});
 	}

@@ -112,7 +112,6 @@ $(".{$this->getElementClass()}").select2({
     },
     cache: true
   },
-  minimumInputLength: 1,
   escapeMarkup: function (markup) {
       return markup;
   }

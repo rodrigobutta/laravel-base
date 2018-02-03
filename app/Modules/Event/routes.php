@@ -8,9 +8,13 @@ Route::group(['namespace' => '\App\Modules\Event'], function () {
         'prefix'        => config('admin.route.prefix')
     ], function (Router $router) {
 
-        $router->get('events/{eventid}/manage', ['as' => 'events.manage', 'uses' => 'EventAdminController@manage']);
+        // $router->resource('events', EventAdminController::class);
 
-        $router->resource('events', EventAdminController::class);
+        $router->get('events', ['as' => 'events.root', 'uses' => 'EventAdminController@index']);
+        $router->get('events/{itemId}', ['as' => 'events.manage', 'uses' => 'EventAdminController@manage']);
+
+        $router->get('events/partials/create', ['as' => 'events.partials.create', 'uses' => 'EventAdminController@partialsCreate']);
+        $router->post('events/partials/save', ['as' => 'events.partials.save', 'uses' => 'EventAdminController@partialsSave']);
 
     });
 

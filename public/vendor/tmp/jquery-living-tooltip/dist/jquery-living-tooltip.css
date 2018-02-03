@@ -1,0 +1,321 @@
+
+.living-tooltip-content {
+  display: none;
+}
+.living-tooltip-rtl {
+  direction: rtl;
+  text-align: right;
+}
+/*  webui popover  */
+.living-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  min-width: 50px;
+  min-height: 32px;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.living-tooltip.top,
+.living-tooltip.top-left,
+.living-tooltip.top-right {
+  margin-top: -10px;
+}
+.living-tooltip.right,
+.living-tooltip.right-top,
+.living-tooltip.right-bottom {
+  margin-left: 10px;
+}
+.living-tooltip.bottom,
+.living-tooltip.bottom-left,
+.living-tooltip.bottom-right {
+  margin-top: 10px;
+}
+.living-tooltip.left,
+.living-tooltip.left-top,
+.living-tooltip.left-bottom {
+  margin-left: -10px;
+}
+.living-tooltip.pop {
+  -webkit-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: transform 0.15s cubic-bezier(0.3, 0, 0, 1.5);
+  -o-transition: transform 0.15s cubic-bezier(0.3, 0, 0, 1.5);
+  transition: transform 0.15s cubic-bezier(0.3, 0, 0, 1.5);
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.living-tooltip.pop-out {
+  -webkit-transition-property: "opacity,transform";
+  -o-transition-property: "opacity,transform";
+  transition-property: "opacity,transform";
+  -webkit-transition: 0.15s linear;
+  -o-transition: 0.15s linear;
+  transition: 0.15s linear;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.living-tooltip.fade,
+.living-tooltip.fade-out {
+  -webkit-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.living-tooltip.out {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.living-tooltip.in {
+  -webkit-transform: none;
+  -o-transform: none;
+  transform: none;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.living-tooltip .living-tooltip-content {
+  padding: 9px 14px;
+  overflow: auto;
+  display: block;
+
+  min-width: 150px;
+    min-height: 70px;
+
+}
+.living-tooltip .living-tooltip-content > div:first-child {
+  width: 99%;
+}
+.living-tooltip-inner .close {
+  font-family: arial;
+  margin: 8px 10px 0 0;
+  float: right;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  color: #000000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+}
+.living-tooltip-inner .close:hover,
+.living-tooltip-inner .close:focus {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.living-tooltip-inner .close:after {
+  content: "\00D7";
+  width: 0.8em;
+  height: 0.8em;
+  padding: 4px;
+  position: relative;
+}
+.living-tooltip-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 18px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f2f2f2;
+  border-radius: 5px 5px 0 0;
+}
+.living-tooltip-content {
+  padding: 9px 14px;
+  overflow: auto;
+  display: none;
+}
+.living-tooltip-inverse {
+  background-color: #333333;
+  color: #eeeeee;
+}
+.living-tooltip-inverse .living-tooltip-title {
+  background: #333333;
+  border-bottom: 1px solid #3b3b3b;
+  color: #eeeeee;
+}
+.webui-no-padding .living-tooltip-content {
+  padding: 0;
+}
+.webui-no-padding .list-group-item {
+  border-right: none;
+  border-left: none;
+}
+.webui-no-padding .list-group-item:first-child {
+  border-top: 0;
+}
+.webui-no-padding .list-group-item:last-child {
+  border-bottom: 0;
+}
+.living-tooltip > .webui-arrow,
+.living-tooltip > .webui-arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.living-tooltip > .webui-arrow {
+  border-width: 11px;
+}
+.living-tooltip > .webui-arrow:after {
+  border-width: 10px;
+  content: "";
+}
+.living-tooltip.top > .webui-arrow,
+.living-tooltip.top-right > .webui-arrow,
+.living-tooltip.top-left > .webui-arrow {
+  bottom: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-top-color: #999999;
+  border-top-color: rgba(0, 0, 0, 0.25);
+  border-bottom-width: 0;
+}
+.living-tooltip.top > .webui-arrow:after,
+.living-tooltip.top-right > .webui-arrow:after,
+.living-tooltip.top-left > .webui-arrow:after {
+  content: " ";
+  bottom: 1px;
+  margin-left: -10px;
+  border-top-color: #ffffff;
+  border-bottom-width: 0;
+}
+.living-tooltip.right > .webui-arrow,
+.living-tooltip.right-top > .webui-arrow,
+.living-tooltip.right-bottom > .webui-arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-left-width: 0;
+  border-right-color: #999999;
+  border-right-color: rgba(0, 0, 0, 0.25);
+}
+.living-tooltip.right > .webui-arrow:after,
+.living-tooltip.right-top > .webui-arrow:after,
+.living-tooltip.right-bottom > .webui-arrow:after {
+  content: " ";
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: #ffffff;
+}
+.living-tooltip.bottom > .webui-arrow,
+.living-tooltip.bottom-right > .webui-arrow,
+.living-tooltip.bottom-left > .webui-arrow {
+  top: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-color: #999999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  border-top-width: 0;
+}
+.living-tooltip.bottom > .webui-arrow:after,
+.living-tooltip.bottom-right > .webui-arrow:after,
+.living-tooltip.bottom-left > .webui-arrow:after {
+  content: " ";
+  top: 1px;
+  margin-left: -10px;
+  border-bottom-color: #ffffff;
+  border-top-width: 0;
+}
+.living-tooltip.left > .webui-arrow,
+.living-tooltip.left-top > .webui-arrow,
+.living-tooltip.left-bottom > .webui-arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: #999999;
+  border-left-color: rgba(0, 0, 0, 0.25);
+}
+.living-tooltip.left > .webui-arrow:after,
+.living-tooltip.left-top > .webui-arrow:after,
+.living-tooltip.left-bottom > .webui-arrow:after {
+  content: " ";
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: #ffffff;
+  bottom: -10px;
+}
+.living-tooltip-inverse.top > .webui-arrow,
+.living-tooltip-inverse.top-left > .webui-arrow,
+.living-tooltip-inverse.top-right > .webui-arrow,
+.living-tooltip-inverse.top > .webui-arrow:after,
+.living-tooltip-inverse.top-left > .webui-arrow:after,
+.living-tooltip-inverse.top-right > .webui-arrow:after {
+  border-top-color: #333333;
+}
+.living-tooltip-inverse.right > .webui-arrow,
+.living-tooltip-inverse.right-top > .webui-arrow,
+.living-tooltip-inverse.right-bottom > .webui-arrow,
+.living-tooltip-inverse.right > .webui-arrow:after,
+.living-tooltip-inverse.right-top > .webui-arrow:after,
+.living-tooltip-inverse.right-bottom > .webui-arrow:after {
+  border-right-color: #333333;
+}
+.living-tooltip-inverse.bottom > .webui-arrow,
+.living-tooltip-inverse.bottom-left > .webui-arrow,
+.living-tooltip-inverse.bottom-right > .webui-arrow,
+.living-tooltip-inverse.bottom > .webui-arrow:after,
+.living-tooltip-inverse.bottom-left > .webui-arrow:after,
+.living-tooltip-inverse.bottom-right > .webui-arrow:after {
+  border-bottom-color: #333333;
+}
+.living-tooltip-inverse.left > .webui-arrow,
+.living-tooltip-inverse.left-top > .webui-arrow,
+.living-tooltip-inverse.left-bottom > .webui-arrow,
+.living-tooltip-inverse.left > .webui-arrow:after,
+.living-tooltip-inverse.left-top > .webui-arrow:after,
+.living-tooltip-inverse.left-bottom > .webui-arrow:after {
+  border-left-color: #333333;
+}
+
+.living-tooltip i.icon-refresh {
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin: 0px auto 0px -10px;
+    color: #cccccc;
+}
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.living-tooltip-backdrop {
+  background-color: rgba(0, 0, 0, 0.65);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+}
+.living-tooltip .dropdown-menu {
+  display: block;
+  position: relative;
+  top: 0;
+  border: none;
+  box-shadow: none;
+  float: none;
+}

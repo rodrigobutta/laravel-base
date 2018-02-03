@@ -2,8 +2,14 @@
 
 namespace App\Modules\Campaign;
 
+use App\Modules\Event\EventModel;
+
 use App\Modules\Campaign\CampaignModel;
 use App\Modules\Campaign\CampaignRepositoryInterface;
+
+use App\Modules\UserList\UserListModel;
+use App\Modules\UserList\UserListTypeModel;
+
 
 use App\Helpers\ResizeHelper;
 
@@ -21,50 +27,64 @@ class CampaignRepository implements CampaignRepositoryInterface
                                 )
     {
         $this->campaign = $campaign;
-
     }
+
 
     public function getById($id)
     {
-        // return $this->posts()->where('id', $id)->with('campaign', 'comments', 'comments.replies', 'favorites', 'info')->firstOrFail();
-        return $this->posts()->where('id', $id)->firstOrFail();
+        return $this->campaign->where('id', $id)->firstOrFail();
     }
 
 
     public function getBySlug($slug)
     {
-        return $this->posts()->where('slug', $slug)->firstOrFail();
-    }
-
-    private function posts(){
-
-        $posts = $this->campaign;
-
-        return $posts;
+        return $this->campaign->where('slug', $slug)->firstOrFail();
     }
 
 
-    public function getAll(){
-        $campaign = $this->posts()->orderBy('sort'); //->with('campaign', 'comments', 'favorites');
-        return $campaign->paginate(perPage());
+    public function create($item,$eventId,$typeId){
+
+        // $item->event_id = $eventId;
+        // $item->type_id = $typeId;
+
+        $event = EventModel::find($eventId);
+        $item->event()->associate($event);
+
+        $campaignType = CampaignTypeModel::find($typeId);
+        $item->type()->associate($campaignType);
+
+        // if(!$item->name){
+        //     $item->name = 'Todos';
+        // }
+
+        if(!isset($item->slug)){
+            $item->slug = @str_slug($item->name);
+        }
+
+        $item->save();
+
+
+        // CREO LISTA ASOCIADA
+
+        $userlist = new UserListModel();
+
+            // $userlist->name = $item->name;
+            $userlist->description = 'Lista creada para alojar las conversiones de la campaña';
+
+            $userlistType = UserListTypeModel::find(2);
+            $userlist->type()->associate($userlistType);
+
+            $userlist->campaign()->associate($item);
+
+            $userlist->event()->associate($event);
+
+        $userlist->save();
+
+
+
+
+        return $item;
     }
-
-
-    public function incrementViews($campaign)
-    {
-        $campaign->views = $campaign->views + 1;
-        $campaign->timestamps = false;
-        $campaign->save(['updated_at' => false]);
-
-        return $campaign;
-    }
-
-
-    public function search($search)
-    {
-        return null;
-    }
-
 
 
     public function delete($id){

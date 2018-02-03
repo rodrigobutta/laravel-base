@@ -83,6 +83,8 @@ function getFixedFieldsCollection(){
 
 
 
+
+
 // REB: http://laravel-tricks.com/tricks/using-bootstrap-error-classes-for-flash-message
 
   // |  #Usage in the controller
