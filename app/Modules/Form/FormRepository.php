@@ -36,6 +36,20 @@ class FormRepository implements FormRepositoryInterface
         return $this->posts()->where('slug', $slug)->with('event')->firstOrFail();
     }
 
+    public function getByComb($eventSlug,$formSlug)
+    {
+
+        return $this->posts()->with('event')
+                ->where('slug', $formSlug)
+                ->whereHas('event', function($query) use($eventSlug){
+                    $query->where('slug', '=', $eventSlug);
+                })
+                ->first();
+
+        // return $this->posts()->where('slug', $slug)->with('event')->firstOrFail();
+    }
+
+
 
 
     public function getAll(){

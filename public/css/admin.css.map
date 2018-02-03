@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "admin.css",
+	"sources": [
+		"../../resources/assets/sass/admin/admin.scss",
+		"../../resources/assets/sass/admin/_variables.scss",
+		"../../resources/assets/sass/admin/_events.scss"
+	],
+	"names": [],
+	"mappings": "AACA,OAAO,CAAC,kEAAI"
+}

@@ -49,6 +49,10 @@
     <script src="{{ admin_asset ("/vendor/laravel-admin/jquery-pjax/jquery.pjax.js") }}"></script>
     <script src="{{ admin_asset ("/vendor/laravel-admin/nprogress/nprogress.js") }}"></script>
 
+
+    {!! HTML::style('/css/admin.css') !!}
+
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!--[if lt IE 9]>

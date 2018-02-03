@@ -28,10 +28,10 @@ class AuthController extends Controller
             return redirect(config('admin.route.prefix'));
         }
 
-        // return view('admin::login');
+        return view('admin::login');
 
         // REB redirect automatico a google
-        return redirect(route('admin.auth.social.google'));
+        // return redirect(route('admin.auth.social.google'));
     }
 
     /**

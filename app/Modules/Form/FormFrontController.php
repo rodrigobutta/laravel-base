@@ -14,6 +14,10 @@ use MP;
 
 use App\Modules\Form\FormRepositoryInterface;
 use App\Modules\Lead\LeadRepositoryInterface;
+use App\Modules\Campaign\CampaignRepositoryInterface;
+
+
+use App\Modules\Campaign\CampaignModel;
 
 use App\Modules\UserField\UserFieldModel;
 
@@ -22,25 +26,31 @@ class FormFrontController extends Controller
 
     public function __construct(
             FormRepositoryInterface $form,
+            CampaignRepositoryInterface $campaign,
             LeadRepositoryInterface $lead
     )
     {
         // view()->addNamespace('form', app_path('Modules/form/views/'));
         $this->form = $form;
+        $this->campaign = $campaign;
         $this->lead = $lead;
     }
 
 
-    public function getView(Request $request, $formslug = null){
+    public function getView(Request $request, $eventSlug, $formSlug){
 
 
-        $c = explode('/', $formslug);
+        // $c = explode('/', $formSlug);
+
 
         try {
-            $item = $this->form->getBySlug(end($c));
+
+            $item = $this->form->getByComb($eventSlug,$formSlug);
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->route('home')->with('flashError', 'no encontrado');
         }
+
 
 
         $schema = json_decode($item->schema);
@@ -74,10 +84,12 @@ class FormFrontController extends Controller
 
 
 
-    public function pushLead(Request $request, $formslug = null){
+    public function pushLead(Request $request, $eventSlug, $formSlug){
 
         try {
-            $form = $this->form->getBySlug($formslug);
+
+            $form = $this->form->getByComb($eventSlug,$formSlug);
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'ERROR' => 'form not found'
@@ -87,7 +99,32 @@ class FormFrontController extends Controller
 
         $fields = $request->all();
 
-        $lead = $this->lead->put($fields,$form->id);
+
+        if($request->has('campaign')){
+
+            $campaign_slug = $request->get('campaign');
+
+
+            $campaign = CampaignModel::where('slug', $campaign_slug)->where('event_id', $form->event_id)->first();
+
+            // var_dump($campaign->id);
+            // exit();
+
+            if($campaign){
+                $lead = $this->lead->put($fields,$form->id, $campaign->id);
+            }
+            else{
+                $lead = $this->lead->put($fields,$form->id);
+            }
+
+
+        }
+        else{
+
+            $lead = $this->lead->put($fields,$form->id);
+
+        }
+
 
 
         $email_tmp = $request->get('userfield_1');

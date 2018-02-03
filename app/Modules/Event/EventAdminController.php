@@ -15,6 +15,10 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 
+use Illuminate\Support\MessageBag;
+
+
+
 use RodrigoButta\Admin\Form;
 use RodrigoButta\Admin\Grid;
 use RodrigoButta\Admin\Facades\Admin;
@@ -163,20 +167,42 @@ class EventAdminController extends Controller{
     {
         return Admin::form(EventModel::class, function (Form $form) {
 
-            $form->display('id', 'ID');
+
+           $form->disableReset();
+           $form->tools(function (Form\Tools $tools) {
+               // $tools->disableBackButton();
+               $tools->disableListButton();
+               // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+           });
+
 
             $form->text('name');
             $form->text('slug');
 
             $form->textarea('note');
 
-            // $form->hasMany('campaigns', function (Form\NestedForm $form) {
-            //     $form->text('name');
-            //     $form->text('slug');
-            // });
+            $form->saved(function ($form) {
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+                $success = new MessageBag([
+                    'title'   => 'Evento Creado',
+                    // 'message' => 'Feriados actualizados',
+                ]);
+
+
+
+                $campaign = new CampaignModel();
+                $campaign->name = 'Test';
+                $campaign->slug = 'test';
+                $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
+                $campaign->event_id = $form->model()->id;
+                $campaign->type_id = 1;
+                $campaign->save();
+
+                return redirect(route('events.manage',['eventid'=>$form->model()->id]));
+
+                // back()->with(compact('success'));
+            });
+
 
         });
     }

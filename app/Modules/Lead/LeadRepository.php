@@ -4,8 +4,8 @@ namespace App\Modules\Lead;
 
 use App\Modules\Lead\LeadModel;
 use App\Modules\Lead\LeadRepositoryInterface;
-
 use App\Modules\User\UserModel;
+use App\Modules\Form\FormModel;
 
 use App\Helpers\ResizeHelper;
 
@@ -28,16 +28,24 @@ class LeadRepository implements LeadRepositoryInterface
 
 
 
-     public function put($fields,$form_id){
+     public function put($fields, $formId, $campaignId = null){
 
         $data = serialize($fields);
 
         // SALVAR LEAD CON TODOS LOS CAMPOS ENCODEADOS
 
+
+        $form = FormModel::find($formId);
+
         $lead = new LeadModel();
 
-        $lead->form_id = $form_id;
-        $lead->data = $data;
+            $lead->event_id = $form->event_id;
+            $lead->form_id = $formId;
+            $lead->data = $data;
+
+            if($campaignId != null){
+                $lead->campaign_id = $campaignId;
+            }
 
         $lead->save();
 

@@ -20,6 +20,10 @@
     <![endif]-->
 
 
+    {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
+
+    {!! HTML::style('/css/app.css') !!}
+
 
     @yield('style')
 

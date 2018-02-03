@@ -71,7 +71,7 @@
 
 
 
-            <form method="POST" action="{!!route('form.view',['formslug'=>$item->slug])!!}" class="form-horizontal" id="form">
+            <form method="POST" class="form-horizontal" id="form">
 
                 @foreach($fields as $field)
 
@@ -201,20 +201,6 @@
 
 @section('extra-js')
 
-
-    {!! HTML::script('/vendor/jquery-validation/dist/jquery.validate.min.js') !!}
-    {!! HTML::script('/vendor/jquery-validation/src/localization/messages_es_AR.js') !!}
-    {!! HTML::script('/vendor/jquery-validation/dist/additional-methods.min.js') !!}
-
-    {!! HTML::script('/vendor/jquery-form/dist/jquery.form.min.js') !!}
-
-    {!! HTML::script('/vendor/sweetalert2/dist/sweetalert2.all.min.js') !!}
-    {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
-
-    {!! HTML::script('/vendor/jquery-mask-plugin/dist/jquery.mask.min.js') !!}
-
-
-    {!! HTML::style('/css/app.css') !!}
 
     <script>
 

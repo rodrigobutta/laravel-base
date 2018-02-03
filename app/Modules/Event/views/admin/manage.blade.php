@@ -51,6 +51,7 @@
                                   0
                               </td>
                               <td>
+                                  <a class="btn btn-success btn-sm"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Ver</a>
                                   <a class="btn btn-default btn-sm"  href="{{route('forms.edit', ['formid' => $f->id])}}">Configurar</a>
                                   <a class="btn btn-default btn-sm" href="{{route('forms.schema', ['formid' => $f->id])}}">Campos</a>
                                   <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm form-row-delete">Eliminar</a>

@@ -14,6 +14,8 @@ interface FormRepositoryInterface{
 
     public function getBySlug($slug);
 
+    public function getByComb($eventSlug,$formSlug);
+
     public function getAll();
 
     public function incrementViews($form);
