@@ -197,34 +197,12 @@ class EventAdminController extends Controller{
             $content->header($item->name);
             // $content->description('editando');
 
-
-
-
-            // $leadsRs =  DB::select("
-            //      select compute.date,
-            //             assign.role_id as role_id,
-            //             admin_roles.name as role_name,
-            //             sum(compute.hours) as total_hours
-            //      from compute, assign
-            //      inner join admin_roles on admin_roles.id = assign.role_id
-            //      where compute.assign_id = assign.id
-            //         and (assign.event_id in({$bindingsfamilyIds})
-            //         or assign.event_id in(select dd.id from event as dd where dd.parent_id= assign.event_id))
-            //         group by compute.date, role_id, role_name
-            //     ", $familyIds);
-
-
-            // $chronComputes = [];
-            // foreach($period as $date){
-            //     foreach ($roleList as $role) {
-            //         $chronComputes[$date->format("Y-m-d")][$role->id] = 0;
-            //     }
-            // }
-
-
+            $content->row(
+                view('event::admin.common', compact('item'))->render()
+            );
 
             $content->row(
-                view('event::admin.manage', compact('item'))
+                view('event::admin.manage', compact('item'))->render()
             );
 
         });
@@ -266,8 +244,7 @@ class EventAdminController extends Controller{
 
 
         $campaign = new CampaignModel();
-            $campaign->name = 'Test';
-            $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
+        $campaign->name = 'Pruebas de formulario';
         $this->campaignRepository->create($campaign,$item->id,1);
 
 

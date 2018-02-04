@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
 
-        <div class="box box-primary22">
+        <div class="box box-primary22 box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">Propiedades</h3>
                 <div class="box-tools pull-right">
@@ -25,7 +25,37 @@
         </div>
 
     </div>
+
+    <div class="col-md-6">
+
+        <div class="box box-primary22 box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Propiedades</h3>
+                <div class="box-tools pull-right">
+                  {{-- <span class="label label-danger">Algun alerta??</span> --}}
+                  {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> --}}
+                  {{-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> --}}
+                </div>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+
+              </dl>
+            </div>
+           {{--  <div class="box-footer">
+                <a href="#" class="btn btn-primary btn-sm btn-edit-event" data-id="{{$item->id}}" data-toggle="tooltip" title="Editar {{$item->name}}">
+                    <i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar
+                </a>
+            </div> --}}
+        </div>
+
+    </div>
+
+
 </div>
+
+
+
 
 <div class="row">
 
@@ -35,12 +65,6 @@
         <div class="box box-warning box-solid">
               <div class="box-header with-border">
                 <h3 class="box-title">Formularios</h3>
-
-              {{--   <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div> --}}
               </div>
 
               <div class="box-body">
@@ -49,10 +73,9 @@
                     <thead>
                     <tr>
                       <th>Nombre</th>
-                      {{-- <th>Código</th> --}}
                       <th>Listas de Usuarios</th>
                       <th>Visitas</th>
-                      <th>Registros</th>
+                      <th>Conversiones</th>
                       <th></th>
                     </tr>
                     </thead>
@@ -64,25 +87,22 @@
                               <td>
                                   <a href="pages/examples/invoice.html">{{$f->name}}</a>
                               </td>
-                             {{--  <td>
-                                  {{$f->slug}}
-                              </td> --}}
                               <td>
                                 @foreach($f->userlists as $l)
                                   <a href="{{route('userlists.edit', ['id' => $l->id])}}"><span class="label label-default">{{$l->name}}</span></a>
                                 @endforeach
                               </td>
                               <td>
-                                  0
+                                  {{$f->views}}
                               </td>
                               <td>
-                                  0
+                                  {{$f->leadsCount()}}
                               </td>
                               <td>
-                                  <a class="btn btn-success btn-sm"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Ver</a>
-                                  <a class="btn btn-default btn-sm"  href="{{route('forms.edit', ['formid' => $f->id])}}">Configurar</a>
-                                  <a class="btn btn-default btn-sm" href="{{route('forms.schema', ['formid' => $f->id])}}">Campos</a>
-                                  <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm form-row-delete">Eliminar</a>
+                                  <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Configurar</a>
+                                  <a class="btn btn-default btn-sm btn-flat" href="{{route('forms.schema', ['formid' => $f->id])}}">Campos</a>
+                                  <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a>
+                                  <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
                               </td>
 
                           </tr>
@@ -92,12 +112,11 @@
                     </tbody>
                   </table>
                 </div>
-
               </div>
 
               <div class="box-footer clearfix">
-                <a href="{{route('forms.create', ['event_id' => $item->id])}}" class="btn btn-sm btn-warning btn-flat pull-left">Nuevo Formulario</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a>
+                <a href="{{route('forms.create', ['event_id' => $item->id])}}" class="btn btn-default btn-flat"><i class="fa fa-list-alt"></i>&nbsp;Nuevo Formulario</a>
+                {{-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a> --}}
               </div>
 
         </div>
@@ -128,16 +147,16 @@
                   <table class="table no-margin">
                     <thead>
                     <tr>
-                      <th>Nombre</th>
-                      {{-- <th>Tipo</th> --}}
-                      {{-- <th>Código</th> --}}
-                      <th>Listas a enviar</th>
-                      <th>Formulario destino</th>
-                      <th>Estado</th>
-                      <th>Enviados</th>
-                      <th>Leidos</th>
-                      <th>Ingresados</th>
-                      <th>Registrados</th>
+                        <th>Tipo</th>
+                        <th>Nombre</th>
+                        <th>Listas a enviar</th>
+                        <th>Formulario destino</th>
+                        {{-- <th>Estado</th> --}}
+                        <th>Envios</th>
+                        <th>Lecturas</th>
+                        <th>Visitas</th>
+                        <th>Conversiones</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -145,26 +164,23 @@
                       @foreach($item->campaigns as $c)
 
                           <tr>
+                                <td>
+                                    <i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->type->name}}
+                                </td>
                               <td>
-                                  <a href="pages/examples/invoice.html"><i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->name}}</a>
+                                  <a href="pages/examples/invoice.html">{{$c->name}}</a>
                               </td>
-                             {{--  <td>
-                                  <i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->type->name}}
-                              </td> --}}
-                              {{-- <td>
-                                  {{$c->slug}}
-                              </td> --}}
                               <td>
                                 @foreach($c->userlists as $l)
                                   <span class="label label-default">{{$l->name}}</span>
                                 @endforeach
                               </td>
                               <td>
-                                  <span class="label label-warning">{{$c->getForm()->name}}</span>
+                                  <span class="label label-default">{{$c->getForm()->name}}</span>
                               </td>
-                              <td>
-                                  <span class="label label-primary">Enviada</span>
-                              </td>
+                              {{-- <td>
+                                  <span class="label label-default">Sin determinar</span>
+                              </td> --}}
                               <td class="text-center22">
                                   0
                                 </td>
@@ -172,10 +188,21 @@
                                   0
                               </td>
                                 <td>
-                                  0
+                                  {{$c->views}}
                               </td>
                                 <td>
-                                  0
+                                  {{$c->leadsCount()}}
+                              </td>
+                              <td>
+
+                                    @if($c->type_id!=1)
+
+                                        <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
+
+                                            <a href="#" class="btn btn-warning btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
+                                            <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Compartir</a>
+
+                                    @endif
                               </td>
 
                           </tr>
@@ -189,8 +216,9 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="{{route('campaigns.create', ['eventid' => $item->id])}}" class="btn btn-sm btn-info btn-flat pull-left">Nueva Campaña</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a>
+                <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="2"><i class="fa fa-facebook"></i>&nbsp;Nueva Campaña para Redes Sociales</a>
+                <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="3"><i class="fa fa-envelope"></i>&nbsp;Nueva Campaña por E-mail</a>
+                {{-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a> --}}
               </div>
 
         </div>
@@ -198,6 +226,9 @@
     </div>
 
 </div>
+
+
+
 
 
 
@@ -254,7 +285,7 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-left">Enviar Mail</a>
+                <a href="javascript:void(0)" class="btn btn-default btn-flat pull-left"><i class="fa fa-hand-lizard-o"></i>&nbsp;Nueva lista personalizada</a>
               </div>
 
         </div>

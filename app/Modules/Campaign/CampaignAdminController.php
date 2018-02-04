@@ -21,17 +21,21 @@ use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
+
 use App\Modules\User\UserListModel;
 use App\Modules\Event\EventModel;
+use App\Modules\Form\FormModel;
+use App\Modules\Campaign\CampaignRepositoryInterface;
 
 
 class CampaignAdminController extends Controller{
 
     use ResourceDispatcherTrait;
 
-    public function __construct(){
+    public function __construct(CampaignRepositoryInterface $c){
+         $this->campaignRepository = $c;
+     }
 
-    }
 
 
     /**
@@ -50,142 +54,122 @@ class CampaignAdminController extends Controller{
         });
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
 
-        // fix reb por resources que no interpretan bien el method del controller
-        if($id=="create"){
-            return $this->create();
-        }
+    // public function edit($id)
+    // {
 
-        return Admin::content(function (Content $content) use ($id) {
+    //     // fix reb por resources que no interpretan bien el method del controller
+    //     if($id=="create"){
+    //         return $this->create();
+    //     }
 
-            $content->header('campaña');
-            $content->description('editando');
+    //     return Admin::content(function (Content $content) use ($id) {
 
-            $content->body($this->form()->edit($id));
-        });
-    }
+    //         $content->header('campaña');
+    //         $content->description('editando');
 
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create(Request $request)
-    {
+    //         $content->body($this->form()->edit($id));
+    //     });
+    // }
 
-        $eventid = $request->get('eventid') || 0;
+    // public function create(Request $request)
+    // {
 
-        return Admin::content(function (Content $content) use($eventid) {
+    //     $eventid = $request->get('eventid') || 0;
 
-            $content->header('Campaña');
-            $content->description('creando');
+    //     return Admin::content(function (Content $content) use($eventid) {
 
-            $content->body($this->form($eventid));
-        });
-    }
+    //         $content->header('Campaña');
+    //         $content->description('creando');
 
-    /**
-     * Admin init page
-     *
-     * @return Grid
-     */
-    protected function list()
-    {
-        return Admin::grid(CampaignModel::class, function (Grid $grid) {
+    //         $content->body($this->form($eventid));
+    //     });
+    // }
 
-            $grid->id('ID');
+    // protected function list()
+    // {
+    //     return Admin::grid(CampaignModel::class, function (Grid $grid) {
 
-            $grid->column('name', 'Nombre');
-            $grid->column('slug', 'Slug');
+    //         $grid->id('ID');
 
-            $grid->event()->display(function ($event) {
+    //         $grid->column('name', 'Nombre');
+    //         $grid->column('slug', 'Slug');
 
-                if($event){
-                    return $event['name'];
-                }
-                return '';
+    //         $grid->event()->display(function ($event) {
 
-            });
+    //             if($event){
+    //                 return $event['name'];
+    //             }
+    //             return '';
 
-            $grid->note()->editable('textarea');
+    //         });
 
-            $published_states = [
-                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $grid->enabled()->switch($published_states);
+    //         $grid->note()->editable('textarea');
 
-            $grid->userlists()->display(function ($userlists) {
+    //         $published_states = [
+    //             'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+    //             'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+    //         ];
+    //         $grid->enabled()->switch($published_states);
 
-                $userlists = array_map(function ($userlist) {
-                    return "<span class='label label-primary'>{$userlist['name']}</span>";
-                }, $userlists);
+    //         $grid->userlists()->display(function ($userlists) {
 
-                return join('&nbsp;', $userlists);
-            });
+    //             $userlists = array_map(function ($userlist) {
+    //                 return "<span class='label label-primary'>{$userlist['name']}</span>";
+    //             }, $userlists);
 
-        });
-    }
+    //             return join('&nbsp;', $userlists);
+    //         });
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form($eventid = 0)
-    {
-        return Admin::form(CampaignModel::class, function (Form $form) use($eventid) {
+    //     });
+    // }
+
+    // protected function form($eventid = 0)
+    // {
+    //     return Admin::form(CampaignModel::class, function (Form $form) use($eventid) {
 
 
-            $form->disableReset();
-            $form->tools(function (Form\Tools $tools) {
-                // $tools->disableBackButton();
-                $tools->disableListButton();
-                // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
-            });
+    //         $form->disableReset();
+    //         $form->tools(function (Form\Tools $tools) {
+    //             // $tools->disableBackButton();
+    //             $tools->disableListButton();
+    //             // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+    //         });
 
-            // $form->display('id', 'ID');
+    //         // $form->display('id', 'ID');
 
-            if($eventid!=0){
+    //         if($eventid!=0){
 
-                $event = EventModel::findOrFail($eventid);
+    //             $event = EventModel::findOrFail($eventid);
 
 
-                $form->hidden('event_id')->value($eventid);
+    //             $form->hidden('event_id')->value($eventid);
 
-                $form->display('Evento')->value($event->name);
-            }
+    //             $form->display('Evento')->value($event->name);
+    //         }
 
 
 
-            $form->text('name');
-            $form->text('slug');
+    //         $form->text('name');
+    //         $form->text('slug');
 
 
 
-            $form->textarea('note');
+    //         $form->textarea('note');
 
-            $enabled_states = [
-                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $form->switch("enabled")->states($enabled_states);
+    //         $enabled_states = [
+    //             'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+    //             'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+    //         ];
+    //         $form->switch("enabled")->states($enabled_states);
 
-            $form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
+    //         $form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+    //         $form->display('created_at', 'Created At');
+    //         $form->display('updated_at', 'Updated At');
 
-        });
-    }
+    //     });
+    // }
 
 
 
@@ -236,6 +220,147 @@ class CampaignAdminController extends Controller{
     //         $content->body($this->form($eventid));
     //     });
     // }
+
+
+
+
+
+
+
+
+
+    protected function create($eventId=0,$typeId=1)
+    {
+
+        $item = new CampaignModel;
+        $item->id = 0;
+
+        $type = CampaignTypeModel::find($typeId);
+        $item->type()->associate($type);
+
+        $event = EventModel::find($eventId);
+
+        $item->event()->associate($event);
+
+        $forms = FormModel::where('event_id','=',$event->id);
+
+        return view('campaign::admin.form', compact('item', 'forms'))->render();
+    }
+
+
+    protected function edit($itemId)
+    {
+        $item = CampaignModel::firstOrCreate(['id' => $itemId]);
+
+        $forms = FormModel::where('event_id','=',$item->event->id)->get();
+
+        return view('campaign::admin.form', compact('item','forms'))->render();
+    }
+
+
+    protected function save(Request $request)
+    {
+        $id = $request->get("campaign_id");
+
+        if($id==0){
+
+            $item = new CampaignModel();
+            $item->name = $request->get("name");;
+            $item->form_id = $request->get("form_id");
+            $this->campaignRepository->create($item,$request->get("event_id"),$request->get("type_id"));
+
+        }
+        else{
+
+            $item = CampaignModel::findOrFail($id);
+            $item->form_id = $request->get("form_id");
+            $item->name = $request->get("name");
+            $item->slug = @str_slug($request->get("slug"));
+
+            $item->save();
+
+        }
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->event_id]),
+            'state' => '200'
+        ]);
+
+    }
+
+
+
+
+    protected function config($itemId)
+    {
+        $item = CampaignModel::firstOrCreate(['id' => $itemId]);
+
+        return view('campaign::admin.form-social-config', compact('item'))->render();
+    }
+
+
+    protected function configSave(Request $request)
+    {
+        $id = $request->get("campaign_id");
+
+        $item = CampaignModel::findOrFail($id);
+
+        $item->social_title = $request->get("social_title");
+        $item->social_description = $request->get("social_description");
+
+        $item->save();
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->event_id]),
+            'state' => '200'
+        ]);
+
+    }
+
+
+
+    protected function partialsDelete($itemId)
+    {
+        $item = CampaignModel::findOrFail($itemId);
+
+        if($this->campaignRepository->delete($itemId)){
+        // if($item->delete()){
+            $response = 'Eliminado';
+            $status = 'success';
+        }
+        else{
+            $response = 'Error al eliminar';
+            $status = 'danger';
+        }
+
+        return response()->json([
+            'message' => $response,
+            'status' => $status
+        ]);
+
+    }
+
+
+    protected function process($itemId)
+    {
+        $item = CampaignModel::findOrFail($itemId);
+
+
+        if($item->type_id==2){
+
+            // chequear que si no hay form definido, no se pueda generar link **********************************
+
+
+
+            return view('campaign::admin.form-social-process', compact('item'))->render();
+
+        }
+
+
+    }
+
+
+
 
 
 

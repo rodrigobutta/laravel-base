@@ -31,6 +31,13 @@ class FormModel extends \App\Models\Profiled
         return $this->hasMany(LeadListModel::class, 'form_id')->where('type_id','=',2)->first();;
     }
 
+    public function leadsCount()
+    {
+        return \DB::table("lead")
+        ->select(\DB::raw("COUNT(*) as count_row"))
+        ->where('form_id','=',$this->id)
+        ->pluck('count_row')->first();
+    }
 
 
     public function fullUserListsArray()

@@ -1,16 +1,15 @@
 @extends('front/master/index')
 
 @section('title')
-    {{$item->name}}
+    {!! $title !!}
 @overwrite
 
 @section('meta')
-    <meta name="description" content="{!! $item->getDescription() !!}">
-    <meta name="keywords" content="{!! $item->getKeywords() !!}">
-    <meta property="og:title" content="{!! str_replace('"', '', strip_tags($item->title)) !!} - {!! siteSettings('siteName') !!}"/>
+    <meta name="description" content="{!! $description !!}">
+    <meta property="og:title" content="{!! $title !!}"/>
     <meta property="og:url" content="{{ Request::url() }}"/>
-    <meta property="og:description" content="{!! str_replace('"', '', $item->getOgDescription()) !!}"/>
-    <meta property="og:image" content="{{ $item->getOgImage() }}"/>
+    <meta property="og:description" content="{!! $description !!}"/>
+    <meta property="og:image" content="{{ URL::to('/') }}/storage/admin/{!!$item->cover_image!!}"/>
 @overwrite
 
 @section('content')

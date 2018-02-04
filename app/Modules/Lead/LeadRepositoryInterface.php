@@ -10,18 +10,6 @@ use Str;
 
 interface LeadRepositoryInterface{
 
-    public function getById($id);
-
-    public function getBySlug($slug);
-
-    public function getAll();
-
-    public function incrementViews($lead);
-
-    public function search($input);
-
-    public function delete($id);
-
     public function put($fields,$form_id);
 
 }

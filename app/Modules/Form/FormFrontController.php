@@ -48,13 +48,9 @@ class FormFrontController extends Controller
 
         }
 
-
-
         $schema = json_decode($item->schema);
 
-
         $fields = $schema->fields;
-
 
         foreach ($fields as &$field) {
 
@@ -64,18 +60,47 @@ class FormFrontController extends Controller
 
                 $userfield = UserFieldModel::findOrFail($userfieldId);
 
-
                 $field->choices = $userfield->choices;
-
 
             }
         }
 
-        // \Event::fire('App\Events', $item);
 
-        $title = $item->title;
 
-        return view('form::front.view', compact('item', 'title', 'fields'));
+        // INCREMENTAR VIEWS
+        $item->views = $item->views + 1;
+        $item->timestamps = false;
+        $item->save(['updated_at' => false]);
+
+
+        // RECONOCIMIENTO DE CAMPAÑA PARA INCREMENTAR SUS VIEWS
+        if($request->has('campaign')){
+
+            $campaign_slug = $request->get('campaign');
+            $campaign = CampaignModel::where('slug', $campaign_slug)->where('event_id', $item->event_id)->first();
+
+            if($campaign){
+                $campaign->views = $campaign->views + 1;
+                $campaign->timestamps = false;
+                $campaign->save(['updated_at' => false]);
+            }
+
+            if($campaign_slug!='test'){
+                $title = $campaign->social_title;
+                $description = $campaign->social_description;
+            }
+            else{
+                $title = $item->event->name . ' - ' . $item->name . ' [' . $campaign->name . ']';
+                $description = '';
+            }
+
+        }
+        else{
+            $title = $item->event->name . ' - ' . $item->name;
+            $description = '';
+        }
+
+        return view('form::front.view', compact('item', 'title', 'description', 'fields'));
 
     }
 

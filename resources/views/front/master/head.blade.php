@@ -2,6 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="author" content="Rodrigo Butta" />
+    <meta property="fb:app_id" content="{{ env('FACEBOOK_ID') }}" />
     <base href="{{ URL::to('/') }}">
 
     @include('front.master.meta_default')
@@ -44,7 +45,6 @@
         }
     </style>
 
-
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,5 +55,26 @@
       ga('send', 'pageview');
 
     </script>
+
+    <script>
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '{{ env('FACEBOOK_ID') }}',
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+    </script>
+
 
 </head>

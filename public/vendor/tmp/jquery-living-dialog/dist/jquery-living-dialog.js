@@ -28,7 +28,8 @@
             error: null, //function(that, xhr, data){}
             opened: null, // el dialogo se abrio function(that, xhr){}
             closed: null, // el dialogo se cerro (por submit o por tocar en el overlay) function(that){}
-            submited: null // el formulario se envio y se recibio respuesta ajaxfunction(that, data, response){}
+            submited: null, // el formulario se envio y se recibio respuesta ajaxfunction(that, data, response){}
+            hideButtons: false
         };
 
         var _srcElements = [];
@@ -74,6 +75,14 @@
 
 
                       that.modalContent = that.$element.find(".modal-body");
+
+                    console.log(that.options.hideButtons);
+                      if(that.options.hideButtons){
+                        that.$element.find(".modal-footer .btn-primary").hide();
+                      }
+                      else{
+                        that.$element.find(".modal-footer .btn-primary").show();
+                      }
 
 
 

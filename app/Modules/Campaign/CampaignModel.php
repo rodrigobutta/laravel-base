@@ -58,4 +58,41 @@ class CampaignModel extends \App\Models\Profiled
 
     }
 
+
+    public function leadsCount()
+    {
+        return \DB::table("lead")
+        ->select(\DB::raw("COUNT(*) as count_row"))
+        ->where('campaign_id','=',$this->id)
+        ->pluck('count_row')->first();
+    }
+
+
+    public function link()
+    {
+
+        if($this->form){
+            return route('forms.view', ['eventSlug' => $this->event->slug, 'formSlug' => $this->form->slug, 'campaign' => $this->slug]);
+        }
+        else{
+            return '';
+        }
+
+    }
+
+
+    public function fullname()
+    {
+
+        return urlencode($this->event->name . ' - ' . $this->form->name);
+
+    }
+
+    public function encodedFullname()
+    {
+
+        return urlencode($this->event->name . ' - ' . $this->form->name);
+
+    }
+
 }
