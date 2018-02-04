@@ -10,9 +10,7 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index');
-
-    // $router->resource('users', UserController::class);
+    $router->get('/', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
 
 });
 

@@ -15,6 +15,7 @@ Route::group(['namespace' => '\App\Modules\Event'], function () {
 
         $router->get('events/partials/create', ['as' => 'events.partials.create', 'uses' => 'EventAdminController@partialsCreate']);
         $router->post('events/partials/save', ['as' => 'events.partials.save', 'uses' => 'EventAdminController@partialsSave']);
+        $router->put('events/partials/editable/save', ['as' => 'events.partials.editable.save', 'uses' => 'EventAdminController@partialsEditableSave']);
 
     });
 

@@ -1,3 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="box box-primary22">
+            <div class="box-header with-border">
+                <h3 class="box-title">Propiedades</h3>
+                <div class="box-tools pull-right">
+                  {{-- <span class="label label-danger">Algun alerta??</span> --}}
+                  {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> --}}
+                  {{-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> --}}
+                </div>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                    <dt>Nombre</dt><dd><a href='#' class='grid-event-editable-name' data-pk='{{ $item->id }}' data-value='{{ $item->name }}'>{{ $item->name }}</a></dd>
+                    <dt>Url</dt><dd><a href='#' class='grid-event-editable-slug' data-pk='{{ $item->id }}' data-value='{{ $item->slug }}'>{{ $item->slug }}</a></dd>
+                    {{-- <dt>Tipo</dt><dd><a href="#" class="grid-event-editable-type" data-type='select' data-pk='{{ $item->id }}' data-value='{{$item->type_id}}'></a></dd> --}}
+              </dl>
+            </div>
+           {{--  <div class="box-footer">
+                <a href="#" class="btn btn-primary btn-sm btn-edit-event" data-id="{{$item->id}}" data-toggle="tooltip" title="Editar {{$item->name}}">
+                    <i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar
+                </a>
+            </div> --}}
+        </div>
+
+    </div>
+</div>
 
 <div class="row">
 
@@ -22,7 +50,7 @@
                     <tr>
                       <th>Nombre</th>
                       {{-- <th>Código</th> --}}
-                      <th>Listas de destino</th>
+                      <th>Listas de Usuarios</th>
                       <th>Visitas</th>
                       <th>Registros</th>
                       <th></th>
@@ -205,14 +233,14 @@
                     </thead>
                     <tbody>
 
-                        @foreach($item->privateUserLists as $c)
+                        @foreach($item->leadlists as $c)
 
                             <tr>
                                 <td>
                                     <a href="pages/examples/invoice.html"><i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->fullname}}</a>
                                 </td>
                                   <td>
-                                    0
+                                    {{$c->leadsCount()}}
                                 </td>
 
                             </tr>
@@ -240,6 +268,12 @@
 
 
     $(function () {
+
+
+
+
+        eventBindEditable()
+
 
         $('.form-row-delete').unbind('click').click(function() {
 
@@ -279,6 +313,99 @@
 
 
     });
+
+
+
+
+
+
+
+
+    function eventBindEditable(){
+
+
+
+
+
+        $('.grid-event-editable-name').editable({
+            url: "{{ route('events.partials.editable.save') }}",
+            name:"name",
+            emptytext: 'Sin definir',
+            // preventSubmit: function(instance, pk, oldValue, newValue) {
+            //     // interrumpe el submit del valor, pide comentarios y si esta todo ok, sigue
+
+            //     var that = $(this);
+            //     actionslog({
+            //         id: pk,
+            //         slug: "event-name-change",
+            //         before: oldValue,
+            //         after: newValue
+            //     },
+            //     function(){
+            //         that.editable('resumeSubmit',instance, newValue);
+            //     },
+            //     function(){
+            //         that.editable('cancelSubmit',instance, 'comentario obligatorio');
+            //     });
+
+            // },
+            success: function(data) {
+                if (data.status) {
+                   toastr.success(data.message);
+                }
+                else{
+                   toastr.error(data.message);
+                }
+            },
+            error: function(data) {
+                console.log(data)
+                toastr.error('admin.error');
+            }
+        });
+
+
+        $('.grid-event-editable-slug').editable({
+            url: "{{ route('events.partials.editable.save') }}",
+            name:"slug",
+            emptytext: 'Sin definir',
+            preventSubmit: function(instance, pk, oldValue, newValue) {
+
+                newValue = newValue + 'xxx'
+
+                $(this).editable('resumeSubmit',instance, newValue);
+
+            },
+            validate: function(value) {
+                if($.trim(value) == '') {
+                    return 'Este campo es requerido';
+                }
+                if (/\s/.test(value)) {
+                    return 'El campo no puede contener espacios, separar utilizando "-".';
+                }
+                if (/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(value)==false) {
+                    return 'El campo tiene caracteres invalidos para una URL';
+                }
+            },
+            success: function(data) {
+                if (data.status) {
+                   toastr.success(data.message);
+                }
+                else{
+                   toastr.error(data.message);
+                }
+            },
+            error: function(data) {
+                console.log(data)
+                toastr.error('admin.error');
+            }
+        });
+
+
+
+
+    }
+
+
 
 
 

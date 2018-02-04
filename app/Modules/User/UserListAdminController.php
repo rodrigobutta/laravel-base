@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\UserList;
+namespace App\Modules\User;
 
 
 // TODO revisar que use no se usan

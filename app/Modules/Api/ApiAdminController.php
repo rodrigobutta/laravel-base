@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Modules\Event\EventModel;
-use App\Modules\UserList\UserListModel;
-use App\Modules\UserList\UserListTypeModel;
+use App\Modules\User\UserListModel;
+use App\Modules\User\UserListTypeModel;
 
 use RodrigoButta\Admin\Auth\Database\Administrator;
 use RodrigoButta\Admin\Auth\Database\Role;

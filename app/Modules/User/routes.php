@@ -13,6 +13,10 @@ Route::group(['namespace' => '\App\Modules\User'], function () {
 
         $router->resource('users', UserAdminController::class);
 
+
+        $router->resource('userlists', UserListAdminController::class);
+
+
     });
 
 });

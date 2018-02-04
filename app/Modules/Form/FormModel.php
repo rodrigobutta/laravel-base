@@ -4,8 +4,9 @@ namespace App\Modules\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-use App\Modules\UserList\UserListModel;
+use App\Modules\User\UserListModel;
 use App\Modules\Event\EventModel;
+use App\Modules\Lead\LeadListModel;
 
 use \App\Traits\MetaTrait;
 
@@ -24,6 +25,30 @@ class FormModel extends \App\Models\Profiled
     {
         return $this->belongsTo(EventModel::class, 'event_id');
     }
+
+    public function leadlist()
+    {
+        return $this->hasMany(LeadListModel::class, 'form_id')->where('type_id','=',2)->first();;
+    }
+
+
+
+    public function fullUserListsArray()
+    {
+
+        $res = [];
+
+
+        foreach ($this->userlists as $v) {
+            array_push($res, $v->id);
+        }
+
+        // $this->event->
+
+
+        return $res;
+    }
+
 
     // devuelve un array con la info de todos los campos del formulario
     // array (size=4)

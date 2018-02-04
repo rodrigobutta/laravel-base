@@ -6,6 +6,7 @@ use App\Modules\Lead\LeadModel;
 use App\Modules\Lead\LeadRepositoryInterface;
 use App\Modules\User\UserModel;
 use App\Modules\Form\FormModel;
+use App\Modules\Campaign\CampaignModel;
 
 use App\Helpers\ResizeHelper;
 
@@ -87,6 +88,10 @@ class LeadRepository implements LeadRepositoryInterface
         $user = UserModel::firstOrNew($key_fields);
 
 
+
+
+
+
         // armo mapa de campos a actualizar en el objeto
 
         foreach ($fields as $key => $value) {
@@ -117,6 +122,37 @@ class LeadRepository implements LeadRepositoryInterface
         $user->save();
 
         $user->fields()->sync($notfixed_fields);
+
+
+
+        // actualizo el lead indicando en que campo de usuario termino
+        $lead->user_id = $user->id;
+        $lead->save();
+
+
+        // AGREGAR USUARIO A TODAS LAS LISTAS DE USUARIO DEFINIDAS EN EL FORM
+
+        foreach ($form->userlists as $l) {
+            $user->userlists()->attach($l->id);
+        }
+
+
+
+
+        $lead->leadlists()->attach($form->event->leadlist()->id);
+
+        $lead->leadlists()->attach($form->leadlist()->id);
+
+        if($campaignId != null){
+
+            $campaign = CampaignModel::find($campaignId);
+
+            $lead->leadlists()->attach($campaign->leadlist()->id);
+
+        }
+
+
+
 
 
         return $lead;

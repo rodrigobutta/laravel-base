@@ -21,11 +21,13 @@ use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
-use App\Modules\UserList\UserListModel;
-use App\Modules\UserList\UserListTypeModel;
 use App\Modules\UserField\UserFieldModel;
 use App\Modules\Lead\LeadModel;
 use App\Modules\Event\EventModel;
+use App\Modules\User\UserListModel;
+use App\Modules\User\UserListTypeModel;
+use App\Modules\Lead\LeadListModel;
+use App\Modules\Lead\LeadListTypeModel;
 
 use Illuminate\Support\MessageBag;
 
@@ -108,7 +110,7 @@ class FormAdminController extends Controller{
 
         		if($eventId!=0){
                       $event = EventModel::find($eventId);
-                      $content->header('Crear tarea para evente: ' . $event->name);
+                      $content->header('Crear formulario para evento ' . $event->name);
                   }
                   else{
                      $content->header('Tareas');
@@ -240,11 +242,11 @@ class FormAdminController extends Controller{
 
             $form->divide();
 
-			// $enabled_states = [
-			// 	'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-			// 	'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-			// ];
-			// $form->switch("enabled")->states($enabled_states);
+			$enabled_states = [
+				'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+				'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+			];
+			$form->switch("enabled")->states($enabled_states)->value(1);
 
 			$form->multipleSelect('userlists','Listas de destino')->options(UserListModel::all()->pluck('name', 'id'));
 
@@ -254,29 +256,26 @@ class FormAdminController extends Controller{
 
             $form->saved(function ($form){
 
-                $success = new MessageBag([
-                    'title'   => 'Formulario Creado',
-                    // 'message' => 'Feriados actualizados',
-                ]);
+                // $success = new MessageBag([
+                //     'title'   => 'Formulario Creado',
+                //     // 'message' => 'Feriados actualizados',
+                // ]);
 
 
                 $event = EventModel::findOrFail($form->model()->event_id);
 
                // CREO LISTA ASOCIADA
 
-               $userlist = new UserListModel();
+               $leadlist = new LeadListModel();
 
-                   // $userlist->name = $item->name;
-                   $userlist->description = 'Lista creada para alojar las conversiones del formulario';
+                   $leadlistType = LeadListTypeModel::find(2);
+                   $leadlist->type()->associate($leadlistType);
 
-                   $userlistType = UserListTypeModel::find(1);
-                   $userlist->type()->associate($userlistType);
+                   $leadlist->form()->associate($form->model());
 
-                   $userlist->form()->associate($form->model());
+                   $leadlist->event()->associate($event);
 
-                   $userlist->event()->associate($event);
-
-               $userlist->save();
+               $leadlist->save();
 
 
 

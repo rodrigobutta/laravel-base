@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\UserList;
+namespace App\Modules\User;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

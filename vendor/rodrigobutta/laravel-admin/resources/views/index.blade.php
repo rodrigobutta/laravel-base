@@ -89,6 +89,9 @@
     {!! HTML::script('vendor/bootstrap-daterangepicker/daterangepicker.js') !!}
     {!! HTML::style('vendor/bootstrap-daterangepicker/daterangepicker.css') !!}
 
+    {!! HTML::script('vendor/toastr/toastr.min.js') !!}
+    {!! HTML::style('vendor/toastr/toastr.min.css') !!}
+
 
 
     {!! HTML::script('vendor/tmp/jquery-living-gantt/dist/jquery-living-gantt.js') !!}
@@ -149,6 +152,33 @@
 <script src="{{ admin_asset ("/vendor/laravel-admin/sweetalert/dist/sweetalert.min.js") }}"></script>
 {!! Admin::js() !!}
 <script src="{{ admin_asset ("/vendor/laravel-admin/laravel-admin/laravel-admin.js") }}"></script>
+
+@if(Session::has('flashSuccess'))
+    <script>
+        $(document).ready(function() {
+            toastr["success"]('{{ Session::get('flashSuccess') }}');
+        });
+    </script>
+@endif
+
+@if(Session::has('flashError'))
+    <script>
+        $(document).ready(function() {
+            toastr["error"]('{{ Session::get('flashError') }}');
+        });
+    </script>
+@endif
+
+@if(Session::has('errors'))
+    <script>
+        $(document).ready(function() {
+            toastr["error"]('{{ Session::get('errors')->first() }}');
+        });
+    </script>
+@endif
+
+
+
 
 </body>
 </html>

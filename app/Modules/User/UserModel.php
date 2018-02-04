@@ -4,7 +4,7 @@ namespace App\Modules\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-use App\Modules\UserList\UserListModel;
+use App\Modules\User\UserListModel;
 use App\Modules\UserField\UserFieldModel;
 use App\Modules\UserField\UserFieldChoiceModel;
 

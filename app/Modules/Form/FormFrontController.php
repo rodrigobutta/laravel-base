@@ -17,6 +17,8 @@ use App\Modules\Lead\LeadRepositoryInterface;
 use App\Modules\Campaign\CampaignRepositoryInterface;
 
 
+use Illuminate\Support\MessageBag;
+
 use App\Modules\Campaign\CampaignModel;
 
 use App\Modules\UserField\UserFieldModel;
@@ -40,15 +42,10 @@ class FormFrontController extends Controller
     public function getView(Request $request, $eventSlug, $formSlug){
 
 
-        // $c = explode('/', $formSlug);
+        if(!$item = $this->form->getByComb($eventSlug,$formSlug)){
 
+            return redirect()->route('home')->with('flashError', 'Formulario no activo');
 
-        try {
-
-            $item = $this->form->getByComb($eventSlug,$formSlug);
-
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return redirect()->route('home')->with('flashError', 'no encontrado');
         }
 
 

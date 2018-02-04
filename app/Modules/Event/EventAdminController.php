@@ -6,18 +6,12 @@ use Cache;
 use App\Models\Profile;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
-
 use Symfony\Component\HttpFoundation\Response;
-
-
 use Illuminate\Support\MessageBag;
-
-
 
 use RodrigoButta\Admin\Form;
 use RodrigoButta\Admin\Grid;
@@ -29,10 +23,9 @@ use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 use App\Modules\Campaign\CampaignModel;
 use App\Modules\Campaign\CampaignRepositoryInterface;
-
 use App\Modules\Form\FormModel;
-
-
+use App\Modules\Lead\LeadListModel;
+use App\Modules\Lead\LeadListTypeModel;
 
 use App\Admin\Extensions\Tools\ReleasePost;
 use App\Admin\Extensions\Tools\UserGender;
@@ -47,12 +40,6 @@ class EventAdminController extends Controller{
      }
 
 
-
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
     public function index()
     {
 
@@ -71,157 +58,128 @@ class EventAdminController extends Controller{
                 view('event::admin.navigator', compact('items'))->render()
             );
 
-
         });
 
-
-
-        // return Admin::content(function (Content $content) {
-
-        //     $content->header('Eventos');
-        //     $content->description('listado');
-
-        //     $content->body($this->list());
-        // });
     }
 
 
 
 
-    public function edit($id)
-    {
+    // public function edit($id)
+    // {
 
-        // fix reb por resources que no interpretan bien el method del controller
-        if($id=="create"){
-            return $this->create();
-        }
+    //     // fix reb por resources que no interpretan bien el method del controller
+    //     if($id=="create"){
+    //         return $this->create();
+    //     }
 
-        return Admin::content(function (Content $content) use ($id) {
+    //     return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('evento');
-            $content->description('editando');
+    //         $content->header('evento');
+    //         $content->description('editando');
 
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-
-    public function create()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Evento');
-            $content->description('creando');
-
-            $content->body($this->form());
-        });
-    }
+    //         $content->body($this->form()->edit($id));
+    //     });
+    // }
 
 
-    protected function list()
-    {
-        return Admin::grid(EventModel::class, function (Grid $grid) {
+    // public function create()
+    // {
+    //     return Admin::content(function (Content $content) {
 
-            // $grid->id('ID');
+    //         $content->header('Evento');
+    //         $content->description('creando');
 
-            $grid->disableExport();
-            $grid->disablePagination();
-            $grid->disableRowSelector();
-
-            $grid->filter(function($filter){
-                $filter->disableIdFilter();
-                // $filter->equal('column')->placeholder('Please input...');
-                $filter->like('name', 'Nombre');
-            });
+    //         $content->body($this->form());
+    //     });
+    // }
 
 
+    // protected function list()
+    // {
+    //     return Admin::grid(EventModel::class, function (Grid $grid) {
 
-            // $grid->column('name', 'Nombre');
+    //         // $grid->id('ID');
 
+    //         $grid->disableExport();
+    //         $grid->disablePagination();
+    //         $grid->disableRowSelector();
 
-            $grid->column('name',' ')->display(function () {
-                return '<a href="' . route('events.manage', ['itemId' => $this->id]) . '">' . $this->name . '</a>';
-            });
-
-            // $grid->note()->editable('textarea');
-
-            // $grid->campaigns()->display(function ($campaigns) {
-
-            //     $campaigns = array_map(function ($campaign) {
-            //         return "<span class='label label-primary'>{$campaign['name']}</span>";
-            //     }, $campaigns);
-
-            //     return join('&nbsp;', $campaigns);
-            // });
-
-            // $grid->forms()->display(function ($forms) {
-
-            //     $forms = array_map(function ($form) {
-            //         return "<span class='label label-primary'>{$form['name']}</span>";
-            //     }, $forms);
-
-            //     return join('&nbsp;', $forms);
-            // });
-
-            // $grid->actions(function ($actions) {
-
-            //     $actions->prepend('<a href="'.route('events.manage', ['itemId' => $actions->row->id]).'"><i class="fa fa-cog"></i></a>');
-
-            // });
-
-        });
-    }
-
-    protected function form()
-    {
-        return Admin::form(EventModel::class, function (Form $form) {
+    //         $grid->filter(function($filter){
+    //             $filter->disableIdFilter();
+    //             // $filter->equal('column')->placeholder('Please input...');
+    //             $filter->like('name', 'Nombre');
+    //         });
 
 
-           $form->disableReset();
-           $form->tools(function (Form\Tools $tools) {
-               // $tools->disableBackButton();
-               $tools->disableListButton();
-               // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
-           });
+    //         $grid->column('name',' ')->display(function () {
+    //             return '<a href="' . route('events.manage', ['itemId' => $this->id]) . '">' . $this->name . '</a>';
+    //         });
 
 
-            $form->text('name');
-            // $form->text('slug');
+    //     });
+    // }
 
-            $form->text('slug')->value('');
-
-            $form->textarea('note');
-
-            // $form->saving(function (Form $form) {
-
-            //     $form->model()->slug = @str_slug($form->model()->name);
-
-            // });
+    // protected function form()
+    // {
+    //     return Admin::form(EventModel::class, function (Form $form) {
 
 
-            $form->saved(function ($form) {
-
-                $success = new MessageBag([
-                    'title'   => 'Evento Creado',
-                    // 'message' => 'Feriados actualizados',
-                ]);
-
-
-                $campaign = new CampaignModel();
-                    $campaign->name = 'Test';
-                    // $campaign->slug = 'test';
-                    $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
-                $this->campaignRepository->create($campaign,$form->model()->id,1);
+    //        $form->disableReset();
+    //        $form->tools(function (Form\Tools $tools) {
+    //            // $tools->disableBackButton();
+    //            $tools->disableListButton();
+    //            // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+    //        });
 
 
-                return redirect(route('events.manage',['eventid'=>$form->model()->id]));
+    //         $form->text('name');
+    //         // $form->text('slug');
 
-                // back()->with(compact('success'));
-            });
+    //         $form->text('slug')->value('');
+
+    //         $form->textarea('note');
+
+    //         // $form->saving(function (Form $form) {
+
+    //         //     $form->model()->slug = @str_slug($form->model()->name);
+
+    //         // });
 
 
-        });
-    }
+    //         $form->saved(function ($form) {
+
+    //             $success = new MessageBag([
+    //                 'title'   => 'Evento Creado',
+    //                 // 'message' => 'Feriados actualizados',
+    //             ]);
+
+
+    //             $leadlist = new LeadListModel();
+
+    //                 $leadlistType = LeadListTypeModel::find(1);
+    //                 $leadlist->type()->associate($leadlistType);
+
+    //                 $leadlist->event()->associate($event);
+
+    //             $leadlist->save();
+
+
+    //             $campaign = new CampaignModel();
+    //                 $campaign->name = 'Test';
+    //                 // $campaign->slug = 'test';
+    //                 $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
+    //             $this->campaignRepository->create($campaign,$form->model()->id,1);
+
+
+    //             return redirect(route('events.manage',['eventid'=>$form->model()->id]));
+
+    //             // back()->with(compact('success'));
+    //         });
+
+
+    //     });
+    // }
 
 
 
@@ -297,11 +255,21 @@ class EventAdminController extends Controller{
         $item->save();
 
 
+        $leadlist = new LeadListModel();
+
+            $leadlistType = LeadListTypeModel::find(1);
+            $leadlist->type()->associate($leadlistType);
+
+            $leadlist->event()->associate($item);
+
+        $leadlist->save();
+
+
         $campaign = new CampaignModel();
             $campaign->name = 'Test';
-            // $campaign->slug = 'test';
             $campaign->note = 'Campaña creada automáticamente con el evento para agrupar las pruebas de los distintos formularios';
         $this->campaignRepository->create($campaign,$item->id,1);
+
 
         return response()->json([
             'route' => route('events.manage', ['itemId' => $item->id]),
@@ -310,6 +278,25 @@ class EventAdminController extends Controller{
 
     }
 
+
+
+
+    protected function partialsEditableSave(Request $request)
+    {
+
+        $item = EventModel::find($request->get("pk"));
+
+        $item{$request->get("name")} = $request->get("value");
+
+        $item->save();
+
+        return response()->json([
+            'message' => 'Cambios guardados!',
+            'status' => 'success',
+            'element' => $item
+        ]);
+
+    }
 
 
 

@@ -7,8 +7,11 @@ use App\Modules\Event\EventModel;
 use App\Modules\Campaign\CampaignModel;
 use App\Modules\Campaign\CampaignRepositoryInterface;
 
-use App\Modules\UserList\UserListModel;
-use App\Modules\UserList\UserListTypeModel;
+use App\Modules\User\UserListModel;
+use App\Modules\User\UserListTypeModel;
+
+use App\Modules\Lead\LeadListModel;
+use App\Modules\Lead\LeadListTypeModel;
 
 
 use App\Helpers\ResizeHelper;
@@ -66,19 +69,16 @@ class CampaignRepository implements CampaignRepositoryInterface
 
         // CREO LISTA ASOCIADA
 
-        $userlist = new UserListModel();
+        $leadlist = new LeadListModel();
 
-            // $userlist->name = $item->name;
-            $userlist->description = 'Lista creada para alojar las conversiones de la campaña';
+            $leadlistType = LeadListTypeModel::find(3);
+            $leadlist->type()->associate($leadlistType);
 
-            $userlistType = UserListTypeModel::find(2);
-            $userlist->type()->associate($userlistType);
+            $leadlist->campaign()->associate($item);
 
-            $userlist->campaign()->associate($item);
+            $leadlist->event()->associate($event);
 
-            $userlist->event()->associate($event);
-
-        $userlist->save();
+        $leadlist->save();
 
 
 

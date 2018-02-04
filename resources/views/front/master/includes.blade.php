@@ -1,11 +1,14 @@
-{{--     {!! HTML::style('resources/assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css') !!}
+    {{-- {!! HTML::style('resources/assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css') !!}
     {!! HTML::style('public/css/common.css') !!}
     {!! HTML::style('public/css/frontend.css') !!}
     {!! HTML::style('public/css/font-awesome.min.css') !!}
     <!--[if IE]>
        {!! HTML::style('public/css/explorer.css') !!}
     <![endif]-->
-    {!! HTML::style('resources/assets/vendor/toastr/toastr.min.css') !!} --}}
+     --}}
+
+    {!! HTML::script('/vendor/toastr/toastr.min.js') !!}
+    {!! HTML::style('/vendor/toastr/toastr.min.css') !!}
 
 
 

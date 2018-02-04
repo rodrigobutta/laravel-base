@@ -39,14 +39,19 @@ class FormRepository implements FormRepositoryInterface
     public function getByComb($eventSlug,$formSlug)
     {
 
-        return $this->posts()->with('event')
+        try {
+
+            return $this->posts()->with('event')
                 ->where('slug', $formSlug)
                 ->whereHas('event', function($query) use($eventSlug){
                     $query->where('slug', '=', $eventSlug);
                 })
                 ->first();
 
-        // return $this->posts()->where('slug', $slug)->with('event')->firstOrFail();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return false;
+        }
+
     }
 
 

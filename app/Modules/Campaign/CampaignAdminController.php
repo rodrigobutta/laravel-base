@@ -21,7 +21,7 @@ use RodrigoButta\Admin\Facades\Admin;
 use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
-use App\Modules\UserList\UserListModel;
+use App\Modules\User\UserListModel;
 use App\Modules\Event\EventModel;
 
 
