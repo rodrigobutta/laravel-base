@@ -90,7 +90,7 @@
 
 	<form  class="form-stacked extra-settings" data-bind="submit: $.noop">
 
-		<div class="form-group">
+	{{-- 	<div class="form-group">
 			<label class="control-label">Display Name (shown publicly)</label>
 			<input class="form-control" name="name" data-bind="value: name">
 		</div>
@@ -98,7 +98,7 @@
 		<div class="form-group">
 			<label class="control-label">Description</label>
 			<textarea class="form-control" name="description"  data-bind="value: description"></textarea>
-		</div>
+		</div> --}}
 	{{-- 	<div class="form-group">
 			<label class="control-label">
 				<input type="checkbox" name="hide_intro" data-bind="checked: hide_intro">
@@ -160,11 +160,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="form-group">
+	{{-- <div class="form-group">
 		<label class="control-label">Submit Button Font Color22222</label><br />
 		<input class="form-control" name="button_font_color" value="white">
-	</div>
-	<div class="row">
+	</div> --}}
+	{{-- <div class="row">
 		<div class="form-group col-sm-6">
 			<label class="control-label">Submit Button Size</label>
 			<select  class="form-control" name="button_size">
@@ -181,7 +181,7 @@
 				<option value="outline" >Outline</option>
 			</select>
 		</div>
-	</div>
+	</div> --}}
 	<div class="form-group">
 		<label class="control-label">Label Orientation</label>
 		<select  class="form-control" name="label_orientation">
@@ -189,14 +189,14 @@
 			<option value="horizontal" >Horizontal (Labels left of inputs)</option>
 		</select>
 	</div>
-	<div class="form-group">
+	{{-- <div class="form-group">
 		<label class="control-label">Input Corner Style</label>
 		<select  class="form-control" name="corner_style">
 			<option value="square" >Square</option>
 			<option value="round" selected>Rounded (a bit)</option>
 			<option value="circle" >Round (a lot)</option>
 		</select>
-	</div>
+	</div> --}}
 	<div class="form-group">
 		<label class="control-label">Input Size</label>
 		<select  class="form-control" name="input_size">
@@ -205,7 +205,7 @@
 			<option value="large" >Large</option>
 		</select>
 	</div>
-
+{{--
 	<div class="form-group">
 		<div class="row">
 			<div class="col-sm-12">
@@ -226,7 +226,7 @@
 			</div>
 		</div>
 	</div>
-
+ --}}
 	<div class="row">
 		<div class="form-group col-sm-6">
 			<label class="control-label">Prepend/Append Color</label><br />
@@ -238,12 +238,12 @@
 		</div>
 	</div>
 
-	<div class="row">
+	{{-- <div class="row">
 		<div class="form-group col-sm-12">
 			<label class="control-label">Extra JavaScript/CSS</label>
 			<textarea class="form-control" name="extra_js_css"></textarea>
 		</div>
-	</div>
+	</div> --}}
 
 </form>
 
@@ -519,9 +519,37 @@
 
 
 
+{!! HTML::style('modules/form/css/editor.css') !!}
+
+{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css') !!}
+{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js') !!}
+{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-es.min.js') !!}
+
+{!! HTML::script('modules/form/js/jquery.hotkeys.js') !!}
+
+{!! HTML::script('modules/form/js/knockout-3.4.2.js') !!}
+{!! HTML::script('modules/form/js/knockout.mapping-latest.js') !!}
+{!! HTML::script('modules/form/js/knockout-sortable.js') !!}
+
+{!! HTML::script('modules/form/js/editor_custom.js') !!}
+{!! HTML::script('modules/form/js/builder.js') !!}
 
 
-<script type="text/javascript">
+
+
+<script type="text/javascript" data-exec-on-popstate>
+
+    $(document).on('pjax:complete', function() {
+      console.log('3333')
+    });
+
+    $(function () {
+
+
+        console.log('carga222')
+
+    });
+
 
 	(function($){
 	   $.fn.innerText = function(msg) {
@@ -550,6 +578,7 @@
 
 	$( document ).ready(function() {
 
+        console.log('carga???')
 
 		var form_settings_pane=$("a[href='#form-settings-pane']");
 		form_settings_pane.click(function(){

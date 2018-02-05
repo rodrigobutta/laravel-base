@@ -301,8 +301,8 @@ var FormViewModel = function(data) {
 		}
 	};
 	this.counter=initial_form.counter;
-	this.name = ko.observable("Untitled");
-	this.description = ko.observable("");
+	// this.name = ko.observable("Untitled");
+	// this.description = ko.observable("");
 	this.fields = ko.observableArray([]);
 	ko.mapping.fromJS(data, mapping, this);
 
@@ -369,10 +369,10 @@ FormViewModel.prototype.toJSON = function() {
 		if (ko.utils.unwrapObservable(this.counter)>cc){var cc_use=ko.utils.unwrapObservable(this.counter)}else{var cc_use=cc}
 
 			var obj = {
-				name: ko.utils.unwrapObservable(this.name),
-				nickname: ko.utils.unwrapObservable(this.nickname),
+				// name: ko.utils.unwrapObservable(this.name),
+				// nickname: ko.utils.unwrapObservable(this.nickname),
 				recipient_email: ko.utils.unwrapObservable(this.recipient_email),
-				description: ko.utils.unwrapObservable(this.description),
+				// description: ko.utils.unwrapObservable(this.description),
 				font_size: ko.utils.unwrapObservable(this.font_size),
 				font_family: ko.utils.unwrapObservable(this.font_family),
 				hide_intro: ko.utils.unwrapObservable(this.hide_intro),

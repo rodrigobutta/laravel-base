@@ -100,7 +100,7 @@
                               </td>
                               <td class="text-right">
                                   <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Editar</a>
-                                  <a class="btn btn-default btn-sm btn-flat" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
+                                  <a class="btn btn-default btn-sm btn-flat reload" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
                                   <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
                                   <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a>
                               </td>
@@ -134,12 +134,6 @@
         <div class="box box-info box-solid">
               <div class="box-header with-border">
                 <h3 class="box-title">Campañas</h3>
-
-              {{--   <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div> --}}
               </div>
 
               <div class="box-body">
@@ -223,10 +217,6 @@
                       <li class="divider"></li>
                       <li><a href="#">Otro tipo..</a></li>
                     </ul>
-
-                {{-- <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="2"><i class="fa fa-facebook"></i>&nbsp;Nueva Campaña para Redes Sociales</a> --}}
-                {{-- <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="3"><i class="fa fa-envelope"></i>&nbsp;Nueva Campaña por E-mail</a> --}}
-                {{-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a> --}}
               </div>
 
         </div>
@@ -276,7 +266,7 @@
                                 <td class="text-right">
                                     @if(!$l->isTest())
                                         <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
-                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar</a>
+                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
                                     @endif
                                 </td>
 
@@ -305,7 +295,6 @@
 
 
     $(function () {
-
 
         bindButtons()
 
