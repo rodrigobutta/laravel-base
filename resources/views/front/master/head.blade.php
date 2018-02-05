@@ -20,8 +20,11 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-
+    {{-- {!! HTML::style('http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css') !!} --}}
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css') !!}
     {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
+    {!! HTML::style('/vendor/toastr/toastr.min.css') !!}
+
 
     {!! HTML::style('/css/app.css') !!}
 

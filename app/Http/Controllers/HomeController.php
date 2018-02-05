@@ -34,12 +34,12 @@ class HomeController extends Controller{
     // root publico. Si está logueado, voy al admin de una
     public function index(){
 
-        if(Auth::guard('admin')->check()){
+        // if(Auth::guard('admin')->check()){
             return redirect(route('admin.home'));
-        }
-        else{
-            return view('welcome');
-        }
+        // }
+        // else{
+            // return view('welcome');
+        // }
 
     }
 

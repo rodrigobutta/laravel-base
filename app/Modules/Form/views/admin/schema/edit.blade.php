@@ -105,106 +105,104 @@
 				<span>Hide display name and description?</span>
 			</label>
 		</div> --}}
-		<div class="form-group">
-			<label class="control-label">Font Size</label>
-			<select class="form-control" name="font_size" >
-				<option value="12" >12</option>
-				<option value="14" selected>14</option>
-				<option value="16" >16</option>
-				<option value="18" >18</option>
-			</select>
-		</div>
 
-		<div class="form-group">
-			<label class="control-label">Font Family</label>
-			<select class="form-control" name="font_family">
-				<option value='Arial, Helvetica, sans-serif'selected>Arial, Helvetica, sans-serif</option>
-				<option value='Georgia, serif' >Georgia, serif</option>
-				<option value='"Palatino Linotype", "Book Antiqua", Palatino, serif' >"Palatino Linotype", "Book Antiqua", Palatino, serif</option>
-				<option value='"Arial Black", Gadget, sans-serif' >"Arial Black", Gadget, sans-serif</option>
-				<option value='"Comic Sans MS", cursive, sans-serif' >"Comic Sans MS", cursive, sans-serif</option>
-				<option value='Impact, Charcoal, sans-serif' >Impact, Charcoal, sans-serif</option>
-				<option value='"Lucida Sans Unicode", "Lucida Grande", sans-serif' >"Lucida Sans Unicode", "Lucida Grande", sans-serif</option>
-				<option value='Tahoma, Geneva, sans-serif' >Tahoma, Geneva, sans-serif</option>
-				<option value='"Courier New", Courier, monospace' >"Courier New", Courier, monospace</option>
-				<option value='"Lucida Console", Monaco, monospace' >"Lucida Console", Monaco, monospace</option>
-			</select>
-		</div>
-		<div class="form-group">
-			<label class="control-label">Font Color (labels)</label><br />
-			<input class="form-control" name="font_color" value="black">
-		</div>
-		<div class="form-group">
-			<label class="control-label">Submit Button Text</label>
-			<input class="form-control" name="submit_text" value="Submit">
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<div class="col-sm-12">
-					<label class="control-label">Submit Button Color</label>
-				</div>
-				<div class="col-sm-9" style="padding-right: 5px">
-					<select  class="form-control" name="button_color">
-						<option value="blue" selected>Blue (.btn-primary)</option>
-						<option value="white" >White (.btn-default)</option>
-						<option value="teal" >Teal (.btn-info)</option>
-						<option value="green" >Green (.btn-success)</option>
-						<option value="orange" >Orange (.btn-warning)</option>
-						<option value="red" >Red (.btn-danger)</option>
-						<option value="custom" >Custom (.btn-custom)</option>
-					</select>
-				</div>
-				<div class="col-sm-3 hidden" style="padding-left: 0px; padding-top: 3px;" >
-					<input class="form-control" name="button_color_custom" value="#337ab7">
-				</a>
-			</div>
-		</div>
-	</div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label class="control-label">Tamaño de los controles</label>
+                <select  class="form-control" name="input_size" data-bind="value: input_size">
+                    <option value="form-control-sm" >Chico</option>
+                    <option value="form-control-md" selected>Normal</option>
+                    <option value="form-control-lg" >Grande</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-9">
+                <label class="control-label">Fuente</label>
+                <select class="form-control" name="font_family" data-bind="value: font_family">
+                    <option value='"Helvetica Neue",Helvetica,Arial,sans-serif'selected>Helvetica Neue,Helvetica,Arial,sans-serif</option>
+                    <option value='Georgia, serif' >Georgia, serif</option>
+                    <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif' >"Palatino Linotype", "Book Antiqua", Palatino, serif</option>
+                    <option value='"Arial Black", Gadget, sans-serif' >"Arial Black", Gadget, sans-serif</option>
+                    <option value='"Comic Sans MS", cursive, sans-serif' >"Comic Sans MS", cursive, sans-serif</option>
+                    <option value='Impact, Charcoal, sans-serif' >Impact, Charcoal, sans-serif</option>
+                    <option value='"Lucida Sans Unicode", "Lucida Grande", sans-serif' >"Lucida Sans Unicode", "Lucida Grande", sans-serif</option>
+                    <option value='Tahoma, Geneva, sans-serif' >Tahoma, Geneva, sans-serif</option>
+                    <option value='"Courier New", Courier, monospace' >"Courier New", Courier, monospace</option>
+                    <option value='"Lucida Console", Monaco, monospace' >"Lucida Console", Monaco, monospace</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-3">
+                <label class="control-label">Tamaño</label>
+                <select class="form-control" name="font_size" data-bind="value: font_size">
+                    <option value="12" >12</option>
+                    <option value="14" selected>14</option>
+                    <option value="16" >16</option>
+                    <option value="18" >18</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+    		<div class="form-group col-sm-12">
+    			<label class="control-label">Texto del Botón de Aceptar</label>
+    			<input class="form-control" name="submit_text" value="Submit" data-bind="value: submit_text">
+    		</div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="control-label">Botones</label>
+                <select  class="form-control" name="button_style" data-bind="value: button_style">
+                    <option value="btn-primary" selected>Azul</option>
+                    <option value="btn-default" >Gris</option>
+                    <option value="btn-info" >Celeste</option>
+                    <option value="btn-success" >Verde</option>
+                    <option value="btn-warning" >Amarillo</option>
+                    <option value="btn-danger" >Rojo</option>
+                   <option value="btn-outline-primary" selected>Delineado Azul</option>
+                   <option value="btn-outline-default" >Delineado Gris</option>
+                   <option value="btn-outline-info" >Delineado Celeste</option>
+                   <option value="btn-outline-success" >Delineado Verde</option>
+                   <option value="btn-outline-warning" >Delineado Amarillo</option>
+                   <option value="btn-outline-danger" >Delineado Rojo</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+               <label class="control-label">Tamaño</label>
+               <select  class="form-control" name="button_size" data-bind="value: button_size">
+                   <option value="btn-sm" >Chico</option>
+                   <option value="btn-md" selected>Normal</option>
+                   <option value="btn-lg" >Grande</option>
+                   <option value="btn-block" >Bloque</option>
+               </select>
+            </div>
+        </div>
+
+
 	{{-- <div class="form-group">
 		<label class="control-label">Submit Button Font Color22222</label><br />
 		<input class="form-control" name="button_font_color" value="white">
 	</div> --}}
-	{{-- <div class="row">
-		<div class="form-group col-sm-6">
-			<label class="control-label">Submit Button Size</label>
-			<select  class="form-control" name="button_size">
-				<option value="small" >Small</option>
-				<option value="medium" selected>Medium</option>
-				<option value="large" >Large</option>
-				<option value="block" >Block</option>
-			</select>
-		</div>
-		<div class="form-group col-sm-6">
-			<label class="control-label">Submit Button Style</label>
-			<select  class="form-control" name="button_style">
-				<option value="solid" selected>Solid</option>
-				<option value="outline" >Outline</option>
-			</select>
-		</div>
-	</div> --}}
+
 	<div class="form-group">
-		<label class="control-label">Label Orientation</label>
-		<select  class="form-control" name="label_orientation">
-			<option value="vertical" selected>Vertical (Labels above inputs)</option>
-			<option value="horizontal" >Horizontal (Labels left of inputs)</option>
+		<label class="control-label">Disposición</label>
+		<select  class="form-control" name="label_orientation" data-bind="value: label_orientation">
+			<option value="form-vertical" >Etiqueta sobre el campo</option>
+			<option value="form-horizontal" selected>Etiqueta a derecha del campo</option>
 		</select>
 	</div>
-	{{-- <div class="form-group">
-		<label class="control-label">Input Corner Style</label>
-		<select  class="form-control" name="corner_style">
-			<option value="square" >Square</option>
-			<option value="round" selected>Rounded (a bit)</option>
-			<option value="circle" >Round (a lot)</option>
-		</select>
-	</div> --}}
 	<div class="form-group">
-		<label class="control-label">Input Size</label>
-		<select  class="form-control" name="input_size">
-			<option value="small" >Small</option>
-			<option value="medium" selected>Medium</option>
-			<option value="large" >Large</option>
+		<label class="control-label">Grilla</label>
+		<select  class="form-control" name="corner_style" data-bind="value: corner_style">>
+			<option value="full" selected>Un campo por fila</option>
+			<option value="half" selected>Dos campos por fila</option>
 		</select>
 	</div>
+
+
 {{--
 	<div class="form-group">
 		<div class="row">
@@ -228,13 +226,17 @@
 	</div>
  --}}
 	<div class="row">
+        <div class="form-group col-sm-6">
+            <label class="control-label">Color del Texto</label><br />
+            <input class="form-control" name="font_color" value="black" data-bind="value: font_color">
+        </div>
+		{{-- <div class="form-group col-sm-6">
+			<label class="control-label">Color***</label><br />
+			<input class="form-control" name="addon_color" data-bind="value: addon_color">
+		</div> --}}
 		<div class="form-group col-sm-6">
-			<label class="control-label">Prepend/Append Color</label><br />
-			<input class="form-control" name="addon_color" value="#555555">
-		</div>
-		<div class="form-group col-sm-6">
-			<label class="control-label">...Background Color</label><br />
-			<input class="form-control" name="addon_background" value="#eeeeee">
+			<label class="control-label">Color de fondo</label><br />
+			<input class="form-control" name="addon_background" data-bind="value: addon_background">
 		</div>
 	</div>
 
@@ -286,12 +288,12 @@
 			</div> --}}
 
 			<div class="form-group">
-				<label class="control-label">Title</label>
+				<label class="control-label">Etiqueta</label>
 				<textarea class="form-control" data-bind="value: title" class="xlarge"></textarea>
 			</div>
 
 			<div data-bind="ifnot: hasNature" class="form-group">
-				<label class="control-label">Unique Identifier (name/id)</label>
+				<label class="control-label">Identificador (ID)</label>
 				<input class="form-control" data-bind="value: id_name">
 			</div>
 			<div data-bind="if: hasNature" class="form-group">
@@ -302,7 +304,7 @@
 			<div class="form-group">
 				<label class="control-label">
 					<input type="checkbox" data-bind="checked: is_required">
-					Required?
+					Es obligatorio?
 				</label>
 			</div>
 
@@ -315,12 +317,12 @@
 			</div>
 
 			<div class="form-group">
-				<label class="control-label">Instructions</label>
+				<label class="control-label">Nota</label>
 				<textarea class="form-control" data-bind="value: instructions"></textarea>
 			</div>
 
 			<div data-bind="if: placeholderNeeded" class="form-group">
-				<label class="control-label">Placeholder</label>
+				<label class="control-label">Ayuda</label>
 				<input class="form-control" data-bind="value: placeholder">
 			</div>
 
@@ -539,17 +541,6 @@
 
 <script type="text/javascript" data-exec-on-popstate>
 
-    $(document).on('pjax:complete', function() {
-      console.log('3333')
-    });
-
-    $(function () {
-
-
-        console.log('carga222')
-
-    });
-
 
 	(function($){
 	   $.fn.innerText = function(msg) {
@@ -577,8 +568,6 @@
 
 
 	$( document ).ready(function() {
-
-        console.log('carga???')
 
 		var form_settings_pane=$("a[href='#form-settings-pane']");
 		form_settings_pane.click(function(){

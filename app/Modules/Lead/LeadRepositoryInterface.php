@@ -10,6 +10,8 @@ use Str;
 
 interface LeadRepositoryInterface{
 
-    public function put($fields,$form_id);
+    public function put($fields,$formId,$campaignId = null);
+
+    public function removeFromList($itemId,$listID);
 
 }

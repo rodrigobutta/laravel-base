@@ -100,7 +100,7 @@ class FormFrontController extends Controller
             $description = '';
         }
 
-        return view('form::front.view', compact('item', 'title', 'description', 'fields'));
+        return view('form::front.view', compact('item', 'title', 'description', 'fields', 'schema'));
 
     }
 

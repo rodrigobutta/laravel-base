@@ -17,6 +17,8 @@ Route::group(['namespace' => '\App\Modules\User'], function () {
         $router->resource('userlists', UserListAdminController::class);
 
 
+        $router->get('user/{itemId}', ['as' => 'user.manage', 'uses' => 'USerAdminController@userManage']);
+
     });
 
 });

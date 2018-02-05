@@ -4,9 +4,23 @@
 
     <div class="col-md-12">
 
-        <div class="box box-default box-solid">
-              <div class="box-header with-border">
-                <h3 class="box-title">Conversiones</h3>
+        <div class="box box-default">
+
+              <div class="box-header">
+                  <span>
+                      <input type="checkbox" class="grid-select-all">
+                      <div class="btn-group" style="margin-left: 8px">
+                          <a class="btn btn-sm btn-default">Para los elementos seleccionados</a>
+                          <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li><a href="#" class="grid-batch-remove">Eliminar</a></li>
+                          </ul>
+                      </div>
+                  </span>
+
               </div>
 
               <div class="box-body">
@@ -14,13 +28,13 @@
                   <table class="table no-margin">
                     <thead>
                     <tr>
+                    <th></th>
                       <th>Fecha</th>
-                      <th>Base Unificada</th>
-
                       @foreach($fields as $field)
                         <th data-key="{{$field->id_name}}">{{$field->title}}</th>
                       @endforeach
-                      <th></th>
+                      <th>Base Unificada</th>
+                      {{-- <th></th> --}}
                     </tr>
                     </thead>
                     <tbody>
@@ -31,19 +45,26 @@
                           ?>
 
                           <tr>
+                            <td>
+
+                                <input type="checkbox" class="grid-row-checkbox" data-id="{{$l->id}}">
+
+                            </td>
                               <td>
                                   {{$l->created_at}}
                               </td>
-                              <td>
-                                  {{$l->user_id}}
-                              </td>
+
                                 @foreach($fields as $field)
                                   <td>{{$tmp[$field->id_name]}}</td>
                                 @endforeach
-                              <td>
-                                  {{-- <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Ver</a> --}}
+                                <td>
+                                    @if($l->user)
+                                        <a href="{{route('user.manage',["itemId"=>$l->user->id])}}">{{$l->user->name}}</a>
+                                    @endif
+                                </td>
+                              {{-- <td>
                                   <a href="javascript:void(0);" data-id="{{$l->id}}" class="btn btn-default btn-sm btn-flat list-row-delete">Remover</a>
-                              </td>
+                              </td> --}}
 
                           </tr>
 
@@ -69,36 +90,70 @@
 <script type="text/javascript" data-exec-on-popstate>
 
 
+    var selectedRows = function () {
+        var selected = [];
+        $('.grid-row-checkbox:checked').each(function(){
+            selected.push($(this).data('id'));
+        });
+
+        return selected;
+    }
+
+
     $(function () {
 
+        $('.grid-row-checkbox').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChanged', function () {
+            if (this.checked) {
+                $(this).closest('tr').css('background-color', '#ffffd5');
+            } else {
+                $(this).closest('tr').css('background-color', '');
+            }
+        });
+
+
+        $('.grid-select-all').iCheck({checkboxClass:'icheckbox_minimal-blue'});
+
+        $('.grid-select-all').on('ifChanged', function(event) {
+            if (this.checked) {
+                $('.grid-row-checkbox').iCheck('check');
+            } else {
+                $('.grid-row-checkbox').iCheck('uncheck');
+            }
+        });
 
 
 
         eventBindEditable()
 
 
-        $('.list-row-delete').unbind('click').click(function() {
 
-            var id = $(this).data('id');
+
+        $('.grid-batch-remove').on('click', function() {
+
+            var ids = selectedRows().join();
 
             swal({
-              title: "Are you sure to delete this item ?",
+              title: "¿Eliminar estos elementos?",
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#DD6B55",
-              confirmButtonText: "Confirm",
+              confirmButtonText: "Confirmar",
               closeOnConfirm: false,
-              cancelButtonText: "Cancel"
+              cancelButtonText: "Cancelar"
             },
             function(){
                 $.ajax({
                     method: 'post',
-                    url: '/admin/forms/' + id,
+                    url: '{{route('leadlist.batch.removeitem',['itemId' => $item->id])}}',
                     data: {
+                        ids: ids,
                         _method:'delete',
                         _token:LA.token,
                     },
                     success: function (data) {
+
+                        console.log(data);
+
                         $.pjax.reload('#pjax-container');
 
                         if (typeof data === 'object') {
@@ -112,6 +167,7 @@
                 });
             });
         });
+
 
 
     });

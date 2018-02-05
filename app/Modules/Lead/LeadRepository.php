@@ -124,5 +124,17 @@ class LeadRepository implements LeadRepositoryInterface
 
 
 
+     public function removeFromList($itemId,$arrIds){
+
+        $item = LeadListModel::findOrFail($itemId);
+
+        $item->leads()->detach($arrIds);
+
+        return true;
+
+     }
+
+
+
 
 }

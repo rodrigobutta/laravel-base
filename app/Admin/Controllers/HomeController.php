@@ -13,27 +13,30 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return Admin::content(function (Content $content) {
 
-            $content->header('Dashboard');
-            $content->description('Description...');
+        return redirect(route('events.root'));
 
-            $content->row(Dashboard::title());
+        // return Admin::content(function (Content $content) {
 
-            $content->row(function (Row $row) {
+        //     $content->header('Bienvenido');
+        //     // $content->description('Description...');
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
+        //     // $content->row(Dashboard::title());
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
+        //     // $content->row(function (Row $row) {
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            });
-        });
+        //     //     $row->column(4, function (Column $column) {
+        //     //         $column->append(Dashboard::environment());
+        //     //     });
+
+        //     //     $row->column(4, function (Column $column) {
+        //     //         $column->append(Dashboard::extensions());
+        //     //     });
+
+        //     //     $row->column(4, function (Column $column) {
+        //     //         $column->append(Dashboard::dependencies());
+        //     //     });
+        //     // });
+        // });
     }
 }

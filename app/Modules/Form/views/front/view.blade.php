@@ -12,7 +12,48 @@
     <meta property="og:image" content="{{ URL::to('/') }}/storage/admin/{!!$item->cover_image!!}"/>
 @overwrite
 
+
+
 @section('content')
+
+
+@section('head')
+
+    <style type="text/css">
+
+        body {
+            @if($schema->addon_background)
+                background-color: {!!$schema->addon_background!!} !important;
+            @endif
+        }
+
+        label, input, button, select, textarea {
+
+            @if($schema->font_size)
+                font-size: {{$schema->font_size}}px !important;
+
+            @endif
+
+            @if($schema->font_family)
+                font-family: {!!$schema->font_family!!} !important;
+            @endif
+
+        }
+
+        label, input, select, textarea {
+
+            @if($schema->font_color)
+                color: {!!$schema->font_color!!} !important;
+            @endif
+
+        }
+
+
+    </style>
+
+@endsection
+
+
 
 
 <div class="cover" style="--background-image:url('/storage/admin/{!!$item->cover_image!!}')">
@@ -28,108 +69,61 @@
                 <br>
             </div>
         </div>
-{{--
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pull-left">
-                    <h1 class="title">{{$item->event->name}}</h1>
-                    <h2 class="subtitle">{{$item->name}}</h2>
-                    <div class="description">{!!$item->description!!}</div>
-                </div>
-                <div class="pull-right">
-
-                </div>
-            </div>
-        </div> --}}
-
-        <div class="row">
-            <div class="col-md-12">
-                <hr>
-            </div>
-        </div>
-
     </div>
 
 </div>
 
+<div class="container" style="padding-top: 50px;padding-bottom: 50px;">
 
-
-<div class="container">
-
-{{--
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
 
-        </div>
-    </div> --}}
+            <div class="form-wrapper">
+                <form method="POST" class="form-inline22 {!! $schema->label_orientation !!}" id="form">
 
+                    @foreach($fields as $field)
 
-    <div class="row row-m-t">
-        <div class="col-md-8">
+                        <div class="form-group {!! $schema->corner_style !!} control-group">
 
+                            <label class="control-label" for="{{$field->id_name}}">{{$field->title}}{!! $field->is_required ? ' <span class="required">*</span>' : '' !!}</label>
 
+                            <div class="controls">
 
+                            @if ($field->type == 'text' || $field->type == 'email')
+                                <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="form-control {!! $schema->input_size !!}">
+                            @elseif ($field->type == 'phone')
+                                <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="form-control {!! $schema->input_size !!} phone">
+                            @elseif ($field->type == 'textarea')
+                                <textarea name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" rows="8" class="form-control {!! $schema->input_size !!} span5"></textarea>
+                            @elseif ($field->type == 'select')
+                                <select name="{{$field->id_name}}" id="{{$field->id_name}}" class="form-control {!! $schema->input_size !!}">
+                                    <option value="" selected=""></option>
+                                    {{-- al ser userfield, tengo valores de tabla que son id, name, title, en vez del texto comun en choice --}}
+                                    @if (isset($field->nature) && $field->nature == 'userfield')
+                                        @foreach($field->choices as $choice)
+                                            <option value="{{ $choice->id }}">{{ $choice->title }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($field->choices as $choice)
+                                            <option value="{{ $choice->choice }}">{{ $choice->choice }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            @endif
 
-            <form method="POST" class="form-horizontal" id="form">
-
-                @foreach($fields as $field)
-
-                    <div class="control-group">
-                        <label class="control-label" for="{{$field->id_name}}">{{$field->title}}{!! $field->is_required ? ' <span class="required">*</span>' : '' !!}</label>
-                        <div class="controls">
-
-
-                        @if ($field->type == 'text' || $field->type == 'email')
-
-                            <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}">
-
-                        @elseif ($field->type == 'phone')
-
-                            <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="phone">
-
-                        @elseif ($field->type == 'textarea')
-
-                            <textarea name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" rows="8" class="span5"></textarea>
-
-                        @elseif ($field->type == 'select')
-
-                            <select name="{{$field->id_name}}" id="{{$field->id_name}}" >
-                                <option value="" selected=""></option>
-
-                                {{-- al ser userfield, tengo valores de tabla que son id, name, title, en vez del texto comun en choice --}}
-                                @if (isset($field->nature) && $field->nature == 'userfield')
-
-                                    @foreach($field->choices as $choice)
-                                        <option value="{{ $choice->id }}">{{ $choice->title }}</option>
-                                    @endforeach
-
-                                @else
-
-                                    @foreach($field->choices as $choice)
-                                        <option value="{{ $choice->choice }}">{{ $choice->choice }}</option>
-                                    @endforeach
-
-                                @endif
-
-                            </select>
-
-                        @endif
+                            </div>
 
                         </div>
+
+                    @endforeach
+
+                    <div class="form-group form-actions">
+                        <button type="submit" class="btn {!!$schema->button_style!!} {!! $schema->button_size !!}">{{ $schema->submit_text or "Aceptar" }}</button>
+                        {{-- <button type="reset" class="btn">Cancelar</button> --}}
                     </div>
 
-                @endforeach
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-success">Aceptar</button>
-                    <button type="reset" class="btn">Cancelar</button>
-                </div>
-
-            </form>
-
-
-
-
+                </form>
+            </div>
 
         </div>
     </div>

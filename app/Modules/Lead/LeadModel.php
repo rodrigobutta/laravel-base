@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use App\Modules\Campaign\CampaignModel;
 use App\Modules\Event\EventModel;
 use App\Modules\Form\FormModel;
+use App\Modules\User\UserModel;
 use App\Modules\Lead\LeadListModel;
 use App\Modules\UserField\UserFieldModel;
 
@@ -37,6 +38,23 @@ class LeadModel extends \App\Models\Profiled
         return $this->belongsToMany(LeadListModel::class, 'leadlist_lead', 'lead_id', 'leadlist_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(UserModel::class, 'user_id');
+    }
+
+    public function getUser()
+    {
+        if($this->user){
+            return $this->user;
+        }
+        else{
+            $dummy = new UserModel();
+            $dummy->setDummy();
+            return $dummy;
+        }
+
+    }
 
     // intenta generar una estructura unificada de todos los datos cargados con su info de campo, ya sea de usuario o del formulario mismo
     public function getFields()

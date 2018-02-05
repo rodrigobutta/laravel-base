@@ -19,6 +19,8 @@ Route::group(['namespace' => '\App\Modules\Lead'], function () {
         $router->get('leadlist/{itemId}', ['as' => 'leadlist.manage', 'uses' => 'LeadAdminController@leadlistManage']);
         $router->get('leadlist/{itemId}/export', ['as' => 'leadlist.export', 'uses' => 'LeadAdminController@leadlistExport']);
 
+
+        $router->delete('leadlist/batch/{itemId}/removeitem', ['as' => 'leadlist.batch.removeitem', 'uses' => 'LeadAdminController@leadlistBatchRemoveitem']);
     });
 
 });

@@ -14,9 +14,6 @@
 
 @section('head')
 
-
-
-
 @endsection
 
 @section('bodyClass', 'is_client')

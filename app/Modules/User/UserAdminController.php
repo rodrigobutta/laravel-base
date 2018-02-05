@@ -162,4 +162,29 @@ class UserAdminController extends Controller{
 
 
 
+
+    public function userManage($itemId){
+
+        $item = UserModel::findOrFail($itemId);
+
+        return Admin::content(function (Content $content) use($item){
+
+            $content->header($item->name);
+
+            // $fields = $item->getFields();
+
+            // $content->row(
+            //     view('lead::admin.leadlist.manage', compact('item','fields'))->render()
+            // );
+
+        });
+
+    }
+
+
+
+
+
+
+
 }
