@@ -48,7 +48,21 @@ class LeadListModel extends \App\Models\Profiled
         return $this->belongsTo(EventModel::class, 'event_id');
     }
 
+    // es de test si fue creada desde el evento y no tuiene map ni campana asociados
+    public function isTest()
+    {
 
+        if(!$this->form && !$this->campaign){
+            return true;
+        }
+        else if( $this->campaign && $this->campaign->type_id==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
 
 
     public function getFullnameAttribute()
@@ -56,11 +70,11 @@ class LeadListModel extends \App\Models\Profiled
 
         switch ($this->type_id) {
             case 1:
-                return $this->type->name . ': ' . $this->event->name;
+                return $this->type->name . ' - ' . $this->event->name;
             case 2:
-                return $this->type->name . ': ' . $this->form->name;
+                return $this->type->name . ' - ' . $this->form->name;
             case 3:
-                return $this->type->name . ': ' . $this->campaign->name;
+                return $this->type->name . ' - ' . $this->campaign->name;
             default:
                 return $this->name;
                 break;
@@ -68,7 +82,33 @@ class LeadListModel extends \App\Models\Profiled
 
     }
 
+    // obtengo algun formulario ya sea el propio o el de su campaña
+    public function getForm()
+    {
 
+        if($this->form){
+            return $this->form;
+        }
+        else{
+            return $this->campaign->form;
+        }
+
+    }
+
+    // devuelve array con campos que se manejaron en la leadlist en base a su propio form o el de su campaña
+    public function getFields()
+    {
+        return $this->getForm()->getFields();
+    }
+
+
+    public function setDummy()
+    {
+        $this->id = -1;
+        $this->name = "";
+
+        return $this;
+    }
 
     public function leadsCount()
     {

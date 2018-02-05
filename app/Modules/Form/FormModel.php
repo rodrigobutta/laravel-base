@@ -42,16 +42,11 @@ class FormModel extends \App\Models\Profiled
 
     public function fullUserListsArray()
     {
-
         $res = [];
-
 
         foreach ($this->userlists as $v) {
             array_push($res, $v->id);
         }
-
-        // $this->event->
-
 
         return $res;
     }
@@ -105,21 +100,9 @@ class FormModel extends \App\Models\Profiled
         return $res;
     }
 
-
-
-    // public function getFieldByName($fieldName)
-    // {
-    //     $fields = $this->getFields();
-
-
-
-    //     return findObjectInArray($fields,'id');
+    // public static function scopePublic(){
+    //     return static::where('enabled',1);
     // }
-
-
-    public static function scopePublic(){
-        return static::where('enabled',1);
-    }
 
 
     public function setDummy()

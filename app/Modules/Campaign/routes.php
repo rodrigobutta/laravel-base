@@ -11,7 +11,8 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         'prefix'        => config('admin.route.prefix')
     ], function (Router $router) {
 
-        $router->any('testmail', ['as' => 'mails.test', 'uses' => 'CampaignAdminController@testMail']);
+
+        // $router->any('testmail', ['as' => 'mails.test', 'uses' => 'CampaignAdminController@testMail']);
 
         // $router->get('campaigns/create/{eventid}', ['as' => 'campaigns.createforevent', 'uses' => 'CampaignAdminController@createForEvent']);
         // $router->get('campaigns/create', ['as' => 'campaigns.createforevent', 'uses' => 'CampaignAdminController@createForEvent']);
@@ -30,6 +31,9 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         $router->get('campaigns/{itemId}/config', ['as' => 'campaigns.config', 'uses' => 'CampaignAdminController@config']);
         $router->post('campaigns/config/save', ['as' => 'campaigns.config.save', 'uses' => 'CampaignAdminController@configSave']);
         $router->get('campaigns/{itemId}/process', ['as' => 'campaigns.process', 'uses' => 'CampaignAdminController@process']);
+
+        $router->post('campaigns/{itemId}/process', ['as' => 'campaigns.process', 'uses' => 'CampaignAdminController@processMails']);
+        $router->post('campaigns/{itemId}/process/test', ['as' => 'campaigns.process.test', 'uses' => 'CampaignAdminController@processTestMail']);
 
 
     });

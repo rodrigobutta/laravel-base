@@ -34,7 +34,6 @@
                 </div>
             </div>
 
-
             @if($item->id!=0)
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">Slug</label>
@@ -48,18 +47,22 @@
 
             @endif
 
-
-
-            <div class="form-group">
-                <label for="description" class="col-sm-2 control-label">Descripción</label>
-                <div class="col-sm-10">
-                    <textarea name="description" class="form-control" rows="5" placeholder="Entrada Description">{{$item->description}}</textarea>
-                </div>
-            </div>
-
-
-
         </div>
+
+        <div class="form-group">
+            <label for="destination_leadlist_id" class="col-sm-2 control-label">Lista de envio</label>
+            <div class="col-sm-10">
+                <select class="form-control destination_leadlist_id" style="width: 100%;" name="destination_leadlist_id">
+                    <option value="{{$item->getDestinaionLeadlist()->id}}" selected>{{$item->getDestinaionLeadlist()->fullname}}</option>
+                    @foreach($item->event->leadlists as $l)
+                        @if($item->destination_leadlist_id!=$l->id && !$l->isTest())
+                            <option value="{{$l->id}}">{{$l->fullname}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <label for="type_id" class="col-sm-2 control-label">Formulario de destino</label>
@@ -74,6 +77,8 @@
                 </select>
             </div>
         </div>
+
+
 
    {{--  </div>
 

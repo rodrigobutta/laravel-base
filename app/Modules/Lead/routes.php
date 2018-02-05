@@ -14,7 +14,10 @@ Route::group(['namespace' => '\App\Modules\Lead'], function () {
         $router->resource('leads', LeadAdminController::class);
 
 
-        $router->get('leads/{formid}/export', ['as' => 'leads.export', 'uses' => 'LeadAdminController@export']);
+        // $router->get('leads/{formid}/export', ['as' => 'leads.export', 'uses' => 'LeadAdminController@export']);
+
+        $router->get('leadlist/{itemId}', ['as' => 'leadlist.manage', 'uses' => 'LeadAdminController@leadlistManage']);
+        $router->get('leadlist/{itemId}/export', ['as' => 'leadlist.export', 'uses' => 'LeadAdminController@leadlistExport']);
 
     });
 

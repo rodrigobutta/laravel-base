@@ -179,23 +179,56 @@ class LeadAdminController extends Controller{
 	}
 
 
-    public function export($formId)
+
+
+
+
+    public function leadlistManage($itemId)
     {
 
-        $form = FormModel::findOrFail($formId);
+        $item = LeadListModel::findOrFail($itemId);
 
-        \Excel::create($form->event->name . '-' . $form->name . '- Conversiones', function($excel) use($form){
 
-            $excel->sheet('Datos', function($sheet) use($form){
+        return Admin::content(function (Content $content) use($item){
+
+            $content->header($item->event->name . ' - Lista > ' . $item->fullname);
+
+            $fields = $item->getFields();
+
+            $content->row(
+                view('lead::admin.leadlist.manage', compact('item','fields'))->render()
+            );
+
+
+        });
+
+
+
+
+    }
+
+
+
+    public function leadlistExport($itemId)
+    {
+
+
+        $item = LeadListModel::findOrFail($itemId);
+
+        // $form = FormModel::findOrFail($formId);
+
+        \Excel::create($item->event->name . '-' . $item->fullname, function($excel) use($item){
+
+            $excel->sheet('Datos', function($sheet) use($item){
 
                 $sheet->setOrientation('landscape');
 
-                $leads = LeadModel::where('form_id', '=',  $form->id)->with('campaign')->get();
+                // $leads = LeadModel::where('form_id', '=',  $form->id)->with('campaign')->get();
 
 
 				$first=true;
 
-                foreach ($leads as $key => $lead) {
+                foreach ($item->leads as $key => $lead) {
 
 					$fields = $lead->getfields();
 

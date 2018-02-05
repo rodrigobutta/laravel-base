@@ -45,6 +45,25 @@ class CampaignModel extends \App\Models\Profiled
     }
 
 
+    public function destinationLeadlist()
+    {
+        return $this->belongsTo(LeadListModel::class, 'destination_leadlist_id');
+    }
+
+    public function getDestinaionLeadlist()
+    {
+        if($this->destinationLeadlist){
+            return $this->destinationLeadlist;
+        }
+        else{
+            $dummy = new LeadListModel();
+            $dummy->setDummy();
+            return $dummy;
+        }
+
+    }
+
+
     public function getForm()
     {
         if($this->form){

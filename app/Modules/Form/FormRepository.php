@@ -74,7 +74,10 @@ class FormRepository implements FormRepositoryInterface
 
         // si es admin o superadmin no limitar el universo a los aprobados
         // if(auth()->check() && (auth()->form()->isSuper() || auth()->form()->isAdmin())){
-            $posts = $this->form->public();
+            // $posts = $this->form->public();
+
+            $posts = $this->form;
+
         // }
         // else{
         //     $posts = $this->form->approved()->published();

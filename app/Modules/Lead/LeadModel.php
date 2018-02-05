@@ -38,7 +38,6 @@ class LeadModel extends \App\Models\Profiled
     }
 
 
-
     // intenta generar una estructura unificada de todos los datos cargados con su info de campo, ya sea de usuario o del formulario mismo
     public function getFields()
     {
@@ -86,5 +85,31 @@ class LeadModel extends \App\Models\Profiled
         return $res;
     }
 
+
+    // intenta generar una estructura unificada de todos los datos cargados con su info de campo, ya sea de usuario o del formulario mismo
+    public function getFieldsArray()
+    {
+
+        $fields = unserialize($this->data);
+
+        return $fields;
+    }
+
+
+    public function getEmail()
+    {
+        // fixeo del campo del email
+        $emailKey = 'userfield_1';
+
+        $fields = $this->getFieldsArray();
+
+        if(isset($fields[$emailKey])){
+            return $fields[$emailKey];
+        }
+        else{
+            return false;
+        }
+
+    }
 
 }

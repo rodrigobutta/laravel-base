@@ -98,11 +98,11 @@
                               <td>
                                   {{$f->leadsCount()}}
                               </td>
-                              <td>
-                                  <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Configurar</a>
-                                  <a class="btn btn-default btn-sm btn-flat" href="{{route('forms.schema', ['formid' => $f->id])}}">Campos</a>
-                                  <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a>
+                              <td class="text-right">
+                                  <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Editar</a>
+                                  <a class="btn btn-default btn-sm btn-flat" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
                                   <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
+                                  <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a>
                               </td>
 
                           </tr>
@@ -149,7 +149,7 @@
                     <tr>
                         <th>Tipo</th>
                         <th>Nombre</th>
-                        <th>Listas a enviar</th>
+                        <th>Lista de envio</th>
                         <th>Formulario destino</th>
                         {{-- <th>Estado</th> --}}
                         <th>Envios</th>
@@ -171,9 +171,7 @@
                                   <a href="pages/examples/invoice.html">{{$c->name}}</a>
                               </td>
                               <td>
-                                @foreach($c->userlists as $l)
-                                  <span class="label label-default">{{$l->name}}</span>
-                                @endforeach
+                                  <span class="label label-default">{{$c->getDestinaionLeadlist()->fullname}}</span>
                               </td>
                               <td>
                                   <span class="label label-default">{{$c->getForm()->name}}</span>
@@ -193,15 +191,12 @@
                                 <td>
                                   {{$c->leadsCount()}}
                               </td>
-                              <td>
+                              <td class="text-right">
 
-                                    @if($c->type_id!=1)
-
+                                    @if($c->type_id>1)
                                         <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
-
-                                            <a href="#" class="btn btn-warning btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
-                                            <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Compartir</a>
-
+                                        <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
+                                        <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Enviar</a>
                                     @endif
                               </td>
 
@@ -216,8 +211,21 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="2"><i class="fa fa-facebook"></i>&nbsp;Nueva Campaña para Redes Sociales</a>
-                <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="3"><i class="fa fa-envelope"></i>&nbsp;Nueva Campaña por E-mail</a>
+
+                <button type="button" class="btn btn-flat btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    Nueva Campaña
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" class="btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="2"><i class="fa fa-facebook"></i>&nbsp;Redes Sociales</a></li>
+                      <li><a href="#" class="btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="3"><i class="fa fa-envelope"></i>&nbsp;E-mail</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Otro tipo..</a></li>
+                    </ul>
+
+                {{-- <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="2"><i class="fa fa-facebook"></i>&nbsp;Nueva Campaña para Redes Sociales</a> --}}
+                {{-- <a href="#" class="btn btn-default btn-flat btn-new-campaign" data-event-id="{{$item->id}}" data-type-id="3"><i class="fa fa-envelope"></i>&nbsp;Nueva Campaña por E-mail</a> --}}
                 {{-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a> --}}
               </div>
 
@@ -242,12 +250,6 @@
         <div class="box box-success box-solid">
               <div class="box-header with-border">
                 <h3 class="box-title">Listas</h3>
-
-              {{--   <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div> --}}
               </div>
 
               <div class="box-body">
@@ -256,22 +258,26 @@
                     <thead>
                     <tr>
                       <th>Nombre</th>
-                      {{-- <th>Formulario</th> --}}
                       <th>Conversiones</th>
-                      {{-- <th>Altas de Usuario</th> --}}
-                      {{-- <th>Actualización de Usuario</th> --}}
+                      <th></th>
                     </tr>
                     </thead>
                     <tbody>
 
-                        @foreach($item->leadlists as $c)
+                        @foreach($item->leadlists as $l)
 
                             <tr>
                                 <td>
-                                    <a href="pages/examples/invoice.html"><i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->fullname}}</a>
+                                    <a href="pages/examples/invoice.html"><i class="fa {{$l->type->icon}}"></i>&nbsp;{{$l->fullname}}</a>
                                 </td>
                                   <td>
-                                    {{$c->leadsCount()}}
+                                    {{$l->leadsCount()}}
+                                </td>
+                                <td class="text-right">
+                                    @if(!$l->isTest())
+                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
+                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar</a>
+                                    @endif
                                 </td>
 
                             </tr>
@@ -301,7 +307,7 @@
     $(function () {
 
 
-
+        bindButtons()
 
         eventBindEditable()
 
@@ -348,7 +354,173 @@
 
 
 
+    function bindButtons(){
 
+
+        $('.btn-new-campaign').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('campaigns.create', ['eventId' => 'xxx', 'typeId' => 'yyy']) }}';
+                url = url.replace('xxx',$(this).attr('data-event-id'));
+                url = url.replace('yyy',$(this).attr('data-type-id'));
+
+
+            $('#modal_form').livingDialog({
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                        // var data = {}
+                        //     data.id = el.closest('.item').attr('data-id')
+                        // return data
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+
+                    console.log(data)
+
+                    toastr.success("Campaña creada");
+
+                    document.location = response.route;
+
+                   // var url = '{{ route('events.manage', ['itemId' => $item->id]) }}';
+                   // console.log(url)
+                   // document.location = url;
+
+
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+
+                }
+            });
+
+
+        });
+
+
+
+        $('.btn-campaign-config').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('campaigns.config', ['itemId' => 'xxx']) }}';
+                url = url.replace('xxx',$(this).attr('data-id'));
+
+            $('#modal_form').livingDialog({
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+                    console.log(data)
+                    toastr.success("Campaña configurada");
+                    document.location = response.route;
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+                }
+            });
+
+
+        });
+
+
+
+
+        $('.btn-campaign-process').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('campaigns.process', ['itemId' => 'xxx']) }}';
+                url = url.replace('xxx',$(this).attr('data-id'));
+
+
+            $('#modal_form').livingDialog({
+                hideButtons: true,
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+                    console.log(data)
+                    toastr.success("Campaña creada");
+                    document.location = response.route;
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+                }
+            });
+
+
+        });
+
+
+
+        $('.btn-campaign-edit').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('campaigns.edit', ['itemId' => 'xxx']) }}';
+                url = url.replace('xxx',$(this).attr('data-id'));
+
+
+            $('#modal_form').livingDialog({
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                        // var data = {}
+                        //     data.id = el.closest('.item').attr('data-id')
+                        // return data
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+
+                    console.log(data)
+
+                    toastr.success("Campaña creada");
+
+                    document.location = response.route;
+
+                   // var url = '{{ route('events.manage', ['itemId' => $item->id]) }}';
+                   // console.log(url)
+                   // document.location = url;
+
+
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+
+                }
+            });
+
+
+        });
+
+
+    }
 
 
 
