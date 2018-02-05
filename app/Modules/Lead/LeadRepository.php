@@ -19,52 +19,36 @@ use Illuminate\Support\Facades\Cache;
 class LeadRepository implements LeadRepositoryInterface
 {
 
-    public function __construct(
-                                LeadModel $lead
-                                )
+    public function __construct(LeadModel $lead)
     {
         $this->lead = $lead;
-
     }
 
 
-
-     public function put($fields, $formId, $campaignId = null){
+    public function put($fields, $formId, $campaignId = null){
 
         $data = serialize($fields);
-
-        // SALVAR LEAD CON TODOS LOS CAMPOS ENCODEADOS
-
 
         $form = FormModel::find($formId);
 
         $lead = new LeadModel();
-
             $lead->event_id = $form->event_id;
             $lead->form_id = $formId;
             $lead->data = $data;
-
             if($campaignId != null){
                 $lead->campaign_id = $campaignId;
             }
-
         $lead->save();
 
 
-
-
-        // ***********************************
         // BASE UNICA DE USUARIOS
 
         $fixedMap = getFixedFieldsCollection();
 
-        // campos que van a guardarse en usuario pero no en la tabla directo (no fixed)
-        $notfixed_fields = [];
+        $notfixed_fields = []; // campos que van a guardarse en usuario pero no en la tabla directo (no fixed)
 
         // BUSCAR CAMPOS KEY
-
-        // array con campos key dinamicos por los que despues voy a buscar en el firstOrNew
-        $key_fields = [];
+        $key_fields = []; // array con campos key dinamicos por los que despues voy a buscar en el firstOrNew
 
         foreach ($fields as $key => $value) {
             if (strpos($key, 'userfield_') !== false) {
@@ -88,31 +72,20 @@ class LeadRepository implements LeadRepositoryInterface
         $user = UserModel::firstOrNew($key_fields);
 
 
-
-
-
-
         // armo mapa de campos a actualizar en el objeto
-
         foreach ($fields as $key => $value) {
-
             if (strpos($key, 'userfield_') !== false) {
 
                 $userfieldId = intval(str_replace('userfield_','',$key));
 
                 if($fixedFieldItem = $fixedMap->get($userfieldId)){
                     // son campos fixed (que tienen correspondiente entabla real de usuario)
-
                     $fieldName = $fixedFieldItem->fixed_field_name;
-
                     $user{$fieldName} = $value;
-
                 }
                 else{
                     // es un campo de usuario pero no fixed, asi que lo mano a la relacion many to many
-
                     $notfixed_fields[$userfieldId]['value'] = $value;
-
                 }
 
             }
@@ -124,41 +97,30 @@ class LeadRepository implements LeadRepositoryInterface
         $user->fields()->sync($notfixed_fields);
 
 
-
         // actualizo el lead indicando en que campo de usuario termino
         $lead->user_id = $user->id;
         $lead->save();
 
 
         // AGREGAR USUARIO A TODAS LAS LISTAS DE USUARIO DEFINIDAS EN EL FORM
-
         foreach ($form->userlists as $l) {
-            $user->userlists()->attach($l->id);
+            if (!$user->userlists->contains($l->id)) {
+                $user->userlists()->attach($l->id);
+            }
         }
 
 
-
-
+        // MAPEO TODAS LASLEAD LISTS QUE CORRESPONDAN
         $lead->leadlists()->attach($form->event->leadlist()->id);
-
         $lead->leadlists()->attach($form->leadlist()->id);
-
         if($campaignId != null){
-
             $campaign = CampaignModel::find($campaignId);
-
             $lead->leadlists()->attach($campaign->leadlist()->id);
-
         }
-
-
-
 
 
         return $lead;
      }
-
-
 
 
 

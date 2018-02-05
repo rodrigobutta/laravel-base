@@ -196,8 +196,10 @@ class CampaignAdminController extends Controller{
 
         $item = CampaignModel::findOrFail($itemId);
 
+        $subject = 'TEST - ' . $item->social_title . ' - TEST';
+
         $data = [
-            'title' => 'TEST - ' . $item->social_title . ' - TEST',
+            'title' => $subject,
             'url' => $item->link(),
             'content' => $item->social_description,
             'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
@@ -205,13 +207,12 @@ class CampaignAdminController extends Controller{
         ];
 
         $recipents = [];
-
         $recipents[$request->get('email')] = [];
 
-        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents) {
-
-            $message->to($recipents);
-
+        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
+            $message
+            ->subject($subject)
+            ->to($recipents);
         });
 
         return response()->json([
@@ -226,8 +227,10 @@ class CampaignAdminController extends Controller{
 
         $item = CampaignModel::findOrFail($itemId);
 
+        $subject = $item->social_title;
+
         $data = [
-            'title' => $item->social_title,
+            'title' => $subject,
             'url' => $item->link(),
             'content' => $item->social_description,
             'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
@@ -246,22 +249,10 @@ class CampaignAdminController extends Controller{
 
         }
 
-        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents) {
-
-            $message->to($recipents);
-
-            // $message->to([
-            //         'rbutta@gmail.com' => [
-            //             'name' => 'Rodrigo Butta HARCODED',
-            //             'city' => 'Buenos aires'
-            //         ]
-            //         // ,
-            //         // 'info@muypunch.com' => [
-            //         //     'name' => 'Empresa Muypunch',
-            //         //     'city' => 'London'
-            //         // ]
-            //     ]);
-
+        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
+            $message
+            ->subject($subject)
+            ->to($recipents);
         });
 
         return response()->json([

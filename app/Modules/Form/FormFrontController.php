@@ -145,37 +145,78 @@ class FormFrontController extends Controller
         }
 
 
-        // TODO desharcodear esto
-        $email_tmp = $request->get('userfield_1');
-        $name_tmp = $request->get('userfield_3');
-
-        $to_mail = $email_tmp;
-
+        $errors = '';
         try {
 
-            // mail al usuario
-            \Mail::to($to_mail)->queue(new ConfirmMail($form,$name_tmp,$email_tmp));
-            // ->bcc($adminEmails)
+            // MAIL AL USUARIO
+            if($form->usermail_enabled){
 
-            // mail de notificación
-            \Mail::to(env('MAIL_NOTIFY_ADDRESS'))->queue(new NotificationMail($form,$lead)); // CREO QUE NO ESTA FUNCIONANDO *********************************************************************
+                // si no recupero el mail del form, no puedo enviar confirmacion
+                if($request->has('userfield_1')){
 
-            $mailResponse = 'SENT ' . $to_mail;
+                    $email_tmp = $request->get('userfield_1');
+
+                    if($request->has('userfield_3')){
+                        $name_tmp = $request->get('userfield_3');
+                    }
+                    else{
+                        $name_tmp = "";
+                    }
+
+
+                    $subject = $form->usermail_subject;
+
+                    $data = [
+                        'title' => $subject,
+                        'form' => $form
+                    ];
+
+                    \Mailgun::send('form::emails.confirm', $data, function ($message) use($subject,$email_tmp, $name_tmp) {
+                        $message
+                        ->subject($subject)
+                        ->to($email_tmp, $name_tmp);
+                    });
+
+                }
+
+            }
+
+            // MAIL AL ADMIN
+            if($form->adminmail_enabled){
+
+                // si no recupero el mail del form, no puedo enviar confirmacion
+                if(isset($form->adminmail_to) && $form->adminmail_to!=''){
+
+                    $subject = 'Nueva conversion para el formulario ' . $form->name;
+
+                    $data = [
+                        'title' => $subject,
+                        'form' => $form,
+                        'lead' => $lead
+                    ];
+
+                    \Mailgun::send('form::emails.notification', $data, function ($message) use($subject, $form) {
+                        $message
+                        ->subject($subject)
+                        ->to($form->adminmail_to);
+                    });
+
+                }
+
+            }
 
         } catch (Exception $e) {
             // $mailResponse = $e->xdebug_message;
-            $mailResponse = $e->getMessage();
+            $errors = $e->getMessage();
         }
 
-
-        // \Event::fire('App\Events', $item);
 
         return response()->json([
             'response' => true,
             'message' => $form->success_title,
             'content' => $form->success_content,
-            'status' => 'success',
-            'mail' => $mailResponse
+            'errors' => $errors,
+            'status' => 'success'
         ]);
 
     }

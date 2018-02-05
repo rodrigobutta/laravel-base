@@ -21,7 +21,7 @@ return [
     'remove'       => 'Retirar',
     'edit'         => 'Editar',
     'view'         => 'Ver',
-    'browse'       => 'vistazo',
+    'browse'       => 'Explorar',
     'reset'        => 'Restablecer',
     'export'       => 'Exportar',
     'batch_delete' => 'Eliminar por lotes',

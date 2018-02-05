@@ -37,36 +37,18 @@ class FormAdminController extends Controller{
 	use ResourceDispatcherTrait;
 
 
-	// private $module_assets_path = 'modules/form';
 
+	// public function index()
+	// {
+	// 	return Admin::content(function (Content $content) {
 
-	public function __construct(){
+	// 		$content->header('Formularios');
+	// 		$content->description('listado');
 
-	}
+	// 		$content->body($this->list());
+	// 	});
+	// }
 
-
-	/**
-	 * Index interface.
-	 *
-	 * @return Content
-	 */
-	public function index()
-	{
-		return Admin::content(function (Content $content) {
-
-			$content->header('Formularios');
-			$content->description('listado');
-
-			$content->body($this->list());
-		});
-	}
-
-	/**
-	 * Edit interface.
-	 *
-	 * @param $id
-	 * @return Content
-	 */
 	public function edit($id)
 	{
 
@@ -122,62 +104,52 @@ class FormAdminController extends Controller{
           });
 	}
 
-	/**
-	 * Admin init page
-	 *
-	 * @return Grid
-	 */
-	protected function list()
-	{
-		return Admin::grid(FormModel::class, function (Grid $grid) {
+	// protected function list()
+	// {
+	// 	return Admin::grid(FormModel::class, function (Grid $grid) {
 
-			$grid->id('ID');
+	// 		$grid->id('ID');
 
-			$grid->column('name', 'Nombre');
-			$grid->column('slug', 'Slug');
+	// 		$grid->column('name', 'Nombre');
+	// 		$grid->column('slug', 'Slug');
 
-			$grid->note()->editable('textarea');
+	// 		$grid->note()->editable('textarea');
 
-			$published_states = [
-				'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-				'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-			];
-			$grid->enabled()->switch($published_states);
+	// 		$published_states = [
+	// 			'on'  => ['value' => 0, 'text' => 'SI', 'color' => 'primary'],
+	// 			'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+	// 		];
+	// 		$grid->enabled()->switch($published_states);
 
 
-			$grid->event()->display(function ($event) {
+	// 		$grid->event()->display(function ($event) {
 
-			    if($event){
-			        return $event['name'];
-			    }
-			    return '';
+	// 		    if($event){
+	// 		        return $event['name'];
+	// 		    }
+	// 		    return '';
 
-			});
+	// 		});
 
 
-			$grid->userlists()->display(function ($userlists) {
+	// 		$grid->userlists()->display(function ($userlists) {
 
-				$userlists = array_map(function ($userlist) {
-					return "<span class='label label-primary'>{$userlist['name']}</span>";
-				}, $userlists);
+	// 			$userlists = array_map(function ($userlist) {
+	// 				return "<span class='label label-primary'>{$userlist['name']}</span>";
+	// 			}, $userlists);
 
-				return join('&nbsp;', $userlists);
-			});
+	// 			return join('&nbsp;', $userlists);
+	// 		});
 
-			$grid->actions(function ($actions) {
+	// 		$grid->actions(function ($actions) {
 
-			    $actions->prepend('<a href="'.route('forms.schema', ['formid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
+	// 		    $actions->prepend('<a href="'.route('forms.schema', ['formid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
 
-			});
+	// 		});
 
-		});
-	}
+	// 	});
+	// }
 
-	/**
-	 * Make a form builder.
-	 *
-	 * @return Form
-	 */
 	protected function form($eventId = 0)
 	{
 
@@ -191,76 +163,79 @@ class FormAdminController extends Controller{
                 // $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
             });
 
-            // dd($eventId);
 
-            if($eventId==0){
-
-                $form->select('event_id','Evento')->options(function ($id) {
-                    $event = EventModel::find($id);
-                    if ($event) {
-                        return [$event->id => $event->name];
-                    }
-                })->ajax('/admin/api/events');
-
+            if($eventId!=0){
+                $form->hidden('event_id')->value($eventId);
             }
             else{
-
-                $event = EventModel::findOrFail($eventId);
-
-                $form->hidden('event_id')->value($event->id);
-
-                $form->display('Evento')->value($event->name);
-
-
+                $form->hidden('event_id');
             }
 
             $form->hidden('schema')->value("{}");
 
-			$form->text('name');
-			$form->text('slug');
+			$form->text('name','Nombre')->rules('required|min:5');
+			$form->text('slug','Slug (url)')->rules('required|min:5');
 
-			$form->textarea('note');
+            $states = [
+                'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $form->switch("enabled","Activo")->states($states)->value(1);
 
             $form->divide();
+            $form->html('<h3><i class="fa fa-list-alt"></i>&nbsp;Estilo del formulario</h3>');
 
-            $form->ckeditor('description','Descripción');
             $form->image('cover_image','Imagen de portada')->help('1920px x 400px', 'fa-image')->uniqueName();;
             $form->image('footer_image','Imagen de pié')->help('1920px x 400px', 'fa-image')->uniqueName();;
 
-            $form->textarea('confirm_title','Confirmación: Título');
-            $form->ckeditor('confirm_content','Confirmación: Contenido');
-            $form->text('confirm_button_ok','Confirmación: Boton Aceptar');
-            $form->text('confirm_button_cancel','Confirmación: Boton Cancelar');
+            $form->divide();
+            $form->html('<h3><i class="fa fa-question"></i>&nbsp;Cuadro de confirmación</h3>');
 
-            $form->textarea('success_title','Formulario Enviado: Título');
-            $form->ckeditor('success_content','Formulario Enviado: Contenido');
-            $form->text('success_button_ok','Formulario Enviado: Boton Aceptar');
-            $form->text('success_button_ok_action','Formulario Enviado: Acción del botón aceptar');
+            $form->text('confirm_title','Título')->default('¿Confirma enviar el formulario?')->rules('required');
+            $form->ckeditor('confirm_content','Contenido');
+            $form->text('confirm_button_ok','Boton Aceptar')->default('Aceptar')->rules('required');
+            $form->text('confirm_button_cancel','Boton Cancelar')->default('Cancelar')->rules('required');//->placeholder('Texto del botón cancelaro dejar vacio para ocultar el botón');
 
+            $form->divide();
+            $form->html('<h3><i class="fa fa-check"></i>&nbsp;Cuadro posterior al envio</h3>');
+
+            $form->text('success_title','Título')->default('Gracias')->rules('required');
+            $form->ckeditor('success_content','Contenido');
+            $form->text('success_button_ok','Boton Aceptar')->default('Aceptar')->rules('required');
+            $form->text('success_button_ok_action','Acción del botón aceptar')->placeholder('URL para redireccionar o dejar vacio para permanecer en la pantalla');
+
+            $form->divide();
+            $form->html('<h3><i class="fa fa-envelope"></i>&nbsp;Mail de confirmación al usuario</h3>');
+
+            $states = [
+                'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $form->switch("usermail_enabled","Activo")->states($states)->value(1);
+            $form->text('usermail_subject','Asunto')->default('Gracias');
+            $form->ckeditor('usermail_content','Cuerpo del mail');
             $form->file('attach','Documento de descarga');
 
 
             $form->divide();
+            $form->html('<h3><i class="fa fa-envelope"></i>&nbsp;Mail de notificación al administrador</h3>');
 
-			$enabled_states = [
-				'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
-				'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-			];
-			$form->switch("enabled")->states($enabled_states)->value(1);
+            $states = [
+                'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $form->switch("adminmail_enabled","Activo")->states($states)->value(1);
+            $form->email('adminmail_to','E-mail')->placeholder('Casilla de mail que recibirá la notificación');
 
-			$form->multipleSelect('userlists','Listas de destino')->options(UserListModel::all()->pluck('name', 'id'));
 
-			// $form->display('created_at', 'Created At');
-			// $form->display('updated_at', 'Updated At');
+            $form->divide();
+            $form->html('<h3><i class="fa fa-users"></i>&nbsp;Base Unificada de Usuarios</h3>');
+
+            $form->multipleSelect('userlists','Agregar a las siguientes listas')->options(UserListModel::all()->pluck('name', 'id'));
+
 
 
             $form->saved(function ($form){
-
-                // $success = new MessageBag([
-                //     'title'   => 'Formulario Creado',
-                //     // 'message' => 'Feriados actualizados',
-                // ]);
-
 
                 $event = EventModel::findOrFail($form->model()->event_id);
 
@@ -276,9 +251,6 @@ class FormAdminController extends Controller{
                    $leadlist->event()->associate($event);
 
                $leadlist->save();
-
-
-
 
                 return redirect(route('events.manage',['eventid' => $event->id]));
 
