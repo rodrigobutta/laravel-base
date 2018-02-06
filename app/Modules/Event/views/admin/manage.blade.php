@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-6">
 
-        <div class="box box-primary22 box-solid">
+        <div class="box box-primary22 box-solid2">
             <div class="box-header with-border">
                 <h3 class="box-title">Propiedades</h3>
                 <div class="box-tools pull-right">
@@ -28,7 +28,7 @@
 
     <div class="col-md-6">
 
-        <div class="box box-primary22 box-solid">
+        <div class="box box-primary22 box-solid2">
             <div class="box-header with-border">
                 <h3 class="box-title">Propiedades</h3>
                 <div class="box-tools pull-right">
@@ -62,9 +62,9 @@
 
     <div class="col-md-12">
 
-        <div class="box box-warning box-solid">
+        <div class="box box-warning box-soli2">
               <div class="box-header with-border">
-                <h3 class="box-title">Formularios</h3>
+                <h3 class="box-title">Landings</h3>
               </div>
 
               <div class="box-body">
@@ -72,10 +72,11 @@
                   <table class="table no-margin">
                     <thead>
                     <tr>
+                      <th>Tipo</th>
                       <th>Nombre</th>
                       <th>Listas de Usuarios</th>
-                      <th>Visitas</th>
-                      <th>Conversiones</th>
+                      <th class="text-center">Visitas</th>
+                      <th class="text-center">Conversiones</th>
                       <th></th>
                     </tr>
                     </thead>
@@ -84,6 +85,9 @@
                       @foreach($item->forms as $f)
 
                           <tr>
+                            <td>
+                                <i class="fa {{$f->type->icon}}"></i>&nbsp;{{$f->type->name}}
+                            </td>
                               <td>
                                   <a href="pages/examples/invoice.html">{{$f->name}}</a>
                               </td>
@@ -92,10 +96,10 @@
                                   <a href="{{route('userlists.edit', ['id' => $l->id])}}"><span class="label label-default">{{$l->name}}</span></a>
                                 @endforeach
                               </td>
-                              <td>
+                              <td class="text-center">
                                   {{$f->views}}
                               </td>
-                              <td>
+                              <td class="text-center">
                                   {{$f->leadsCount()}}
                               </td>
                               <td class="text-right">
@@ -131,7 +135,7 @@
 
     <div class="col-md-12">
 
-        <div class="box box-info box-solid">
+        <div class="box box-info box-solid2">
               <div class="box-header with-border">
                 <h3 class="box-title">Campañas</h3>
               </div>
@@ -146,10 +150,10 @@
                         <th>Lista de envio</th>
                         <th>Formulario destino</th>
                         <th>Estado</th>
-                        <th>Enviados</th>
-                        <th>Leidos</th>
-                        <th>Visitados</th>
-                        <th>Conversiones</th>
+                        <th class="text-center">Envios</th>
+                        <th class="text-center">Lecturas</th>
+                        <th class="text-center">Visitas</th>
+                        <th class="text-center">Conversiones</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -180,20 +184,20 @@
                               <td>
                                     <span class="" style="color: {{$status->color}}"><i class="fa {{$status->icon}}"></i>&nbsp;{{$status->name}}</span>
                               </td>
-                              <td class="text-center22">
+                              <td class="text-center">
                                     @if($c->type_id==3)
                                         {{$c->sentCount()}}
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                   @if($c->type_id==3)
                                       {{$c->seenCount()}}
                                   @endif
                               </td>
-                                <td>
+                                <td class="text-center">
                                   {{$c->views}}
                               </td>
-                                <td>
+                                <td class="text-center">
                                   {{$c->leadsCount()}}
                               </td>
                               <td class="text-right">
@@ -256,9 +260,28 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="box box-success box-solid">
+        <div class="box box-success box-solid2">
               <div class="box-header with-border">
                 <h3 class="box-title">Listas</h3>
+              </div>
+
+
+              <div class="box-header">
+
+                  <span>
+                      <input type="checkbox" class="grid-select-all">
+                      <div class="btn-group" style="margin-left: 8px">
+                          <a class="btn btn-sm btn-default">Acciones</a>
+                          <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li><a href="#" class="grid-batch-remove">Clonar</a></li>
+                          </ul>
+                      </div>
+                  </span>
+
               </div>
 
               <div class="box-body">
@@ -266,8 +289,11 @@
                   <table class="table no-margin">
                     <thead>
                     <tr>
+                        <th></th>
+                      <th>Tipo</th>
                       <th>Nombre</th>
-                      <th>Conversiones</th>
+                      <th>Criterio</th>
+                      <th class="text-center">Conversiones</th>
                       <th></th>
                     </tr>
                     </thead>
@@ -277,14 +303,25 @@
 
                             <tr>
                                 <td>
-                                    <a href="pages/examples/invoice.html"><i class="fa {{$l->type->icon}}"></i>&nbsp;{{$l->fullname}}</a>
+                                    @if(!$l->isTest())
+                                        <input type="checkbox" class="grid-row-checkbox" data-id="{{$l->id}}">
+                                    @endif
                                 </td>
-                                  <td>
+                                <td>
+                                    <i class="fa {{$l->type->icon}}"></i>&nbsp;{{$l->type->name}}
+                                </td>
+                                <td>
+                                    {{$l->fullname}}
+                                </td>
+                                <td>
+
+                                </td>
+                                  <td class="text-center">
                                     {{$l->leadsCount()}}
                                 </td>
                                 <td class="text-right">
                                     @if(!$l->isTest())
-                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
+                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Detalles</a>
                                         <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
                                     @endif
                                 </td>
@@ -300,7 +337,7 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-default btn-flat pull-left"><i class="fa fa-hand-lizard-o"></i>&nbsp;Nueva lista personalizada</a>
+                <a href="javascript:void(0)" class="btn btn-default btn-flat pull-left"><i class="fa fa-hand-lizard-o"></i>&nbsp;Nueva lista segmentada</a>
               </div>
 
         </div>
@@ -311,8 +348,38 @@
 
 <script type="text/javascript" data-exec-on-popstate>
 
+    var selectedRows = function () {
+        var selected = [];
+        $('.grid-row-checkbox:checked').each(function(){
+            selected.push($(this).data('id'));
+        });
+
+        return selected;
+    }
+
 
     $(function () {
+
+        $('.grid-row-checkbox').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChanged', function () {
+            if (this.checked) {
+                $(this).closest('tr').css('background-color', '#ffffd5');
+            } else {
+                $(this).closest('tr').css('background-color', '');
+            }
+        });
+
+
+        $('.grid-select-all').iCheck({checkboxClass:'icheckbox_minimal-blue'});
+
+        $('.grid-select-all').on('ifChanged', function(event) {
+            if (this.checked) {
+                $('.grid-row-checkbox').iCheck('check');
+            } else {
+                $('.grid-row-checkbox').iCheck('uncheck');
+            }
+        });
+
+
 
         bindButtons()
 

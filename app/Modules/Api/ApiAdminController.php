@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Modules\Form\FormTypeModel;
 use App\Modules\Event\EventModel;
 use App\Modules\User\UserListModel;
 use App\Modules\User\UserListTypeModel;
@@ -65,7 +66,12 @@ class ApiAdminController extends Controller{
         return UserListTypeModel::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
     }
 
+    public function formTypes(Request $request)
+    {
+        $q = $request->get('q');
 
+        return FormTypeModel::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
+    }
 
 
 

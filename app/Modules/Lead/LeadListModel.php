@@ -18,6 +18,10 @@ class LeadListModel extends \App\Models\Profiled
     protected $appends = ['fullname'];
 
 
+    protected $fillable = ['type_id', 'event_id', 'form_id', 'campaign_id'];
+
+
+
     public function campaigns()
     {
         return $this->belongsToMany(CampaignModel::class, 'campaign_leadlist', 'leadlist_id', 'campaign_id');
@@ -81,6 +85,24 @@ class LeadListModel extends \App\Models\Profiled
         }
 
     }
+
+
+    public function getName()
+    {
+
+        switch ($this->type_id) {
+            case 1:
+                return $this->event->name;
+            case 2:
+                return $this->form->name;
+            case 3:
+                return $this->campaign->name;
+            default:
+                return $this->name;
+        }
+
+    }
+
 
     // obtengo algun formulario ya sea el propio o el de su campaña
     public function getForm()

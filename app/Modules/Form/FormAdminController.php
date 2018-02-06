@@ -122,6 +122,27 @@ class FormAdminController extends Controller{
             $form->switch("enabled","Activo")->states($states)->value(1);
 
             $form->divide();
+            $form->html('<h3><i class="fa fa-list-alt"></i>&nbsp;¿Formulario o Página externa?</h3>');
+
+            // $states = [
+            //     'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
+            //     'off' => ['value' => 2, 'text' => 'NO', 'color' => 'default'],
+            // ];
+            // $form->switch("type_id","¿Es un formulario?")->states($states)->value(1);
+
+
+            $form->select('type_id','Tipo')->options(function ($id) {
+                $type = FormTypeModel::find($id);
+
+                if ($type) {
+                    return [$type->id => $type->name];
+                }
+            })->ajax('/admin/api/formtypes');
+
+
+            $form->text('redirect','URL de destino')->placeholder('Http://');
+
+            $form->divide();
             $form->html('<h3><i class="fa fa-list-alt"></i>&nbsp;Estilo del formulario</h3>');
 
             $form->image('cover_image','Imagen de portada')->help('1920px x 400px', 'fa-image')->uniqueName();;
@@ -164,7 +185,7 @@ class FormAdminController extends Controller{
                 'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
             ];
             $form->switch("adminmail_enabled","Activo")->states($states)->value(1);
-            $form->email('adminmail_to','E-mail')->placeholder('Casilla de mail que recibirá la notificación');
+            $form->text('adminmail_to','E-mail')->placeholder('Casilla de mail que recibirá la notificación');
 
 
             $form->divide();
@@ -176,22 +197,17 @@ class FormAdminController extends Controller{
 
             $form->saved(function ($form){
 
-                $event = EventModel::findOrFail($form->model()->event_id);
-
                // CREO LISTA ASOCIADA
+                if($form->type_id==1){
 
-               // $leadlist = new LeadListModel();
+                    $event = EventModel::findOrFail($form->model()->event_id);
 
-                $leadlist = LeadListModel::firstOrNew(['type_id' => 2, 'form_id' => $form->model()->id]);
+                    $leadlist = LeadListModel::firstOrNew(['type_id' => 2, 'form_id' => $form->model()->id]);
+                       $leadlist->form()->associate($form->model());
+                       $leadlist->event()->associate($event);
+                    $leadlist->save();
 
-                   // $leadlistType = LeadListTypeModel::find(2);
-                   // $leadlist->type()->associate($leadlistType);
-
-                   $leadlist->form()->associate($form->model());
-
-                   $leadlist->event()->associate($event);
-
-               $leadlist->save();
+               }
 
                 return redirect(route('events.manage',['eventid' => $event->id]));
 

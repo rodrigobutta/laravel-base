@@ -13,6 +13,7 @@ Route::group(['namespace' => '\App\Modules\Api'], function () {
         $router->any('api/userlists', ['as' => 'api.userlists', 'uses' => 'ApiAdminController@userLists']);
         $router->any('api/userlisttypes', ['as' => 'api.userlisttypes', 'uses' => 'ApiAdminController@userListTypes']);
         $router->any('api/events', ['as' => 'api.events', 'uses' => 'ApiAdminController@events']);
+        $router->any('api/formtypes', ['as' => 'api.formtypes', 'uses' => 'ApiAdminController@formTypes']);
 
     });
 

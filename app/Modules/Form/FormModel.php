@@ -35,6 +35,12 @@ class FormModel extends \App\Models\Profiled
         return $this->hasMany(LeadListModel::class, 'form_id')->where('type_id','=',2)->first();;
     }
 
+    public function type()
+    {
+        return $this->belongsTo(FormTypeModel::class, 'type_id');
+    }
+
+
     public function leadsCount()
     {
         return \DB::table("lead")

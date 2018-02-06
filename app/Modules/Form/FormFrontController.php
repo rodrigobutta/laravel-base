@@ -47,24 +47,6 @@ class FormFrontController extends Controller
 
         }
 
-        $schema = json_decode($item->schema);
-
-        $fields = $schema->fields;
-
-        foreach ($fields as &$field) {
-
-            if($field->type == 'select' && isset($field->nature) && $field->nature == 'userfield'){
-
-                $userfieldId = str_replace('userfield_','',$field->id_name);
-
-                $userfield = UserFieldModel::findOrFail($userfieldId);
-
-                $field->choices = $userfield->choices;
-
-            }
-        }
-
-
 
         // INCREMENTAR VIEWS
         $item->views = $item->views + 1;
@@ -111,6 +93,33 @@ class FormFrontController extends Controller
             $title = $item->event->name . ' - ' . $item->name;
             $description = '';
         }
+
+
+        if($item->type_id==2 && isset($item->redirect) && $item->redirect!=''){
+            return redirect($item->redirect);
+        }
+
+
+
+        $schema = json_decode($item->schema);
+
+        $fields = $schema->fields;
+
+        foreach ($fields as &$field) {
+
+            if($field->type == 'select' && isset($field->nature) && $field->nature == 'userfield'){
+
+                $userfieldId = str_replace('userfield_','',$field->id_name);
+
+                $userfield = UserFieldModel::findOrFail($userfieldId);
+
+                $field->choices = $userfield->choices;
+
+            }
+        }
+
+
+
 
         return view('form::front.view', compact('item', 'title', 'description', 'fields', 'schema','send'));
 
