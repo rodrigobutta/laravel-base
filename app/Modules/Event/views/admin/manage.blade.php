@@ -145,10 +145,10 @@
                         <th>Nombre</th>
                         <th>Lista de envio</th>
                         <th>Formulario destino</th>
-                        {{-- <th>Estado</th> --}}
-                        <th>Envios</th>
-                        <th>Lecturas</th>
-                        <th>Visitas</th>
+                        <th>Estado</th>
+                        <th>Enviados</th>
+                        <th>Leidos</th>
+                        <th>Visitados</th>
                         <th>Conversiones</th>
                         <th></th>
                     </tr>
@@ -156,6 +156,9 @@
                     <tbody>
 
                       @foreach($item->campaigns as $c)
+                        <?php
+                            $status = $c->getStatus();
+                        ?>
 
                           <tr>
                                 <td>
@@ -165,19 +168,27 @@
                                   <a href="pages/examples/invoice.html">{{$c->name}}</a>
                               </td>
                               <td>
-                                  <span class="label label-default">{{$c->getDestinaionLeadlist()->fullname}}</span>
+                                  <span class="label label-success">{{$c->getDestinaionLeadlist()->fullname}}</span>
+
+                                  @foreach($c->userlists as $u)
+                                    <span class="label label-primary">{{$u->name}}</span>
+                                  @endforeach
                               </td>
                               <td>
                                   <span class="label label-default">{{$c->getForm()->name}}</span>
                               </td>
-                              {{-- <td>
-                                  <span class="label label-default">Sin determinar</span>
-                              </td> --}}
+                              <td>
+                                    <span class="" style="color: {{$status->color}}"><i class="fa {{$status->icon}}"></i>&nbsp;{{$status->name}}</span>
+                              </td>
                               <td class="text-center22">
-                                  0
+                                    @if($c->type_id==3)
+                                        {{$c->sentCount()}}
+                                    @endif
                                 </td>
                                 <td>
-                                  0
+                                  @if($c->type_id==3)
+                                      {{$c->seenCount()}}
+                                  @endif
                               </td>
                                 <td>
                                   {{$c->views}}
@@ -187,11 +198,27 @@
                               </td>
                               <td class="text-right">
 
-                                    @if($c->type_id>1)
+                                    @if($c->type_id==2)
                                         <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
                                         <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
-                                        <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Enviar</a>
+                                        <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Compartir</a>
                                     @endif
+
+                                    @if($c->type_id==3)
+
+                                        @if($status->id!=3)
+                                            <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
+                                            <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
+                                        @else
+                                            <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-default btn-sm btn-flat" data-id="{{$c->id}}">Detalles</a>
+                                        @endif
+
+                                        @if($status->id==2)
+                                            <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Enviar</a>
+                                        @endif
+
+                                    @endif
+
                               </td>
 
                           </tr>
@@ -226,15 +253,7 @@
 </div>
 
 
-
-
-
-
-
-
 <div class="row">
-
-
     <div class="col-md-12">
 
         <div class="box box-success box-solid">
@@ -287,7 +306,6 @@
         </div>
 
     </div>
-
 </div>
 
 

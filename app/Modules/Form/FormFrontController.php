@@ -15,13 +15,12 @@ use MP;
 use App\Modules\Form\FormRepositoryInterface;
 use App\Modules\Lead\LeadRepositoryInterface;
 use App\Modules\Campaign\CampaignRepositoryInterface;
-
+use App\Modules\Campaign\CampaignModel;
+use App\Modules\UserField\UserFieldModel;
+use App\Modules\Campaign\SendModel;
 
 use Illuminate\Support\MessageBag;
 
-use App\Modules\Campaign\CampaignModel;
-
-use App\Modules\UserField\UserFieldModel;
 
 class FormFrontController extends Controller
 {
@@ -72,6 +71,19 @@ class FormFrontController extends Controller
         $item->timestamps = false;
         $item->save(['updated_at' => false]);
 
+        // si viene con parametro de envio (Desde un mail) lo marco como CTA
+        if($request->has('s')){
+            $send = SendModel::whereId($request->get('s'))->first();
+            if(!is_null($send)) {
+                // $send = SendModel::find($request->get('s'));
+                $send->cta_at = Carbon::now();
+                $send->save();
+            }
+        }
+        else{
+            $send = null;
+        }
+
 
         // RECONOCIMIENTO DE CAMPAÑA PARA INCREMENTAR SUS VIEWS
         if($request->has('campaign')){
@@ -100,7 +112,7 @@ class FormFrontController extends Controller
             $description = '';
         }
 
-        return view('form::front.view', compact('item', 'title', 'description', 'fields', 'schema'));
+        return view('form::front.view', compact('item', 'title', 'description', 'fields', 'schema','send'));
 
     }
 
@@ -143,6 +155,20 @@ class FormFrontController extends Controller
             $lead = $this->lead->put($fields,$form->id);
 
         }
+
+
+        // si el formulario viene de un mail de campa@a, seguro tenga el parametro s, que se imprime como hidden de send_id, si existe, aviso al send que fue eficaz
+        if($request->has('send_id')){
+            $send = SendModel::whereId($request->get('send_id'))->first();
+            if(!is_null($send)) {
+                // $send = SendModel::find($request->get('s'));
+                $send->completed_at = Carbon::now();
+                $send->save();
+            }
+        }
+
+
+
 
 
         $errors = '';

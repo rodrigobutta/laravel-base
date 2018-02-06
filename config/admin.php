@@ -141,7 +141,7 @@ return [
     |---------------------------------------------------------|
      */
     // 'layout'  => ['sidebar-mini', 'fixed'],
-    'layout'  => ['sidebar-mini',  'fixed'],
+    'layout'  => ['sidebar-collapse',  'fixed'],
 
     /*
      * Version displayed in footer.

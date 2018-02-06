@@ -1,88 +1,100 @@
 
-
-<div class="row" >
-
-	<div class="col-md-6" data-bind="with: form">
-
-		<div class="box box-default box-solid">
-		    <div class="box-header with-border">
-		        <h3 class="box-title">Campos Activos</h3>
-		        <div class="box-tools">
-
-					<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" aria-expanded="true">Agregar Campo<span class="caret"></span></button>
-					<ul class="dropdown-menu test" role="menu" aria-labelledby="menu1" data-bind="click: $root.addField">
-
-
-                        @foreach($userFields as $field)
-                          <li role="presentation"><a role="menuitem" href="javascript:void(0);" data-nature="userfield" data-type="{{$field->type}}" data-schema='{{$field->getSchema()}}'>{{$field->name}}</a></li>
-                        @endforeach
-
-
-						<li role="presentation" class="divider"></li>
-
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="text">Single Line Text</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="number">Number</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="textarea">Paragraph Text</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="checkbox">Checkboxes</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="select">Dropdown</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="radio">Radio Buttons</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="tel">Telephone #</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="url">URL</a></li>
-						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="date">Date</a></li>
-
-					</ul>
-
-		        </div>
-		    </div>
-		    <div class="box-body">
-
-				{{-- <span data-bind="ifnot: hide_intro"></span> --}}
-				<form data-bind="sortable: {template: &#39;tmpl-field-preview&#39;, data: fields}" class="form-stacked form-builder-preview ko_container ui-sortable">
-				</form>
-				<div data-bind="ifnot: hasFields">
-			    	El formulario aun no tiene campos
-			    </div>
-
-			</div>
-		</div>
-
-	</div>
-
-
-
-	<div class="col-md-6 tab-v1 form_builder_general" id="left-tabs">
-		<ul class="nav nav-tabs" data-bind="tab: $root.currentTab">
-			{{-- <li class=""><a href="#add-field-pane" data-toggle="tab" aria-expanded="false">Add Field</a></li> --}}
-			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Porpiedades del Campo</a></li>
-			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Estilo del Formulario</a></li>
-		</ul>
-		<div class="tab-content">
-			{{-- <div class="tab-pane active" id="add-field-pane">
-				<div data-bind="template: &#39;tmpl-add-field&#39;">
-				</div>
-			</div> --}}
-			<div class="tab-pane" id="field-settings-pane">
-				<div data-bind="template: {name: &#39;tmpl-field-settings&#39;, data: selectedField }">
-				</div>
-			</div>
-			<div class="tab-pane" id="form-settings-pane">
-				<div data-bind="template: {name: &#39;tmpl-form&#39;, data: form }">
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-</div>
-
-<div class="row" >
-
-    <div class="col-md-12" data-bind="with: form">
-        <button type="button" class="btn btn-primary pull-right22" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Aceptar</button>&nbsp;
-        <button type="button" class="btn btn-default pull-right22" onclick="history.back()">Cancelar</button>&nbsp;
+<div class="box box-primary22 box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">Editor de Campos y Estilo</h3>
+        <div class="box-tools pull-right">
+          {{-- <span class="label label-danger">Algun alerta??</span> --}}
+          {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> --}}
+          {{-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> --}}
+        </div>
     </div>
+    <div class="box-body">
 
+
+        <div class="row" >
+
+        	<div class="col-md-6" data-bind="with: form">
+
+        		<div class="box box-default box-solid">
+        		    <div class="box-header with-border">
+        		        <h3 class="box-title">Campos Activos</h3>
+        		        <div class="box-tools">
+
+        					<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" aria-expanded="true">Agregar Campo<span class="caret"></span></button>
+        					<ul class="dropdown-menu test" role="menu" aria-labelledby="menu1" data-bind="click: $root.addField">
+
+
+                                @foreach($userFields as $field)
+                                  <li role="presentation"><a role="menuitem" href="javascript:void(0);" data-nature="userfield" data-type="{{$field->type}}" data-schema='{{$field->getSchema()}}'>{{$field->name}}</a></li>
+                                @endforeach
+
+
+        						<li role="presentation" class="divider"></li>
+
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="text">Single Line Text</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="number">Number</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="textarea">Paragraph Text</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="checkbox">Checkboxes</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="select">Dropdown</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="radio">Radio Buttons</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="tel">Telephone #</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="url">URL</a></li>
+        						<li role="presentation"><a role="menuitem" href="javascript:void(0);" data-type="date">Date</a></li>
+
+        					</ul>
+
+        		        </div>
+        		    </div>
+        		    <div class="box-body">
+
+        				{{-- <span data-bind="ifnot: hide_intro"></span> --}}
+        				<form data-bind="sortable: {template: &#39;tmpl-field-preview&#39;, data: fields}" class="form-stacked form-builder-preview ko_container ui-sortable">
+        				</form>
+        				<div data-bind="ifnot: hasFields">
+        			    	El formulario aun no tiene campos
+        			    </div>
+
+        			</div>
+        		</div>
+
+        	</div>
+
+
+
+        	<div class="col-md-6 tab-v1 form_builder_general" id="left-tabs">
+        		<ul class="nav nav-tabs" data-bind="tab: $root.currentTab">
+        			{{-- <li class=""><a href="#add-field-pane" data-toggle="tab" aria-expanded="false">Add Field</a></li> --}}
+        			<li class=""><a href="#field-settings-pane" data-toggle="tab" aria-expanded="false">Porpiedades del Campo</a></li>
+        			<li class="active"><a href="#form-settings-pane" data-toggle="tab" aria-expanded="true">Estilo del Formulario</a></li>
+        		</ul>
+        		<div class="tab-content">
+        			{{-- <div class="tab-pane active" id="add-field-pane">
+        				<div data-bind="template: &#39;tmpl-add-field&#39;">
+        				</div>
+        			</div> --}}
+        			<div class="tab-pane" id="field-settings-pane">
+        				<div data-bind="template: {name: &#39;tmpl-field-settings&#39;, data: selectedField }">
+        				</div>
+        			</div>
+        			<div class="tab-pane" id="form-settings-pane">
+        				<div data-bind="template: {name: &#39;tmpl-form&#39;, data: form }">
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+
+
+        </div>
+
+    </div>
+    <div class="box-footer">
+        <div class="pull-right">
+            <button type="button" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Guardar</button>&nbsp;
+            <button type="button" class="btn btn-default" onclick="history.back()">Cerrar</button>&nbsp;
+        </div>
+    </div>
 </div>
+
 
 
 {{-- script form --}}

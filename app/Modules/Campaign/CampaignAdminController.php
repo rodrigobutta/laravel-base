@@ -89,7 +89,11 @@ class CampaignAdminController extends Controller{
             $item = new CampaignModel();
             $item->name = $request->get("name");;
             $item->form_id = $request->get("form_id");
+
             $item->destination_leadlist_id = $request->get("destination_leadlist_id");
+
+            $item->userlists()->sync($request->get("userlists"));
+
             $this->campaignRepository->create($item,$request->get("event_id"),$request->get("type_id"));
 
         }
@@ -97,7 +101,11 @@ class CampaignAdminController extends Controller{
 
             $item = CampaignModel::findOrFail($id);
             $item->form_id = $request->get("form_id");
+
             $item->destination_leadlist_id = $request->get("destination_leadlist_id");
+
+            $item->userlists()->sync($request->get("userlists"));
+
             $item->name = $request->get("name");
             $item->slug = @str_slug($request->get("slug"));
 
@@ -202,7 +210,7 @@ class CampaignAdminController extends Controller{
             'title' => $subject,
             'url' => $item->link(),
             'content' => $item->social_description,
-            'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
+            'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image, //****** convertir esto a imagenes del mail
             'bottomimage' => env('APP_URL') . '/storage/admin/' . $item->form->footer_image
         ];
 
@@ -233,21 +241,73 @@ class CampaignAdminController extends Controller{
             'title' => $subject,
             'url' => $item->link(),
             'content' => $item->social_description,
-            'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
-            'bottomimage' => env('APP_URL') . '/storage/admin/' . $item->form->footer_image
+            // 'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
+            // 'bottomimage' => env('APP_URL') . '/storage/admin/' . $item->form->footer_image
+            'topimage' => '',
+            'bottomimage' => ''
         ];
 
-        $sentCnt = 0;
-        $recipents = [];
-        foreach ($item->getDestinaionLeadlist()->leads as $lead) {
 
-            // si no encuentro el email en el lead (userfield_1), no puedo agregarlo al envio
-            if($email=$lead->getEmail()){
-                $recipents[$email] = $lead->getFieldsArray();
-                $sentCnt++;
+        $recipents = [];
+
+        // vamos con la lista de leads
+        if($item->destinationLeadlist){
+
+            foreach ($item->destinationLeadlist->leads as $lead) {
+
+                // si no encuentro el email en el lead (userfield_1), no puedo agregarlo al envio
+                if($email=$lead->getEmail()){
+
+                    $send = new SendModel();
+                    $send->campaign_id = $item->id;
+                    $send->lead_id = $lead->id;
+                    $send->email = $email;
+                    $send->created_at = Carbon::now();
+                    $send->save();
+
+                    $recipents[$email] = $lead->getFieldsArray();
+                    $recipents[$email]['pixel'] = route('campaign.pixel',["sendId" => $send->id]) ;
+                    $recipents[$email]['cta'] =  $item->link($send->id);
+
+                }
+
             }
 
         }
+        else{
+            // vamos con la lista de usuarios
+
+            foreach ($item->userlists as $u) {
+
+                foreach ($u->users as $user) {
+
+                    // si no encuentro el email en el lead (userfield_1), no puedo agregarlo al envio
+                    if($email=$user->getEmail()){
+
+                        $send = new SendModel();
+                        $send->campaign_id = $item->id;
+                        $send->user_id = $user->id;
+                        $send->email = $email;
+                        $send->created_at = Carbon::now();
+                        $send->save();
+
+                        $recipents[$email] = $user->getFieldsArray();
+                        $recipents[$email]['pixel'] = route('campaign.pixel',["sendId" => $send->id]) ;
+                        $recipents[$email]['cta'] =  $item->link($send->id);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        $sentCnt = sizeof($recipents);
+
+        // var_dump($recipents);
+        // exit();
 
         \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
             $message
@@ -264,5 +324,21 @@ class CampaignAdminController extends Controller{
 
 
 
+
+    public function details($itemId){
+
+        $item = CampaignModel::findOrFail($itemId);
+
+        return Admin::content(function (Content $content) use($item){
+
+            $content->header($item->name);
+
+            $content->row(
+                view('campaign::admin.details', compact('item'))->render()
+            );
+
+        });
+
+    }
 
 }

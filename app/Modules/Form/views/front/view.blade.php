@@ -81,6 +81,10 @@
             <div class="form-wrapper">
                 <form method="POST" class="form-inline22 {!! $schema->label_orientation !!}" id="form">
 
+                    @if($send)
+                        <input type="hidden" name="send_id" value="{{$send->id}}" />
+                    @endif
+
                     @foreach($fields as $field)
 
                         <div class="form-group {!! $schema->corner_style !!} control-group">

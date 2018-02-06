@@ -18,12 +18,14 @@
        <tr>
          <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;font-size: 16px; font-family: Arial">
 
-                {!!$content!!}
+            {!!$content!!}
+
+            <a href="{{$url}}" target="_blank">Formulario</a>
+
+            <img src="%recipient.pixel%" alt="" >
 
 
-                  <a href="{{$url}}" target="_blank">Formulario</a>
-
-
+            <a href="%recipient.cta%" target="_blank">Ir al Formulario</a>
 
          </td>
        </tr>

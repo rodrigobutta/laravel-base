@@ -37,6 +37,7 @@ class UserModel extends \App\Models\Profiled
 
             $item = new \stdClass();
             $item->key = $field->id;
+            $item->slug = $field->slug;
             $item->title = $field->name;
 
             if($field->type=='select'){
@@ -51,6 +52,39 @@ class UserModel extends \App\Models\Profiled
         }
 
         return $res;
+    }
+
+
+    public function getFieldsArray()
+    {
+            ///******************* aca tengo que hacer lo mismo que con el lead
+
+        $fields = [];
+
+        foreach ($this->getFields() as $f) {
+            $fields[$f->slug] = $f->value;
+        }
+
+        $fixedFields = UserFieldModel::whereFixed(1)->get();
+
+        foreach ($fixedFields as $f) {
+            $fields[$f->slug] = $this->getAttribute($f->fixed_field_name);
+        }
+
+        return $fields;
+    }
+
+
+    public function getEmail()
+    {
+
+        if(isset($this->email) && isset($this->email) != ''){
+            return $this->email;
+        }
+        else{
+            return false;
+        }
+
     }
 
 

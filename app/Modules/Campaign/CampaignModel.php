@@ -8,6 +8,7 @@ use App\Modules\User\UserListModel;
 use App\Modules\Event\EventModel;
 use App\Modules\Form\FormModel;
 use App\Modules\Lead\LeadListModel;
+use App\Modules\Campaign\SendModel;
 
 class CampaignModel extends \App\Models\Profiled
 {
@@ -27,6 +28,10 @@ class CampaignModel extends \App\Models\Profiled
         return LeadListModel::where('campaign_id','=',$this->id)->where('type_id','=',3)->first();
     }
 
+    public function sends()
+    {
+        return $this->hasMany(SendModel::class, 'campaign_id');
+    }
 
     public function event()
     {
@@ -38,10 +43,38 @@ class CampaignModel extends \App\Models\Profiled
         return $this->belongsTo(FormModel::class, 'form_id');
     }
 
-
     public function type()
     {
         return $this->belongsTo(CampaignTypeModel::class, 'type_id');
+    }
+
+    public function getStatus()
+    {
+
+        if($this->type_id < 3){
+            return CampaignStatusModel::find(3);
+        }
+        else{
+
+
+            if($this->sentCount() > 0){
+                return CampaignStatusModel::find(3);
+            }
+            else{
+
+                if(($this->leadlist() || $this->userlists) && $this->social_title!='' && $this->social_description!=''){
+                    return CampaignStatusModel::find(2);
+                }
+                else{
+                    return CampaignStatusModel::find(1);
+                }
+
+            }
+
+
+        }
+
+        // return $this->belongsTo(CampaignStatusModel::class, 'status_id');
     }
 
 
@@ -78,6 +111,24 @@ class CampaignModel extends \App\Models\Profiled
     }
 
 
+    public function sentCount()
+    {
+        return \DB::table("send")
+        ->select(\DB::raw("COUNT(*) as count_row"))
+        ->where('campaign_id','=',$this->id)
+        ->pluck('count_row')->first();
+    }
+
+    public function seenCount()
+    {
+        return \DB::table("send")
+        ->select(\DB::raw("COUNT(*) as count_row"))
+        ->where('campaign_id','=',$this->id)
+        ->whereNotNull('seen_at')
+        ->pluck('count_row')->first();
+    }
+
+
     public function leadsCount()
     {
         return \DB::table("lead")
@@ -87,11 +138,11 @@ class CampaignModel extends \App\Models\Profiled
     }
 
 
-    public function link()
+    public function link($sendId=0)
     {
 
         if($this->form){
-            return route('forms.view', ['eventSlug' => $this->event->slug, 'formSlug' => $this->form->slug, 'campaign' => $this->slug]);
+            return route('forms.view', ['eventSlug' => $this->event->slug, 'formSlug' => $this->form->slug, 'campaign' => $this->slug, 's' => $sendId]);
         }
         else{
             return '';
@@ -113,5 +164,14 @@ class CampaignModel extends \App\Models\Profiled
         return urlencode($this->event->name . ' - ' . $this->form->name);
 
     }
+
+
+    // public function status()
+    // {
+
+    //     // if()
+
+    // }
+
 
 }

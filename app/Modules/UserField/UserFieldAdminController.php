@@ -99,6 +99,7 @@ class UserFieldAdminController extends Controller{
 			$grid->id('ID');
 
 			$grid->column('name', 'Nombre');
+            $grid->column('slug', 'Código');
 			$grid->column('title', 'Etiqueta');
 
 			$grid->column('type')->display(function () {
@@ -120,6 +121,7 @@ class UserFieldAdminController extends Controller{
 			$form->display('id', 'ID');
 
 			$form->text('name', 'Nombre');
+            $form->text('slug', 'Código');
 			$form->text('title', 'Etiqueta');
 
 			$form->select('type', 'Tipo')->options($form->model()->getFieldTypes());

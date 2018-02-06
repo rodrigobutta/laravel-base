@@ -3,8 +3,9 @@ use Illuminate\Routing\Router;
 
 Route::group(['namespace' => '\App\Modules\Campaign'], function () {
 
-    // Route::any('campaignsroot', ['as' => 'campaign.index', 'uses' => 'CampaignFrontController@getList']);
-    // Route::any('campaigns/{mslug?}', ['as' => 'campaign.view', 'uses' => 'CampaignFrontController@getView'])->where('mslug', '(.*)');
+
+    Route::any('campaign/pixel/{sendId}', ['as' => 'campaign.pixel', 'uses' => 'CampaignFrontController@getPixel']);
+
 
     Route::group([
         'middleware' => config('admin.route.middleware'),
@@ -35,7 +36,7 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         $router->post('campaigns/{itemId}/process', ['as' => 'campaigns.process', 'uses' => 'CampaignAdminController@processMails']);
         $router->post('campaigns/{itemId}/process/test', ['as' => 'campaigns.process.test', 'uses' => 'CampaignAdminController@processTestMail']);
 
-
+        $router->get('campaigns/{itemId}/details', ['as' => 'campaigns.details', 'uses' => 'CampaignAdminController@details']);
     });
 
 });

@@ -228,7 +228,7 @@ class FormAdminController extends Controller{
 
 		return Admin::content(function (Content $content) use($item){
 
-			$content->header($item->name);
+			$content->header($item->fullname);
 			// $content->description('editando');
 
 			$schema = $item->schema;

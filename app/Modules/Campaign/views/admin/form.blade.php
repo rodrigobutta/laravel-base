@@ -5,99 +5,85 @@
     <input type="hidden" name="event_id" value="{{$item->event_id}}"/>
     <input type="hidden" name="type_id" value="{{$item->type_id}}"/>
 
-    {{-- <div class="box-body"> --}}
-        @if($item->event_id!=0)
+
+    <h3>Propiedades</h3>
+    <p>El nombre de la campaña se usa de forma interna para identificar a la campaña dentro del administrador y el <strong>código</strong> es lapalabra que se utilizará en los links para identificar el origen de los mismos con la campaña</p>
+
+    <div class="fields-group">
+
+        <div class="form-group">
+            <label for="name" class="col-sm-4 control-label">Nombre</label>
+            <div class="col-sm-8">
+                <input type="text" id="name" name="name" value="{{$item->name}}" class="form-control name" placeholder="" autofocus style="width: 100%;"/>
+            </div>
+        </div>
+
+        @if($item->id!=0)
+
             <div class="form-group">
-                <label class="col-sm-2 control-label">Dentro de</label>
-                <div class="col-sm-10 text-primary" style="padding-top: 7px;">
-                   {{$item->event->name}}
+                <label for="name" class="col-sm-4 control-label">Código</label>
+                <div class="col-sm-8">
+                    <input type="text" id="slug" name="slug" value="{{$item->slug}}" class="form-control" placeholder="" autofocus style="width: 100%;"/>
                 </div>
             </div>
+
         @endif
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Tipo</label>
-            <div class="col-sm-10 text-primary" style="padding-top: 7px;">
-               {{$item->type->name}}
-            </div>
-        </div>
-
-        <div class="fields-group">
-
-            <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Nombre</label>
-                <div class="col-sm-10">
-                    {{-- <div class="input-group"> --}}
-                        {{-- <span class="input-group-addon"><i class="fa fa-pencil"></i></span> --}}
-                        <input type="text" id="name" name="name" value="{{$item->name}}" class="form-control name" placeholder="" autofocus style="width: 100%;"/>
-                    {{-- </div> --}}
-                </div>
-            </div>
-
-            @if($item->id!=0)
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Slug</label>
-                    <div class="col-sm-10">
-                        {{-- <div class="input-group"> --}}
-                            {{-- <span class="input-group-addon"><i class="fa fa-pencil"></i></span> --}}
-                            <input type="text" id="slug" name="slug" value="{{$item->slug}}" class="form-control" placeholder="" autofocus style="width: 100%;"/>
-                        {{-- </div> --}}
-                    </div>
-                </div>
-
-            @endif
-
-        </div>
-
-        <div class="form-group">
-            <label for="destination_leadlist_id" class="col-sm-2 control-label">Lista de envio</label>
-            <div class="col-sm-10">
-                <select class="form-control destination_leadlist_id" style="width: 100%;" name="destination_leadlist_id">
-                    <option value="{{$item->getDestinaionLeadlist()->id}}" selected>{{$item->getDestinaionLeadlist()->fullname}}</option>
-                    @foreach($item->event->leadlists as $l)
-                        @if($item->destination_leadlist_id!=$l->id && !$l->isTest())
-                            <option value="{{$l->id}}">{{$l->fullname}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label for="type_id" class="col-sm-2 control-label">Formulario de destino</label>
-            <div class="col-sm-10">
-                <select class="form-control form_id" style="width: 100%;" name="form_id">
-                    <option value="{{$item->getForm()->id}}" selected>{{$item->getForm()->name}}</option>
-                    @foreach($forms as $form)
-                        @if($item->form_id!=$form->id)
-                            <option value="{{$form->id}}">{{$form->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-
-
-   {{--  </div>
-
-    <div class="box-footer">
-
-
-        <div class="2">
-
-        </div>
-        <div class="8">
-
-            <div class="btn-group pull-right">
-                <button type="submit" class="btn btn-info pull-right" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Enviar">Enviar</button>
-            </div>
-
-        </div>
-
     </div>
- --}}
+
+    <h3>Origen</h3>
+    <p>Seleccione desde donde se van a tomar las personas a enviar. El origen puede ser una lista de conversiones previas en el evento o bien, una lista de usuarios unificados. (no ambas)</p>
+
+    <div class="form-group">
+        <label for="destination_leadlist_id" class="col-sm-4 control-label">Lista</label>
+        <div class="col-sm-8">
+            <select class="form-control destination_leadlist_id" style="width: 100%;" name="destination_leadlist_id">
+                @if($item->destinationLeadlist)
+                    <option value="{{$item->destinationLeadlist->id}}" selected>{{$item->destinationLeadlist->fullname}}</option>
+                @endif
+                @foreach($item->event->leadlists as $l)
+                    <option value="">- ninguna -</option>
+                    @if($item->destination_leadlist_id!=$l->id && !$l->isTest())
+                        <option value="{{$l->id}}">{{$l->fullname}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="userlists" class="col-sm-4 control-label">Listas de Usuario</label>
+        <div class="col-sm-8">
+            <select class="form-control userlists" style="width: 100%;" name="userlists[]" multiple="multiple" >
+                @foreach($item->userlists as $u)
+                    <option value="{{$u->id}}" selected>{{$u->name}}</option>
+                @endforeach
+                @foreach(getUserlists()->diff($item->userlists) as $u)
+                    <option value="{{$u->id}}">{{$u->name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+
+    <h3>Destino</h3>
+    <p>Este elemento es opcional, ya que puede haber E-mails que tengan un CTA hacia un formulario o bien, pueden ser sólo informativos, en cuyo caso este campo deberá quedar vacio</p>
+
+    <div class="form-group">
+        <label for="type_id" class="col-sm-4 control-label">Formulario</label>
+        <div class="col-sm-8">
+            <select class="form-control form_id" style="width: 100%;" name="form_id">
+                <option value="">- ninguno -</option>
+                <option value="{{$item->getForm()->id}}" selected>{{$item->getForm()->name}}</option>
+                @foreach($forms as $form)
+                    @if($item->form_id!=$form->id)
+                        <option value="{{$form->id}}">{{$form->name}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+
 {!! Form::close() !!}
 
 <script data-exec-on-popstate>
@@ -124,6 +110,11 @@
 
     function fieldComponents(){
 
+
+        $(".userlists").select2({
+            allowClear: true,
+            placeholder: ""
+        });
 
 
     }

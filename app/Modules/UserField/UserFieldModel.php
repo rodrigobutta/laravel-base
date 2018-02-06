@@ -31,7 +31,14 @@ class UserFieldModel extends \App\Models\Profiled
             return $this->fieldTypes;
         }
         else{
-            return $this->fieldTypes[$key];
+
+            if(isset($this->fieldTypes[$key])){
+                return $this->fieldTypes[$key];
+            }
+            else{
+                return '(phone)';
+            }
+
         }
 
     }

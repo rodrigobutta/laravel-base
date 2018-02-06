@@ -16,6 +16,10 @@ class FormModel extends \App\Models\Profiled
 
     protected $table = 'form';
 
+
+    protected $appends = ['fullname'];
+
+
     public function userlists()
     {
         return $this->belongsToMany(UserListModel::class, 'form_userlist', 'form_id', 'userlist_id');
@@ -49,6 +53,15 @@ class FormModel extends \App\Models\Profiled
         }
 
         return $res;
+    }
+
+
+
+    public function getFullnameAttribute()
+    {
+
+        return $this->event->name . ' - ' . $this->name;
+
     }
 
 

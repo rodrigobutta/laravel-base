@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Modules\User\UserListModel;
+
+
 use Jenssegers\Agent\Agent as Agent;
 
 // traducir texto
@@ -81,7 +84,11 @@ function getFixedFieldsCollection(){
 
 
 
+function getUserlists(){
 
+    return UserListModel::all();
+
+}
 
 
 

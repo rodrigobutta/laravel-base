@@ -9,28 +9,27 @@
     <div class="fields-group">
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">Campaña</label>
-            <div class="col-sm-10 text-primary">
-               {{$item->form->name}} > {{$item->name}}
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Lista de destino</label>
-            <div class="col-sm-10 text-primary">
-               {{$item->getDestinaionLeadlist()->fullname }}
-            </div>
-        </div>
-
-
-        <div class="form-group">
             <label class="col-sm-2 control-label">Campos disponibles</label>
             <div class="col-sm-10 text-primary">
 
                <ul class="list-unstyled">
-                   @foreach($item->getDestinaionLeadlist()->getFields() as $f)
-                       <li data-id="{{$f->id_name}}">{{$f->title}}&nbsp;&rArr;&nbsp;<code>%recipient.{{$f->id_name}}%</code></li>
-                   @endforeach
+
+                    @if($item->destinationLeadlist)
+
+                       @foreach($item->destinationLeadlist->getFields() as $f)
+                           <li data-id="{{$f->id_name}}">{{$f->title}}&nbsp;&rArr;&nbsp;<code>%recipient.{{$f->id_name}}%</code></li>
+                       @endforeach
+
+                    @else
+
+                        @foreach($item->userlists as $u)
+                            @foreach($u->getFields() as $f)
+                                <li data-id="{{$f->slug}}">{{$f->title}}&nbsp;&rArr;&nbsp;<code>%recipient.{{$f->slug}}%</code></li>
+                            @endforeach
+                        @endforeach
+
+                    @endif
+
 
                </ul>
 
