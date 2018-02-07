@@ -163,7 +163,7 @@ class CampaignAdminController extends Controller{
     }
 
 
-    protected function configSave(Request $request)
+    protected function configSocialSave(Request $request)
     {
         $id = $request->get("campaign_id");
 
@@ -180,6 +180,8 @@ class CampaignAdminController extends Controller{
         ]);
 
     }
+
+
 
 
     protected function process($itemId){
@@ -302,35 +304,30 @@ class CampaignAdminController extends Controller{
 
         $item = CampaignModel::findOrFail($itemId);
 
-
         return Admin::content(function (Content $content) use($item){
 
             $content->header($item->name);
 
             $content->row(
-                view('campaign::admin.template', compact('item'))->render()
+                view('campaign::admin.form-mail-template', compact('item'))->render()
             );
 
         });
 
-        // return view('campaign::admin.template', compact('item'))->render();
-
     }
-
-
-
-
 
     protected function templateSave(Request $request)
     {
         $id = $request->get("id");
-        $html = $request->get("html");
-
         $item = CampaignModel::findOrFail($id);
 
-        // dd($html);
+        $mail_html = $request->get("mail_html");
+        $mail_code = $request->get("mail_code");
+        $mail_subject = $request->get("mail_subject");
 
-        $item->social_description = $html;
+        $item->mail_html = $mail_html;
+        $item->mail_code = $mail_code;
+        $item->mail_subject = $mail_subject;
 
         $item->save();
 

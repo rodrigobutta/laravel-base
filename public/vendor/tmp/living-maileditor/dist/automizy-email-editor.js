@@ -4322,31 +4322,31 @@
 
 
 
-            $AEE.elements.$blockList.stop().animate({
-                width: leftBoxSize + 'px',
-                maxWidth: leftBoxSize + 'px'
-            }, animationTime);
-            if(editorWidth === false) {
-                $AEE.elements.$editor.stop().animate({
-                    left: leftBoxSize + 'px',
-                    width: x - leftBoxSize - rightBoxSize - 40 + 'px'
-                }, animationTime);
-            }else{
-                $AEE.elements.$editor.stop().animate({
-                    left: editorPosition + 'px',
-                    width: editorWidth + 'px'
-                }, animationTime);
-            }
-            $AEE.elements.$blockSettings.stop().animate({
-                right: rightBoxPosition + 'px',
-                width: rightBoxSize + 'px'
-            }, animationTime);
-            $AEE.elements.$blocksIcon.stop().animate({
-                left: blocksIconPosition + 'px'
-            }, animationTime);
-            $AEE.elements.$settingsIcon.stop().animate({
-                right: settingsIconPosition + 'px'
-            }, animationTime);
+            // $AEE.elements.$blockList.stop().animate({
+            //     width: leftBoxSize + 'px',
+            //     maxWidth: leftBoxSize + 'px'
+            // }, animationTime);
+            // if(editorWidth === false) {
+            //     $AEE.elements.$editor.stop().animate({
+            //         left: leftBoxSize + 'px',
+            //         width: x - leftBoxSize - rightBoxSize - 40 + 'px'
+            //     }, animationTime);
+            // }else{
+            //     $AEE.elements.$editor.stop().animate({
+            //         left: editorPosition + 'px',
+            //         width: editorWidth + 'px'
+            //     }, animationTime);
+            // }
+            // $AEE.elements.$blockSettings.stop().animate({
+            //     right: rightBoxPosition + 'px',
+            //     width: rightBoxSize + 'px'
+            // }, animationTime);
+            // $AEE.elements.$blocksIcon.stop().animate({
+            //     left: blocksIconPosition + 'px'
+            // }, animationTime);
+            // $AEE.elements.$settingsIcon.stop().animate({
+            //     right: settingsIconPosition + 'px'
+            // }, animationTime);
 
             /*
             var h = y - 53;
@@ -4394,7 +4394,7 @@
             }
             if($(event.target).closest('#aee-editor').length > 0) {
                 $AEE.saved = false;
-                if ($AEE.screenSize()['x'] < 800) {
+                if ($AEE.screenSize()['x'] < 800) { // ** REB reb
                     $AEE.settingsShowed = false;
                     $AEE.blocksShowed = false;
                     $AEE.setLayoutByDisplay();
@@ -5100,11 +5100,11 @@
                 fadeTime = func;
             }
             $AEE.ready(function() {
-                $AEE.d.bodyOverflow = $('body').css('overflow');
+                // $AEE.d.bodyOverflow = $('body').css('overflow');
             });
             $AEE.layoutReady(function() {
                 if ($AEE.d.functions.open.apply($AEE, [$AEE]) !== false) {
-                    $('body').css('overflow', 'hidden');
+                    // $('body').css('overflow', 'hidden');
                     $AEE.widget().css({
                         width:'100%',
                         display:'block',
@@ -5148,39 +5148,25 @@
 
 
 
-    $AEE.save = function(func){
+    // $AEE.save = function(func){
 
-        console.log('salvando')
-        // console.log($AEE.getHtmlCode({conditions:false}))
-        // if (typeof func === 'function') {
-        //     $AEE.d.functions.save = func;
-        // } else {
-        //     $AEE.showSaveMessage();
-        //     return $AEE.d.functions.save.apply($AEE, [{
-        //         editorCode:$AEE.getEditorCode(),
-        //         htmlCode:$AEE.getHtmlCode(),
-        //         title:$AEE.title(),
-        //         maxWidth:$AEE.maxWidth(),
-        //         links:$AEE.links()
-        //     }]);
-        // }
-        return $AEE.getHtmlCode({conditions:false});
-    };
-    // $AEE.saveAndExit = function(func){
-    //     if (typeof func === 'function') {
-    //         $AEE.d.functions.saveAndExit = func;
-    //     } else {
-    //         $AEE.showSaveMessage();
-    //         return $AEE.d.functions.saveAndExit.apply($AEE, [{
-    //             editorCode:$AEE.getEditorCode(),
-    //             htmlCode:$AEE.getHtmlCode(),
-    //             title:$AEE.title(),
-    //             maxWidth:$AEE.maxWidth(),
-    //             links:$AEE.links()
-    //         }]);
-    //     }
-    //     return $AEE;
+    //     console.log('salvando')
+    //     // console.log($AEE.getHtmlCode({conditions:false}))
+    //     // if (typeof func === 'function') {
+    //     //     $AEE.d.functions.save = func;
+    //     // } else {
+    //     //     $AEE.showSaveMessage();
+    //     //     return $AEE.d.functions.save.apply($AEE, [{
+    //     //         editorCode:$AEE.getEditorCode(),
+    //     //         htmlCode:$AEE.getHtmlCode(),
+    //     //         title:$AEE.title(),
+    //     //         maxWidth:$AEE.maxWidth(),
+    //     //         links:$AEE.links()
+    //     //     }]);
+    //     // }
+    //     return $AEE.getHtmlCode({conditions:false});
     // };
+
 
 })();
 
@@ -5257,7 +5243,9 @@
 
 (function(){
     $AEE.getHtmlCodeInProgress = false;
+
     var htmlCode = '';
+
     $AEE.getHtmlCode = function (options) {
         if(typeof options === 'undefined'){
             var options = {};

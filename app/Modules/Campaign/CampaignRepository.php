@@ -158,17 +158,18 @@ class CampaignRepository implements CampaignRepositoryInterface
         }
 
 
-        $subject = $item->social_title;
+        $subject = $item->mail_subject;
 
         $data = [
-            'title' => $subject,
-            'url' => $item->link(),
-            'content' => $item->social_description,
+            // 'title' => $subject,
+            // 'url' => $item->link(),
+            'content' => $item->mail_html,
             // 'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
             // 'bottomimage' => env('APP_URL') . '/storage/admin/' . $item->form->footer_image
         ];
 
-        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
+        // \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
+        \Mailgun::send('campaign::emails.template-blank', $data, function ($message) use($recipents,$subject) {
             $message
             ->subject($subject)
             ->to($recipents);

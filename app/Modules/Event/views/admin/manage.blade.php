@@ -222,8 +222,7 @@
 
                                         @if($status->id!=3)
                                             <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
-                                            <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
-                                            <a href="{{route('campaigns.template',["itemId"=>$c->id])}}" class="btn btn-warning btn-sm btn-flat">Template</a>
+                                            <a href="{{route('campaigns.template',["itemId"=>$c->id])}}" class="btn btn-default btn-sm btn-flat reload">Configurar</a>
                                         @else
                                             <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-primary btn-sm btn-flat">Detalles</a>
                                         @endif

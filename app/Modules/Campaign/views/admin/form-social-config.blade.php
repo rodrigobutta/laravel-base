@@ -1,5 +1,5 @@
 
-{!! Form::open(['url' => route('campaigns.config.save'), 'method' => 'post', 'pjax-container', 'class' => 'form-horizontal']) !!}
+{!! Form::open(['url' => route('campaigns.config.social.save'), 'method' => 'post', 'pjax-container', 'class' => 'form-horizontal']) !!}
 
     <input type="hidden" name="campaign_id" value="{{$item->id}}"/>
 

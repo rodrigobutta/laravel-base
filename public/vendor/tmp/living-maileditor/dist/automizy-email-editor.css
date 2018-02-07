@@ -3,7 +3,7 @@
     /*top:0;*/
     /*left:0;*/
     width: 100%;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 240px);
     min-height: 100%;
     margin: 0;
     padding: 0;
@@ -103,12 +103,12 @@
     position:relative;
 }
 #automizy-email-editor #aee-block-list{
-    position:absolute;
-    top:0;
-    left:0;
+    /*position:absolute;*/
+    /*top:0;*/
+    /*left:0;*/
     height:100%;
-    width:422px;
-
+    width:140px;
+    float: left;;
     background-color:#F4F5F7;
     vertical-align: top;
     text-align: center;
@@ -117,19 +117,21 @@
     z-index:2;
 }
 #automizy-email-editor #aee-editor{
-    position:absolute;
-    top:0;
-    left:450px;
-    width:0px;
+    /*position:absolute;*/
+    /*top:0;*/
+    /*left:450px;*/
+    /*width:0px;*/
+    float: left;
+    width: calc(100% - 480px);
     height:100%;
     overflow:hidden;
     z-index:1;
 }
 #automizy-email-editor #aee-block-settings{
-    position:absolute;
-    top:0;
-    right:-398px;
-    width:398px;
+    /*position:absolute;*/
+    /*top:0;*/
+    /*right:-398px;*/
+    width:340px;
     height:100%;
     overflow:hidden;
     overflow-y: auto;

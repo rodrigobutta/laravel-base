@@ -62,12 +62,36 @@ class CampaignModel extends \App\Models\Profiled
             }
             else{
 
-                if(($this->leadlist() || $this->userlists) && $this->social_title!='' && $this->social_description!=''){
-                    return CampaignStatusModel::find(2);
+                switch ($this->type_id) {
+
+                    case 2: //social
+
+                        if($this->social_title!='' && $this->social_description!=''){
+                            return CampaignStatusModel::find(2);
+                        }
+                        else{
+                            return CampaignStatusModel::find(1);
+                        }
+                        break;
+
+                    case 3: //mail
+
+                        if(($this->leadlist() || $this->userlists) && $this->mail_subject!='' && $this->mail_html!=''){
+                            return CampaignStatusModel::find(2);
+                        }
+                        else{
+                            return CampaignStatusModel::find(1);
+                        }
+                        break;
+
+                    default:
+                        # code...
+                        return CampaignStatusModel::find(2);
+
+                        break;
                 }
-                else{
-                    return CampaignStatusModel::find(1);
-                }
+
+
 
             }
 
