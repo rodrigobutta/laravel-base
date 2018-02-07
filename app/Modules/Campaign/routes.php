@@ -37,6 +37,12 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
         $router->post('campaigns/{itemId}/process/test', ['as' => 'campaigns.process.test', 'uses' => 'CampaignAdminController@processTestMail']);
 
         $router->get('campaigns/{itemId}/details', ['as' => 'campaigns.details', 'uses' => 'CampaignAdminController@details']);
+        $router->get('campaigns/{itemId}/view', ['as' => 'campaigns.view', 'uses' => 'CampaignAdminController@view']);
+
+        $router->get('campaigns/{itemId}/clone', ['as' => 'campaigns.clone', 'uses' => 'CampaignAdminController@clone']);
+
+        $router->get('campaigns/{itemId}/template', ['as' => 'campaigns.template', 'uses' => 'CampaignAdminController@template']);
+        $router->post('campaigns/template', ['as' => 'campaigns.template', 'uses' => 'CampaignAdminController@templateSave']);
     });
 
 });

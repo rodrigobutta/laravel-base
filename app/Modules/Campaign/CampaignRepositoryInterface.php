@@ -18,4 +18,8 @@ interface CampaignRepositoryInterface{
 
     public function create($item,$eventId,$typeId);
 
+    public function sendMails($itemId);
+
+    public function clone($itemId);
+
 }

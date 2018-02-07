@@ -74,6 +74,7 @@
                     <tr>
                       <th>Tipo</th>
                       <th>Nombre</th>
+                      <th>Visibilidad</th>
                       <th>Listas de Usuarios</th>
                       <th class="text-center">Visitas</th>
                       <th class="text-center">Conversiones</th>
@@ -92,6 +93,13 @@
                                   <a href="pages/examples/invoice.html">{{$f->name}}</a>
                               </td>
                               <td>
+                                    @if($f->enabled)
+                                        <span class="label label-success">Publico</span>
+                                    @else
+                                        <span class="label label-danger">Privado</span>
+                                    @endif
+                              </td>
+                              <td>
                                 @foreach($f->userlists as $l)
                                   <a href="{{route('userlists.edit', ['id' => $l->id])}}"><span class="label label-default">{{$l->name}}</span></a>
                                 @endforeach
@@ -100,13 +108,15 @@
                                   {{$f->views}}
                               </td>
                               <td class="text-center">
+                                @if($f->type_id==1)
                                   {{$f->leadsCount()}}
+                                @endif
                               </td>
                               <td class="text-right">
                                   <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Editar</a>
                                   <a class="btn btn-default btn-sm btn-flat reload" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
                                   <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
-                                  <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a>
+                                  {{-- <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a> --}}
                               </td>
 
                           </tr>
@@ -147,8 +157,8 @@
                     <tr>
                         <th>Tipo</th>
                         <th>Nombre</th>
-                        <th>Lista de envio</th>
-                        <th>Formulario destino</th>
+                        <th>Origen</th>
+                        <th>Landing</th>
                         <th>Estado</th>
                         <th class="text-center">Envios</th>
                         <th class="text-center">Lecturas</th>
@@ -213,15 +223,26 @@
                                         @if($status->id!=3)
                                             <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
                                             <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
+                                            <a href="{{route('campaigns.template',["itemId"=>$c->id])}}" class="btn btn-warning btn-sm btn-flat">Template</a>
                                         @else
-                                            <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-default btn-sm btn-flat" data-id="{{$c->id}}">Detalles</a>
+                                            <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-primary btn-sm btn-flat">Detalles</a>
                                         @endif
 
-                                        @if($status->id==2)
+                                        {{-- @if($status->id==2) --}}
                                             <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Enviar</a>
-                                        @endif
+                                        {{-- @endif --}}
 
                                     @endif
+
+                                    @if($c->type_id>1)
+                                        <a href="{{route('campaigns.clone',["itemId"=>$c->id])}}" class="btn btn-primary btn-sm btn-flat">Clonar</a>
+                                    @endif
+
+
+
+                                  {{--   @if($status->id==3)
+                                        <a href="#" class="btn btn-success btn-sm btn-flat btn-campaign-view" data-id="{{$c->id}}">Detalles</a>
+                                    @endif --}}
 
                               </td>
 
@@ -592,6 +613,43 @@
 
 
         });
+
+
+
+        $('.btn-campaign-view').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('campaigns.view', ['itemId' => 'xxx']) }}';
+                url = url.replace('xxx',$(this).attr('data-id'));
+
+
+            $('#modal_form').livingDialog({
+                hideButtons: true,
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+                    console.log(data)
+                    toastr.success("Campaña creada");
+                    document.location = response.route;
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+                }
+            });
+
+
+        });
+
+
 
 
     }

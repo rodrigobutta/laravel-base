@@ -40,13 +40,10 @@ class FormFrontController extends Controller
 
     public function getView(Request $request, $eventSlug, $formSlug){
 
-
         if(!$item = $this->form->getByComb($eventSlug,$formSlug)){
-
-            return redirect()->route('home')->with('flashError', 'Formulario no activo');
-
+            // return redirect()->route('home')->with('flashError', 'Formulario no activo');
+            abort(404);
         }
-
 
         // INCREMENTAR VIEWS
         $item->views = $item->views + 1;

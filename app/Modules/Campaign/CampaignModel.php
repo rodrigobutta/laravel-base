@@ -96,6 +96,23 @@ class CampaignModel extends \App\Models\Profiled
 
     }
 
+    public function getDestinaionCount()
+    {
+        if($this->destinationLeadlist){
+            return $this->destinationLeadlist->leadsCount();
+        }
+        else{
+
+            $res = 0;
+            foreach ($this->userlists as $u) {
+                $res = $res + $u->usersCount();
+            }
+
+            return $res;
+        }
+
+    }
+
 
     public function getForm()
     {
@@ -166,12 +183,8 @@ class CampaignModel extends \App\Models\Profiled
     }
 
 
-    // public function status()
-    // {
 
-    //     // if()
 
-    // }
 
 
 }

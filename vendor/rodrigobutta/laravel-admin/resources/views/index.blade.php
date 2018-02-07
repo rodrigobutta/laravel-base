@@ -100,7 +100,8 @@
     {!! HTML::script('vendor/tmp/jquery-living-gantt/dist/jquery-living-gantt.js') !!}
 
 
-
+    {!! HTML::script('vendor/tmp/living-maileditor/dist/automizy-email-editor.js') !!}
+    {!! HTML::style('vendor/tmp/living-maileditor/dist/automizy-email-editor.css') !!}
 
 
     {!! HTML::style('/css/admin.css') !!}

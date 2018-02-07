@@ -7,11 +7,16 @@ use App\Modules\Form\FormRepositoryInterface;
 
 use App\Helpers\ResizeHelper;
 
-use Auth;
+// use Auth;
 use Carbon\Carbon;
 use DB;
 use File;
 use Illuminate\Support\Facades\Cache;
+
+use Illuminate\Support\Facades\Auth;
+
+use RodrigoButta\Admin\Facades\Admin;
+
 
 class FormRepository implements FormRepositoryInterface
 {
@@ -23,6 +28,25 @@ class FormRepository implements FormRepositoryInterface
         $this->form = $form;
 
     }
+
+
+
+    private function posts(){
+
+        // dd($user = Admin::user());
+        // dd(Auth::guard('admin')->check());
+
+        if(Auth::guard('admin')->check()){
+            $posts = $this->form;
+        }
+        else{
+            $posts = $this->form->public();
+        }
+
+        return $posts;
+    }
+
+
 
     public function getById($id)
     {
@@ -55,36 +79,6 @@ class FormRepository implements FormRepositoryInterface
     }
 
 
-
-
-    public function getAll(){
-        $form = $this->posts()->orderBy('id'); //->with('form', 'comments', 'favorites');
-        return $form->paginate(perPage());
-    }
-
-
-
-
-
-    // *************************************************************************
-
-
-
-    private function posts(){
-
-        // si es admin o superadmin no limitar el universo a los aprobados
-        // if(auth()->check() && (auth()->form()->isSuper() || auth()->form()->isAdmin())){
-            // $posts = $this->form->public();
-
-            $posts = $this->form;
-
-        // }
-        // else{
-        //     $posts = $this->form->approved()->published();
-        // }
-
-        return $posts;
-    }
 
 
     public function incrementViews($form)

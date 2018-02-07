@@ -4,8 +4,9 @@
 	"sources": [
 		"../../resources/assets/sass/admin/admin.scss",
 		"../../resources/assets/sass/admin/_variables.scss",
-		"../../resources/assets/sass/admin/_events.scss"
+		"../../resources/assets/sass/admin/_events.scss",
+		"../../resources/assets/sass/admin/_main.scss"
 	],
 	"names": [],
-	"mappings": "AACA,OAAO,CAAC,kEAAI,CAMZ,AAAyD,2BAA9B,CAAC,4BAA4B,CAAC,0BAA0B,AAAC,CAChF,KAAK,CAAE,IAAI,CAEd"
+	"mappings": "AACA,OAAO,CAAC,kEAAI,CGDZ,AAIQ,cAJM,CAEV,EAAE,CAEE,KAAK,AAAA,CACD,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,cAAc,CAAE,IAAI,CACpB,SAAS,CAAE,GAAG,CACjB,AAKT,AAAA,iBAAiB,AAAA,CACb,OAAO,CAAE,KAAK,CACd,UAAU,CAAE,GAAG,CACf,aAAa,CAAE,IAAI,CACnB,YAAY,CAAE,GAAG,CACpB,AHVD,AAAyD,2BAA9B,CAAC,4BAA4B,CAAC,0BAA0B,AAAC,CAChF,KAAK,CAAE,IAAI,CACd"
 }

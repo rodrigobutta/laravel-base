@@ -115,7 +115,7 @@ class CampaignAdminController extends Controller{
 
         return response()->json([
             'route' => route('events.manage', ['itemId' => $item->event_id]),
-            'state' => '200'
+            'status' => '200'
         ]);
 
     }
@@ -176,7 +176,7 @@ class CampaignAdminController extends Controller{
 
         return response()->json([
             'route' => route('events.manage', ['itemId' => $item->event_id]),
-            'state' => '200'
+            'status' => '200'
         ]);
 
     }
@@ -225,7 +225,7 @@ class CampaignAdminController extends Controller{
 
         return response()->json([
             'sentcnt' => 1,
-            'state' => '200'
+            'status' => '200'
         ]);
 
     }
@@ -233,95 +233,39 @@ class CampaignAdminController extends Controller{
 
     public function processMails(Request $request, $itemId){
 
-        $item = CampaignModel::findOrFail($itemId);
 
-        $subject = $item->social_title;
+        if($sentCnt = $this->campaignRepository->sendMails($itemId)){
 
-        $data = [
-            'title' => $subject,
-            'url' => $item->link(),
-            'content' => $item->social_description,
-            // 'topimage' => env('APP_URL') . '/storage/admin/' . $item->form->cover_image,
-            // 'bottomimage' => env('APP_URL') . '/storage/admin/' . $item->form->footer_image
-            'topimage' => '',
-            'bottomimage' => ''
-        ];
-
-
-        $recipents = [];
-
-        // vamos con la lista de leads
-        if($item->destinationLeadlist){
-
-            foreach ($item->destinationLeadlist->leads as $lead) {
-
-                // si no encuentro el email en el lead (userfield_1), no puedo agregarlo al envio
-                if($email=$lead->getEmail()){
-
-                    $send = new SendModel();
-                    $send->campaign_id = $item->id;
-                    $send->lead_id = $lead->id;
-                    $send->email = $email;
-                    $send->created_at = Carbon::now();
-                    $send->save();
-
-                    $recipents[$email] = $lead->getFieldsArray();
-                    $recipents[$email]['pixel'] = route('campaign.pixel',["sendId" => $send->id]) ;
-                    $recipents[$email]['cta'] =  $item->link($send->id);
-
-                }
-
-            }
+            return response()->json([
+                'sentcnt' => $sentCnt,
+                'status' => '200'
+            ]);
 
         }
         else{
-            // vamos con la lista de usuarios
-
-            foreach ($item->userlists as $u) {
-
-                foreach ($u->users as $user) {
-
-                    // si no encuentro el email en el lead (userfield_1), no puedo agregarlo al envio
-                    if($email=$user->getEmail()){
-
-                        $send = new SendModel();
-                        $send->campaign_id = $item->id;
-                        $send->user_id = $user->id;
-                        $send->email = $email;
-                        $send->created_at = Carbon::now();
-                        $send->save();
-
-                        $recipents[$email] = $user->getFieldsArray();
-                        $recipents[$email]['pixel'] = route('campaign.pixel',["sendId" => $send->id]) ;
-                        $recipents[$email]['cta'] =  $item->link($send->id);
-
-                    }
-
-                }
-
-            }
-
+            return response()->json([
+                'sentcnt' => 0,
+                'status' => '555'
+            ]);
         }
-
-
-        $sentCnt = sizeof($recipents);
-
-        // var_dump($recipents);
-        // exit();
-
-        \Mailgun::send('campaign::emails.template1', $data, function ($message) use($recipents,$subject) {
-            $message
-            ->subject($subject)
-            ->to($recipents);
-        });
-
-        return response()->json([
-            'sentcnt' => $sentCnt,
-            'state' => '200'
-        ]);
 
     }
 
+
+
+    public function clone(Request $request, $itemId){
+
+
+        if($item = $this->campaignRepository->clone($itemId)){
+
+            return redirect()->back()->with('flashSuccess', 'Campaña Clonada');
+
+        }
+        else{
+            return redirect()->back()->with('flashError', 'No se pudo clonar');
+        }
+
+    }
 
 
 
@@ -340,5 +284,63 @@ class CampaignAdminController extends Controller{
         });
 
     }
+
+
+    public function view($itemId){
+
+        $item = CampaignModel::findOrFail($itemId);
+
+        return view('campaign::admin.view', compact('item'))->render();
+
+    }
+
+
+
+
+
+    public function template($itemId){
+
+        $item = CampaignModel::findOrFail($itemId);
+
+
+        return Admin::content(function (Content $content) use($item){
+
+            $content->header($item->name);
+
+            $content->row(
+                view('campaign::admin.template', compact('item'))->render()
+            );
+
+        });
+
+        // return view('campaign::admin.template', compact('item'))->render();
+
+    }
+
+
+
+
+
+    protected function templateSave(Request $request)
+    {
+        $id = $request->get("id");
+        $html = $request->get("html");
+
+        $item = CampaignModel::findOrFail($id);
+
+        // dd($html);
+
+        $item->social_description = $html;
+
+        $item->save();
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->event_id]),
+            'message' => 'E-mail guardado!',
+            'status' => '200'
+        ]);
+
+    }
+
 
 }

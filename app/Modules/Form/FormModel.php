@@ -119,9 +119,9 @@ class FormModel extends \App\Models\Profiled
         return $res;
     }
 
-    // public static function scopePublic(){
-    //     return static::where('enabled',1);
-    // }
+    public static function scopePublic(){
+        return static::where('enabled',1);
+    }
 
 
     public function setDummy()

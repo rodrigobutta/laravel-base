@@ -10,11 +10,14 @@
   <tr>
    <td>
      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+
+        @if(!empty($topimage))
        <tr>
          <td align="center" bgcolor="#70bbd9" >
           <img src="{!!$topimage!!}" alt="" width="600" height="180" style="display: block;" >
          </td>
        </tr>
+       @endif
        <tr>
          <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;font-size: 16px; font-family: Arial">
 
@@ -29,11 +32,13 @@
 
          </td>
        </tr>
+       @if(!empty($bottomimage))
        <tr>
          <td align="center" bgcolor="#70bbd9" >
           <img src="{!!$bottomimage!!}" alt="" width="600" height="106" style="display: block;" >
          </td>
        </tr>
+       @endif
      </table>
    </td>
   </tr>

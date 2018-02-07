@@ -1,12 +1,11 @@
 
-    <dl class="dl-horizontal">
-          <dt>Campaña</dt><dd>{{$item->name}}</dd>
-          <dt>Lista de destino****</dt><dd>{{$item->getDestinaionLeadlist()->fullname }}</dd>
-          <dt>Cantidad de destinatarios****</dt><dd>{{ $item->getDestinaionLeadlist()->leadsCount() }}</dd>
-    </dl>
+<dl class="dl-horizontal">
+      <dt>Campaña</dt><dd>{{$item->name}}</dd>
+      <dt>Destinatarios</dt><dd>{{ $item->getDestinaionCount() }}</dd>
+</dl>
 
-                <a href="#" class="btn btn-default btn-send-test"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando Prueba">Enviar Prueba</a>
-               <a href="#" class="btn btn-primary btn-send"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando">Enviar Campaña</a>
+<a href="#" class="btn btn-default btn-send-test"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando Prueba">Enviar Prueba</a>
+<a href="#" class="btn btn-primary btn-send"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando">Enviar Campaña</a>
 
 
 
