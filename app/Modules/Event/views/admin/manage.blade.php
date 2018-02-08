@@ -129,7 +129,7 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="{{route('forms.create', ['event_id' => $item->id])}}" class="btn btn-default btn-flat"><i class="fa fa-list-alt"></i>&nbsp;Nuevo Formulario</a>
+                <a href="{{route('forms.create', ['event_id' => $item->id])}}" class="btn btn-default btn-flat"><i class="fa fa-list-alt"></i>&nbsp;Nueva Landing</a>
                 {{-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Estadísticas</a> --}}
               </div>
 
@@ -312,7 +312,7 @@
                         {{-- <th></th> --}}
                       <th>Tipo</th>
                       <th>Nombre</th>
-                      <th>Formulario Asociado</th>
+                      <th>Landing asociada</th>
                       <th class="text-center">Conversiones</th>
                       <th></th>
                     </tr>

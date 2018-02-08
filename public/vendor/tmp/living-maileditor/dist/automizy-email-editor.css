@@ -106,8 +106,8 @@
     /*position:absolute;*/
     /*top:0;*/
     /*left:0;*/
-    height:100%;
-    width:140px;
+    height:calc(100vh - 240px);
+    width:160px;
     float: left;;
     background-color:#F4F5F7;
     vertical-align: top;
@@ -122,9 +122,10 @@
     /*left:450px;*/
     /*width:0px;*/
     float: left;
-    width: calc(100% - 480px);
+    width: calc(100% - 500px);
     height:100%;
-    overflow:hidden;
+    overflow-x:hidden;
+    overflow-y:scroll;
     z-index:1;
 }
 #automizy-email-editor #aee-block-settings{
@@ -468,15 +469,15 @@
 #automizy-email-editor .aee-block-item{
     display: inline-block;
     width: 125px !important;
-    height: 85px !important;
-    margin: 6px 6px 6px 6px;
+    height: 76px !important;
+    margin: 6px 6px 0px 6px;
     padding: 0;
     opacity: 0.9;
+    border: 2px solid #777;
 }
 #automizy-email-editor .aee-block-item-content{
     width: 100%;
     height: 100%;
-    background-position: 2px 12px;
     background-repeat: no-repeat;
 }
 #automizy-email-editor .aee-ui-state-highlight{
@@ -616,14 +617,14 @@
     z-index: 1;
 }
 #automizy-email-editor .aee-block:hover{
-    outline:2px solid #ff9800;
+    outline:2px solid #367fa9;
     z-index: 1;
 }
 #automizy-email-editor .aee-block.aee-active{
-    outline:4px dashed #ff9800 !important;
+    outline:4px dashed #367fa9 !important;
 }
 #automizy-email-editor .aee-block.aee-active:hover{
-    outline:4px solid #ff9800 !important;
+    outline:4px solid #367fa9 !important;
     z-index: 1;
 }
 #automizy-email-editor .aee-block-handle{
@@ -634,7 +635,7 @@
     width:30px;
     height:36px;
     text-align:right;
-    background-color:#ff9800;
+    background-color:#367fa9;
     background-repeat:no-repeat;
     background-position:center center;
     z-index:95;

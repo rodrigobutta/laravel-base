@@ -139,16 +139,16 @@
             $AEE.setEditorCode('{!!addslashes($item->mail_code)!!}')
 
             // $AEE.buttons.saveAndExitButton.text($A.translate('Download'));
-            $AEE.imagePicker.d.buttons.gallery.click(function(){
+            // $AEE.imagePicker.d.buttons.gallery.click(function(){
 
-                $AEE.imagePicker.d.dialogs.gallery.open();
+            //     $AEE.imagePicker.d.dialogs.gallery.open();
 
-            });
-            $AEE.imagePicker.d.inputs.upload.click(function(){
+            // });
+            // $AEE.imagePicker.d.inputs.upload.click(function(){
 
-                $AEE.imagePicker.d.inputs.upload.enable();
+            //     $AEE.imagePicker.d.inputs.upload.enable();
 
-            });
+            // });
 
             // volar esto cuando sepa apra que sirve
             var xhrs = [];

@@ -342,7 +342,7 @@
                 });
                 editor.addButton('customfields', {
                     type: 'menubutton',
-                    text: $A.translate('Custom fields'),
+                    text: $A.translate('Campos de Usuario'),
                     icon: false,
                     menu: [
                         {
@@ -631,7 +631,7 @@
                 };
                 editor.addButton('automizyImage', {
                     icon: 'image',
-                    tooltip: $A.translate('Select Image'),
+                    tooltip: $A.translate('Seleccionar imagen'),
                     onclick: function() {
                         var dom = editor.dom;
                         var imgElm = editor.selection.getNode();
@@ -641,7 +641,7 @@
                             var height = dom.getAttrib(imgElm, 'height');
                             $AEE.imagePicker
                                 .reset()
-                                .dialogTitle($A.translate('Modify image'))
+                                .dialogTitle($A.translate('Modificar imagen'))
                                 .src(dom.getAttrib(imgElm, 'src') || '')
                                 .alt(dom.getAttrib(imgElm, 'alt') || '')
                                 .title(dom.getAttrib(imgElm, 'title') || '')
@@ -892,27 +892,27 @@
             t.d.$controlImageBox.appendTo(t.d.$content);
 
             t.d.buttons.cancel = $A.newButton({
-                text: $A.translate('Cancel'),
+                text: $A.translate('Cancelar'),
                 click: function () {
                     t.d.dialogs.widget.close();
                 }
             });
             t.d.buttons.save = $A.newButton({
-                skin: 'simple-orange',
-                text: $A.translate('Save'),
+                skin: 'simple-white',
+                text: $A.translate('Aceptar'),
                 click: function () {
                     t.save();
                     t.d.dialogs.widget.close();
                 }
             });
             t.d.buttons.delete = $A.newButton({
-                text: $A.translate('Delete image'),
+                text: $A.translate('Eliminar imagen'),
                 click: function () {
                     t.delete();
                 }
             });
             t.d.buttons.cancelGallery = $A.newButton({
-                text: $A.translate('Cancel'),
+                text: $A.translate('Cancelar'),
                 click: function () {
                     t.d.dialogs.gallery.close();
                 }
@@ -1019,7 +1019,7 @@
                     t.d.inputs.upload.data('automizyButton').disable();
                     t.d.inputs.upload.widget().find('input[type="file"]').prop('disabled', true);
                     t.d.inputs.url.disable();
-                    t.d.buttons.gallery.disable();
+                    // t.d.buttons.gallery.disable();
                     t.d.buttons.cancel.disable();
                     t.d.buttons.save.disable();
                     t.closable(false);
@@ -1028,10 +1028,10 @@
                     t.d.inputs.upload.data('automizyButton').text(parseInt(data.loaded / data.total * 100, 10) + '%');
                 },
                 complete: function () {
-                    t.d.inputs.upload.data('automizyButton').enable().text($A.translate('Select an other image from local computer'));
+                    t.d.inputs.upload.data('automizyButton').enable().text($A.translate('Imagen desde la computadora..'));
                     t.d.inputs.upload.widget().find('input[type="file"]').prop('disabled', false);
                     t.d.inputs.url.enable();
-                    t.d.buttons.gallery.enable();
+                    // t.d.buttons.gallery.enable();
                     t.d.buttons.cancel.enable();
                     t.d.buttons.save.enable();
                     t.closable(true);
@@ -1048,18 +1048,18 @@
                 }
             });
 
-            t.d.buttons.gallery = $A.newButton({
-                id:'automizy-image-picker-gallery-button',
-                text:$A.translate('Select image from gallery'),
-                target: t.d.$controlImageBox,
-                width:'300px',
-                click:function(){
-                    t.d.dialogs.gallery.open();
-                }
-            });
+            // t.d.buttons.gallery = $A.newButton({
+            //     id:'automizy-image-picker-gallery-button',
+            //     text:$A.translate('Select image from gallery'),
+            //     target: t.d.$controlImageBox,
+            //     width:'300px',
+            //     click:function(){
+            //         t.d.dialogs.gallery.open();
+            //     }
+            // });
 
             t.d.inputs.url = $A.newInput({
-                placeholder:$A.translate('Enter the image url here'),
+                placeholder:$A.translate('Url de la imagen'),
                 target:t.d.$controlImageBox,
                 type:'text',
                 labelWidth: 'auto',
@@ -1081,43 +1081,43 @@
             });
 
             t.d.inputs.link = $A.newInput({
-                label:$A.translate('Link to'),
-                help:$A.translate('Defines a hyperlink, which is used to link to another page.'),
+                label:$A.translate('Link'),
+                help:$A.translate('Si al hacer click en la imagen, deba dirigir el usuario a otra página.'),
                 value:'http://',
                 change:function(){
                     t.d.img.link = this.val();
                 }
             });
             t.d.inputs.alt = $A.newInput({
-                label:$A.translate('ALT text'),
-                help:$A.translate('The required alt attribute specifies an alternate text for an image, if the image cannot be displayed.'),
+                label:$A.translate('Texto alternativo'),
+                help:$A.translate('Texto que aparece si la imagen no pudo ser mostrada por algun motivo. Es requerido.'),
                 change:function(){
                     t.d.img.alt = this.val();
                 }
             });
             t.d.inputs.title = $A.newInput({
-                label:$A.translate('Image title'),
-                help:$A.translate('Provides additional information related to the element when a user places their mouse over the element.'),
+                label:$A.translate('Título de la imagen'),
+                help:$A.translate('Texto que aparece cuando el usuario se para sobre la imagen.'),
                 change:function(){
                     t.d.img.title = this.val();
                 }
             });
             t.d.inputs.align = $A.newInput({
-                label:$A.translate('Alignment'),
-                help:$A.translate('Specifies the horizontal alignment'),
+                label:$A.translate('Alineación'),
+                help:$A.translate('Alineación horizontal'),
                 type:'select',
                 options:[
-                    ['left', $A.translate('Left')],
-                    ['center', $A.translate('Center'), true],
-                    ['right', $A.translate('Right')]
+                    ['left', $A.translate('Izquierda')],
+                    ['center', $A.translate('Centrado'), true],
+                    ['right', $A.translate('Derecha')]
                 ],
                 change:function(){
                     t.d.img.align = this.val();
                 }
             });
             t.d.inputs.minWidth = $A.newInput({
-                label:$A.translate('Min. width'),
-                help:$A.translate('The minimal width of image in pixel'),
+                label:$A.translate('Ancho mínimo'),
+                help:$A.translate('El ancho mínimo de la imagen (en pixels)'),
                 change:function(){
                     t.d.img.minWidth = this.val();
                     if(t.d.img.minWidth === ''){
@@ -1126,7 +1126,7 @@
                 }
             });
             t.d.forms.moreSettigns = $A.newForm().draw().addGroup({
-                text: 'Advanced settings',
+                text: 'Avanzado..',
                 inputs: [
                     t.d.inputs.link,
                     t.d.inputs.alt,
@@ -1169,12 +1169,12 @@
                     t.d.img.src = '';
                     t.d.inputs.url.val('');
                     t.d.$previewImage.attr('src', '').hide();
-                    t.d.inputs.upload.data('automizyButton').text($A.translate('Select image from local computer'));
+                    t.d.inputs.upload.data('automizyButton').text($A.translate('Explorar en la computadora..'));
                 }else{
                     t.d.img.src = value;
                     t.d.inputs.url.val(value);
                     t.d.$previewImage.attr('src', value).show();
-                    t.d.inputs.upload.data('automizyButton').text($A.translate('Select an other image from local computer'));
+                    t.d.inputs.upload.data('automizyButton').text($A.translate('Explorar en la computadora..'));
                 }
                 return t;
             }
@@ -1392,7 +1392,7 @@
                 $block.addClass('aee-image-block-item aee-empty');
                 var $imageBox = $('<div class="aee-image-block-content" style="position: relative; padding: 24px; border: 1px solid #c1c1c1; font-size: 7px; text-align: center; background-color: #efefef;"></div>').appendTo($contentCell);
                 var $emptyImage = $('<img src="'+$AEE.d.config.url + '/images/noimage.gif" class="aee-image-block-image" />').appendTo($imageBox).after('<br/><br/>');
-                var $selectImageButton = $('<a href="javascript:;" class="aee-image-block-button"></a>').text($A.translate('Select image')).appendTo($imageBox);
+                var $selectImageButton = $('<a href="javascript:;" class="aee-image-block-button"></a>').text($A.translate('Seleccionar imagen')).appendTo($imageBox);
                 $AEE.imagePicker
                     .reset()
                     .save(function(img){
@@ -1456,6 +1456,9 @@
             event.preventDefault();
         });
     });
+
+
+
 })();
 
 (function(){
@@ -1802,7 +1805,7 @@
         }
 
         $AEE.buttons.buttonSettings.save = $A.newButton({
-            skin: 'simple-orange',
+            skin: 'simple-white',
             text: $A.translate('Save'),
             click: function () {
                 var data = getData();
@@ -1960,7 +1963,7 @@
                     }
                 },
                 {
-                    skin: 'simple-orange',
+                    skin: 'simple-white',
                     text: $A.translate('Save'),
                     data:{
                         $textarea:$textarea
@@ -2020,110 +2023,110 @@
 
     });
 
-    $AEE.layoutReady(function(){
+    // $AEE.layoutReady(function(){
 
-        $AEE.elements.$blockSettingsShareBox = $('<div id="aee-block-settings-share-box" class="aee-block-settings-box"></div>').appendTo($AEE.elements.$blockSettingsContent);
+    //     $AEE.elements.$blockSettingsShareBox = $('<div id="aee-block-settings-share-box" class="aee-block-settings-box"></div>').appendTo($AEE.elements.$blockSettingsContent);
 
-        $AEE.elements.$shareFacebookIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-facebook.gif" />');
-        $AEE.elements.$shareTwitterIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-twitter.gif" />');
-        $AEE.elements.$shareGoogleplusIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-googleplus.gif" />');
-        $AEE.elements.$shareLinkedinIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-linkedin.gif" />');
+    //     $AEE.elements.$shareFacebookIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-facebook.gif" />');
+    //     $AEE.elements.$shareTwitterIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-twitter.gif" />');
+    //     $AEE.elements.$shareGoogleplusIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-googleplus.gif" />');
+    //     $AEE.elements.$shareLinkedinIcon = $('<img src="' + $AEE.d.config.dir + '/images/social-linkedin.gif" />');
 
-        $AEE.rebuildIcons = function($block, options){
-            var $block = $block || $AEE.elements.$activeBlock;
-            var options = options || {};
-            var $textCell = $block.find('.aee-share-block-content-cell-text:first');
-            var $iconsCell = $block.find('.aee-share-block-content-cell-icons:first');
-            var $icons = $('<div class="aee-share-block-icons"></div>');
-            var icons = [];
-            var distance = $AEE.inputs.blockSettingsShareDistanceBetween.val();
+    //     $AEE.rebuildIcons = function($block, options){
+    //         var $block = $block || $AEE.elements.$activeBlock;
+    //         var options = options || {};
+    //         var $textCell = $block.find('.aee-share-block-content-cell-text:first');
+    //         var $iconsCell = $block.find('.aee-share-block-content-cell-icons:first');
+    //         var $icons = $('<div class="aee-share-block-icons"></div>');
+    //         var icons = [];
+    //         var distance = $AEE.inputs.blockSettingsShareDistanceBetween.val();
 
-            if(options.facebook || $AEE.inputs.blockSettingsShareFacebook.checked()){
-                icons.push('<a href="[{share_facebook}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-facebook.gif" class="aee-share-block-icons-facebook" /></a>');
-            }
-            if(options.twitter || $AEE.inputs.blockSettingsShareTwitter.checked()){
-                icons.push('<a href="[{share_twitter}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-twitter.gif" class="aee-share-block-icons-twitter" /></a>');
-            }
-            if(options.googleplus || $AEE.inputs.blockSettingsShareGoogleplus.checked()){
-                icons.push('<a href="[{share_gplus}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-googleplus.gif" class="aee-share-block-icons-googleplus" /></a>');
-            }
-            if(options.linkedin || $AEE.inputs.blockSettingsShareLinkedin.checked()){
-                icons.push('<a href="[{share_linkedin}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-linkedin.gif" class="aee-share-block-icons-linkedin" /></a>');
-            }
+    //         if(options.facebook || $AEE.inputs.blockSettingsShareFacebook.checked()){
+    //             icons.push('<a href="[{share_facebook}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-facebook.gif" class="aee-share-block-icons-facebook" /></a>');
+    //         }
+    //         if(options.twitter || $AEE.inputs.blockSettingsShareTwitter.checked()){
+    //             icons.push('<a href="[{share_twitter}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-twitter.gif" class="aee-share-block-icons-twitter" /></a>');
+    //         }
+    //         if(options.googleplus || $AEE.inputs.blockSettingsShareGoogleplus.checked()){
+    //             icons.push('<a href="[{share_gplus}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-googleplus.gif" class="aee-share-block-icons-googleplus" /></a>');
+    //         }
+    //         if(options.linkedin || $AEE.inputs.blockSettingsShareLinkedin.checked()){
+    //             icons.push('<a href="[{share_linkedin}]" onclick="return false;" style="text-decoration:none"><img src="' + $AEE.d.config.url + '/images/social-linkedin.gif" class="aee-share-block-icons-linkedin" /></a>');
+    //         }
 
-            $block.attr('data-space', distance);
+    //         $block.attr('data-space', distance);
 
-            var html = icons.join('<img src="' + $AEE.d.config.url + '/images/spacer.gif" height="1" width="'+distance+'" style="height:1px; width:'+distance+'px" />');
-            $iconsCell.html(html);
-        };
+    //         var html = icons.join('<img src="' + $AEE.d.config.url + '/images/spacer.gif" height="1" width="'+distance+'" style="height:1px; width:'+distance+'px" />');
+    //         $iconsCell.html(html);
+    //     };
 
-        $AEE.inputs.blockSettingsShareFacebook = $A.newInput2({
-            type:'checkbox',
-            labelBefore:$AEE.elements.$shareFacebookIcon,
-            change:function(){
-                $AEE.rebuildIcons();
-            },
-            create:function(){
-                this.widget().css('padding', 0);
-            }
-        });
-        $AEE.inputs.blockSettingsShareTwitter = $A.newInput2({
-            type:'checkbox',
-            labelBefore:$AEE.elements.$shareTwitterIcon,
-            change:function(){
-                $AEE.rebuildIcons();
-            },
-            create:function(){
-                this.widget().css('padding', 0);
-            }
-        });
-        $AEE.inputs.blockSettingsShareGoogleplus = $A.newInput2({
-            type:'checkbox',
-            labelBefore:$AEE.elements.$shareGoogleplusIcon,
-            change:function(){
-                $AEE.rebuildIcons();
-            },
-            create:function(){
-                this.widget().css('padding', 0);
-            }
-        });
-        $AEE.inputs.blockSettingsShareLinkedin = $A.newInput2({
-            type:'checkbox',
-            labelBefore:$AEE.elements.$shareLinkedinIcon,
-            change:function(){
-                $AEE.rebuildIcons();
-            },
-            create:function(){
-                this.widget().css('padding', 0);
-            }
-        });
-        $AEE.inputs.blockSettingsShareDistanceBetween = $A.newInput2({
-            type:'number',
-            labelBefore:$A.translate('Space between icons'),
-            labelAfter:'px',
-            value:6,
-            enter:function(){
-                $AEE.rebuildIcons();
-                return false;
-            },
-            change:function(){
-                $AEE.rebuildIcons();
-            },
-            create:function(){
-                this.widget().css('padding-top', '12px');
-                this.input().attr('min', 0);
-                this.input().pbmInput();
-            }
-        });
+    //     $AEE.inputs.blockSettingsShareFacebook = $A.newInput2({
+    //         type:'checkbox',
+    //         labelBefore:$AEE.elements.$shareFacebookIcon,
+    //         change:function(){
+    //             $AEE.rebuildIcons();
+    //         },
+    //         create:function(){
+    //             this.widget().css('padding', 0);
+    //         }
+    //     });
+    //     $AEE.inputs.blockSettingsShareTwitter = $A.newInput2({
+    //         type:'checkbox',
+    //         labelBefore:$AEE.elements.$shareTwitterIcon,
+    //         change:function(){
+    //             $AEE.rebuildIcons();
+    //         },
+    //         create:function(){
+    //             this.widget().css('padding', 0);
+    //         }
+    //     });
+    //     $AEE.inputs.blockSettingsShareGoogleplus = $A.newInput2({
+    //         type:'checkbox',
+    //         labelBefore:$AEE.elements.$shareGoogleplusIcon,
+    //         change:function(){
+    //             $AEE.rebuildIcons();
+    //         },
+    //         create:function(){
+    //             this.widget().css('padding', 0);
+    //         }
+    //     });
+    //     $AEE.inputs.blockSettingsShareLinkedin = $A.newInput2({
+    //         type:'checkbox',
+    //         labelBefore:$AEE.elements.$shareLinkedinIcon,
+    //         change:function(){
+    //             $AEE.rebuildIcons();
+    //         },
+    //         create:function(){
+    //             this.widget().css('padding', 0);
+    //         }
+    //     });
+    //     $AEE.inputs.blockSettingsShareDistanceBetween = $A.newInput2({
+    //         type:'number',
+    //         labelBefore:$A.translate('Space between icons'),
+    //         labelAfter:'px',
+    //         value:6,
+    //         enter:function(){
+    //             $AEE.rebuildIcons();
+    //             return false;
+    //         },
+    //         change:function(){
+    //             $AEE.rebuildIcons();
+    //         },
+    //         create:function(){
+    //             this.widget().css('padding-top', '12px');
+    //             this.input().attr('min', 0);
+    //             this.input().pbmInput();
+    //         }
+    //     });
 
-        $AEE.forms.blockSettingsShare = $A.newForm().addInputs([
-            $AEE.inputs.blockSettingsShareFacebook,
-            $AEE.inputs.blockSettingsShareTwitter,
-            $AEE.inputs.blockSettingsShareGoogleplus,
-            $AEE.inputs.blockSettingsShareLinkedin,
-            $AEE.inputs.blockSettingsShareDistanceBetween
-        ]).drawTo($AEE.elements.$blockSettingsShareBox);
-    })
+    //     $AEE.forms.blockSettingsShare = $A.newForm().addInputs([
+    //         $AEE.inputs.blockSettingsShareFacebook,
+    //         $AEE.inputs.blockSettingsShareTwitter,
+    //         $AEE.inputs.blockSettingsShareGoogleplus,
+    //         $AEE.inputs.blockSettingsShareLinkedin,
+    //         $AEE.inputs.blockSettingsShareDistanceBetween
+    //     ]).drawTo($AEE.elements.$blockSettingsShareBox);
+    // })
 
 })();
 
@@ -2170,7 +2173,7 @@
             var $element = $('<div class="aee-gallery-block-element aee-empty"></div>').appendTo($contentCell);
             var $imageBox = $('<div class="aee-gallery-block-content"></div>').appendTo($element);
             var $emptyImage = $('<img src="' + $AEE.d.config.url + '/images/noimage.gif" class="aee-gallery-block-image" />').appendTo($imageBox).after('<br/><br/>');
-            var $selectImageButton = $('<a href="javascript:;" class="aee-gallery-block-button"></a>').text($A.translate('Select image')).appendTo($imageBox);
+            var $selectImageButton = $('<a href="javascript:;" class="aee-gallery-block-button"></a>').text($A.translate('Seleccionar imagen')).appendTo($imageBox);
         };
 
         $AEE.elements.$document.on('click', '.aee-gallery-block-item .aee-gallery-block-button, .aee-gallery-block-item .aee-gallery-block-image', function(){
@@ -2201,37 +2204,37 @@
                 })
                 .open();
         }).on('click', '.aee-gallery-block-item .aee-imagepicker-image', function(){
-            var $img = $(this);
-            var $block = $img.closest('.aee-gallery-block-item');
-            var $element = $img.closest('.aee-gallery-block-element');
-            var $contentCell = $block.find('.aee-block-content-cell:first');
-            $AEE.imagePicker
-                .reset()
-                .enableDelete()
-                .disableAlign()
-                .delete(function(){
-                    $element.remove();
-                    $AEE.imagePicker.close();
-                    if($block.find('.aee-gallery-block-content').length === 0){
-                        $AEE.addEmptyGalleryItem($contentCell);
-                    }
-                    $AEE.rebuildGallery();
-                })
-                .dialogTitle($A.translate('Modify image'))
-                .src(this.src)
-                .link($img.closest('a').attr('href') || '')
-                .alt(this.alt || '')
-                .title(this.title || '')
-                .save(function(img){
-                    if(img.$elem !== false){
-                        img.$elem.appendTo($element.removeClass('aee-empty').empty());
-                        img.$img.automizyResizabe();
-                        if($block.find('.aee-gallery-block-content').length === 0){
-                            $AEE.addEmptyGalleryItem($contentCell);
-                        }
-                    }
-                })
-                .open();
+            // var $img = $(this);
+            // var $block = $img.closest('.aee-gallery-block-item');
+            // var $element = $img.closest('.aee-gallery-block-element');
+            // var $contentCell = $block.find('.aee-block-content-cell:first');
+            // $AEE.imagePicker
+            //     .reset()
+            //     .enableDelete()
+            //     .disableAlign()
+            //     .delete(function(){
+            //         $element.remove();
+            //         $AEE.imagePicker.close();
+            //         if($block.find('.aee-gallery-block-content').length === 0){
+            //             $AEE.addEmptyGalleryItem($contentCell);
+            //         }
+            //         $AEE.rebuildGallery();
+            //     })
+            //     .dialogTitle($A.translate('Modify image'))
+            //     .src(this.src)
+            //     .link($img.closest('a').attr('href') || '')
+            //     .alt(this.alt || '')
+            //     .title(this.title || '')
+            //     .save(function(img){
+            //         if(img.$elem !== false){
+            //             img.$elem.appendTo($element.removeClass('aee-empty').empty());
+            //             img.$img.automizyResizabe();
+            //             if($block.find('.aee-gallery-block-content').length === 0){
+            //                 $AEE.addEmptyGalleryItem($contentCell);
+            //             }
+            //         }
+            //     })
+            //     .open();
         }).on('click', '.aee-gallery-block-item .aee-gallery-block-button', function(event){
             event.preventDefault();
         });
@@ -2820,7 +2823,7 @@
             'text',
             'title',
             'columns',
-            'share',
+            // 'share',
             'button',
             'gallery',
             'html'
@@ -2840,7 +2843,7 @@
         for(var i = 0; i < $AEE.blocksInSort.length; i++){
             var block = $AEE.blocksInSort[i];
             block.$widget = $('<div class="aee-block-item"></div>').attr('data-title', block.title).attr('data-name', block.name).appendTo($AEE.elements.$blockList).css({
-                backgroundImage:'url(' + $AEE.d.config.dir + '/images/blocks/frame.gif)',
+
                 cursor:'url(' + $AEE.d.config.dir + '/images/cursors/openhand.cur), move'
             }).data('block', block);
             block.$content = $('<div class="aee-block-item-content"></div>').appendTo(block.$widget).css({
@@ -2953,7 +2956,7 @@
                         $AEE.setImageSize($(this));
                     });
                 });
-            $AEE.elements.$blockSettingsContentTitle.html($A.translate('Document settings'));
+            $AEE.elements.$blockSettingsContentTitle.html($A.translate('Configuración General'));
         }else {
             $block.addClass('aee-active');
 
@@ -3081,22 +3084,22 @@
                     d.$contentCell.attr('style',style.join('; '));
 
                 });
-            $AEE.elements.$blockSettingsContentTitle.html($A.translate('Selected block settings'));
+            $AEE.elements.$blockSettingsContentTitle.html($A.translate('Configuración del elemento'));
         }
 
         $AEE.elements.$blockSettingsContent.find('.aee-block-settings-box').hide();
         if($block.attr('id') === 'aee-document'){
             $AEE.elements.$blockSettingsDocumentBox.show();
             $AEE.inputs.blockSettingsDocumentMaxWidth.val(parseInt($AEE.elements.$document[0].style.width));
-        }else if($block.hasClass('aee-share-block-item')){
-            $AEE.elements.$blockSettingsShareBox.show();
-            var $textCell = $block.find('.aee-share-block-content-cell-text:first');
-            var $iconsCell = $block.find('.aee-share-block-content-cell-icons:first');
-            $AEE.inputs.blockSettingsShareFacebook.checked(($iconsCell.find('.aee-share-block-icons-facebook').length > 0));
-            $AEE.inputs.blockSettingsShareTwitter.checked(($iconsCell.find('.aee-share-block-icons-twitter').length > 0));
-            $AEE.inputs.blockSettingsShareGoogleplus.checked(($iconsCell.find('.aee-share-block-icons-googleplus').length > 0));
-            $AEE.inputs.blockSettingsShareLinkedin.checked(($iconsCell.find('.aee-share-block-icons-linkedin').length > 0));
-            $AEE.inputs.blockSettingsShareDistanceBetween.val($block.attr('data-space') || 6);
+        // }else if($block.hasClass('aee-share-block-item')){
+        //     $AEE.elements.$blockSettingsShareBox.show();
+        //     var $textCell = $block.find('.aee-share-block-content-cell-text:first');
+        //     var $iconsCell = $block.find('.aee-share-block-content-cell-icons:first');
+        //     $AEE.inputs.blockSettingsShareFacebook.checked(($iconsCell.find('.aee-share-block-icons-facebook').length > 0));
+        //     $AEE.inputs.blockSettingsShareTwitter.checked(($iconsCell.find('.aee-share-block-icons-twitter').length > 0));
+        //     $AEE.inputs.blockSettingsShareGoogleplus.checked(($iconsCell.find('.aee-share-block-icons-googleplus').length > 0));
+        //     $AEE.inputs.blockSettingsShareLinkedin.checked(($iconsCell.find('.aee-share-block-icons-linkedin').length > 0));
+        //     $AEE.inputs.blockSettingsShareDistanceBetween.val($block.attr('data-space') || 6);
         }else if($block.hasClass('aee-gallery-block-item')){
             $AEE.elements.$blockSettingsGalleryBox.show();
             $AEE.inputs.blockSettingsGalleryDistanceBetween.val($block.attr('data-space') || 6);
@@ -3859,21 +3862,21 @@
         $AEE.elements.$blockSettingsDocumentBox = $('<div id="aee-block-settings-document-box" class="aee-block-settings-box"></div>').appendTo($AEE.elements.$blockSettingsContent);
         $AEE.inputs.blockSettingsResponsiveEmail = $A.newInput2({
             type: 'checkbox',
-            labelBefore: $A.translate('Responsive'),
+            labelBefore: $A.translate('Mail Responsivo'),
             checked: true,
             change: function () {
                 if (this.checked()) {
-                    $AEE.inputs.blockSettingsDocumentMaxWidth.labelBefore($A.translate('Max. width'));
+                    $AEE.inputs.blockSettingsDocumentMaxWidth.labelBefore($A.translate('Ancho Máximo'));
                     $AEE.elements.$document.attr('data-responsive-email', '1');
                 } else {
-                    $AEE.inputs.blockSettingsDocumentMaxWidth.labelBefore($A.translate('Width'));
+                    $AEE.inputs.blockSettingsDocumentMaxWidth.labelBefore($A.translate('Ancho'));
                     $AEE.elements.$document.attr('data-responsive-email', '0');
                 }
             }
         });
         $AEE.inputs.blockSettingsDocumentMaxWidth = $A.newInput2({
             type: 'number',
-            labelBefore: $A.translate('Max. width'),
+            labelBefore: $A.translate('Ancho Máximo'),
             value: 800,
             enter: function () {
                 this.change();
@@ -3888,7 +3891,7 @@
         });
         $AEE.inputs.blockSettingsDocumentOuterColor = $A.newInput2({
             type: 'text',
-            labelBefore: $A.translate('Outer color'),
+            labelBefore: $A.translate('Color de fondo'),
             change: function () {
                 $AEE.elements.$documentBox[0].style.backgroundColor = this.val();
                 $AEE.elements.$document.attr('data-outer-color', this.val());
@@ -3950,8 +3953,8 @@
         ]).drawTo($AEE.elements.$blockSettingsDocumentBox);
 
 
-        $('<style>#aee-document .aee-ui-state-highlight:before{content: "' + $A.translate("Drop here") + '"}</style>').appendTo('body:first');
-        $('<style>#aee-block-list .aee-ui-state-highlight:before{content: "' + $A.translate("Delete") + '"}</style>').appendTo('body:first');
+        $('<style>#aee-document .aee-ui-state-highlight:before{content: "' + $A.translate("Soltar acá") + '"}</style>').appendTo('body:first');
+        $('<style>#aee-block-list .aee-ui-state-highlight:before{content: "' + $A.translate("Elimiar") + '"}</style>').appendTo('body:first');
 
 
 
@@ -4652,193 +4655,196 @@
     });
 })();
 
-(function(){
-    $AEE.ready(function() {
+// (function(){
+//     $AEE.ready(function() {
 
-        $AEE.setPreviewScreenSize = function(x, y){
-            //$AEE.elements.$previewDialogScreen.getNiceScroll().hide();
-            $AEE.elements.$previewDialogScreen.stop().animate({
-                width:x + 'px',
-                height:y + 'px'
-            }, 500, function(){
-                //$AEE.elements.$previewDialogScreen.getNiceScroll().resize();
-                //$AEE.elements.$previewDialogScreen.getNiceScroll().show();
-            })
-        };
+//         $AEE.setPreviewScreenSize = function(x, y){
+//             //$AEE.elements.$previewDialogScreen.getNiceScroll().hide();
+//             $AEE.elements.$previewDialogScreen.stop().animate({
+//                 width:x + 'px',
+//                 height:y + 'px'
+//             }, 500, function(){
+//                 //$AEE.elements.$previewDialogScreen.getNiceScroll().resize();
+//                 //$AEE.elements.$previewDialogScreen.getNiceScroll().show();
+//             })
+//         };
 
-        $AEE.elements.$previewDialogContent = $('<div id="aee-preview-dialog-content"></div>');
-        $AEE.elements.$previewDialogLeftColumn = $('<div id="aee-preview-dialog-left-column"></div>').appendTo($AEE.elements.$previewDialogContent);
-        $AEE.elements.$previewDialogRightColumn = $('<div id="aee-preview-dialog-right-column"></div>').appendTo($AEE.elements.$previewDialogContent);
-        $AEE.elements.$previewDialogScreen = $('<div id="aee-preview-dialog-screen"></div>').appendTo($AEE.elements.$previewDialogRightColumn);
-        /*var niceScrollObj = $.extend({}, $AEE.settings.niceScroll);
-        niceScrollObj.zindex = 2003;
-        niceScrollObj.touchbehavior = true;
-        $AEE.elements.$previewDialogScreen.niceScroll(niceScrollObj);*/
+//         $AEE.elements.$previewDialogContent = $('<div id="aee-preview-dialog-content"></div>');
+//         $AEE.elements.$previewDialogLeftColumn = $('<div id="aee-preview-dialog-left-column"></div>').appendTo($AEE.elements.$previewDialogContent);
+//         $AEE.elements.$previewDialogRightColumn = $('<div id="aee-preview-dialog-right-column"></div>').appendTo($AEE.elements.$previewDialogContent);
+//         $AEE.elements.$previewDialogScreen = $('<div id="aee-preview-dialog-screen"></div>').appendTo($AEE.elements.$previewDialogRightColumn);
+//         /*var niceScrollObj = $.extend({}, $AEE.settings.niceScroll);
+//         niceScrollObj.zindex = 2003;
+//         niceScrollObj.touchbehavior = true;
+//         $AEE.elements.$previewDialogScreen.niceScroll(niceScrollObj);*/
 
-        $AEE.inputs.screenSizeSelect = $A.newInput2({
-            labelTop:$A.translate('Select screen'),
-            type:'select',
-            options:[
-                ['general', $A.translate('General'), true],
-                ['480x800', 'Alcatel One Touch T10'],
-                ['600x1024', 'BlackBerry PlayBook'],
-                ['360x640', 'HTC Desire 700'],
-                ['320x533', 'Huawei Y300-0151'],
-                ['768x1024', 'iPad Air'],
-                ['320x480', 'iPhone 3/4'],
-                ['320x568', 'iPhone 5'],
-                ['375x627', 'iPhone 6'],
-                ['320x427', 'LG Optimus L3'],
-                ['360x598', 'Motorola Moto G'],
-                ['600x960', 'Nexus 7'],
-                ['800x1280', 'Nexus 10'],
-                ['320x480', 'Nokia Lumia'],
-                ['320x533', 'Samsung Galaxy Ace 2'],
-                ['360x598', 'Sony Xperia Z'],
-                ['320x534', 'ZTE T83']
-            ],
-            change:function(){
-                var value = this.val();
-                if(value === 'general'){
-                    value = $AEE.maxWidth() + 'x600';
-                }
-                var size = value.split('x');
-                $AEE.inputs.screenSizeX.val(size[0]);
-                $AEE.inputs.screenSizeY.val(size[1]);
-                $AEE.setPreviewScreenSize(size[0], size[1]);
-            }
-        });
-        $AEE.inputs.screenSizeX = $A.newInput2({
-            labelTop:$A.translate('Screen width'),
-            labelAfter: 'px',
-            type:'number',
-            value:$AEE.maxWidth(),
-            change:function(){
-                $AEE.setPreviewScreenSize(this.val(), $AEE.inputs.screenSizeY.val());
-            }
-        });
-        $AEE.inputs.screenSizeX.input().attr('min', 10).attr('max', 5000).pbmInput();
+//         $AEE.inputs.screenSizeSelect = $A.newInput2({
+//             labelTop:$A.translate('Select screen'),
+//             type:'select',
+//             options:[
+//                 ['general', $A.translate('General'), true],
+//                 ['480x800', 'Alcatel One Touch T10'],
+//                 ['600x1024', 'BlackBerry PlayBook'],
+//                 ['360x640', 'HTC Desire 700'],
+//                 ['320x533', 'Huawei Y300-0151'],
+//                 ['768x1024', 'iPad Air'],
+//                 ['320x480', 'iPhone 3/4'],
+//                 ['320x568', 'iPhone 5'],
+//                 ['375x627', 'iPhone 6'],
+//                 ['320x427', 'LG Optimus L3'],
+//                 ['360x598', 'Motorola Moto G'],
+//                 ['600x960', 'Nexus 7'],
+//                 ['800x1280', 'Nexus 10'],
+//                 ['320x480', 'Nokia Lumia'],
+//                 ['320x533', 'Samsung Galaxy Ace 2'],
+//                 ['360x598', 'Sony Xperia Z'],
+//                 ['320x534', 'ZTE T83']
+//             ],
+//             change:function(){
+//                 var value = this.val();
+//                 if(value === 'general'){
+//                     value = $AEE.maxWidth() + 'x600';
+//                 }
+//                 var size = value.split('x');
+//                 $AEE.inputs.screenSizeX.val(size[0]);
+//                 $AEE.inputs.screenSizeY.val(size[1]);
+//                 $AEE.setPreviewScreenSize(size[0], size[1]);
+//             }
+//         });
+//         $AEE.inputs.screenSizeX = $A.newInput2({
+//             labelTop:$A.translate('Screen width'),
+//             labelAfter: 'px',
+//             type:'number',
+//             value:$AEE.maxWidth(),
+//             change:function(){
+//                 $AEE.setPreviewScreenSize(this.val(), $AEE.inputs.screenSizeY.val());
+//             }
+//         });
+//         $AEE.inputs.screenSizeX.input().attr('min', 10).attr('max', 5000).pbmInput();
 
-        $AEE.inputs.screenSizeY = $A.newInput2({
-            labelTop: $A.translate('Screen height'),
-            labelAfter: 'px',
-            type:'number',
-            value:600,
-            change:function(){
-                $AEE.setPreviewScreenSize($AEE.inputs.screenSizeX.val(), this.val());
-            }
-        });
-        $AEE.inputs.screenSizeY.input().attr('min', 10).attr('max', 5000).pbmInput();
+//         $AEE.inputs.screenSizeY = $A.newInput2({
+//             labelTop: $A.translate('Screen height'),
+//             labelAfter: 'px',
+//             type:'number',
+//             value:600,
+//             change:function(){
+//                 $AEE.setPreviewScreenSize($AEE.inputs.screenSizeX.val(), this.val());
+//             }
+//         });
+//         $AEE.inputs.screenSizeY.input().attr('min', 10).attr('max', 5000).pbmInput();
 
-        $AEE.inputs.previewSegments = $A.newInput2({
-            type:'select',
-            labelTop:$A.translate('A recipient from this segment'),
-            options:[],
-            change:function(){
-                var segment = this.val();
-                $AEE.elements.$previewDialogScreen.find('[data-dynamic-segments]').each(function(){
-                    var $t = $(this);
-                    var segments = $t.attr('data-dynamic-segments').split(',');
-                    if($.inArray(segment, segments) < 0){
-                        $t.hide();
-                    }else{
-                        $t.show();
-                    }
-                })
-            }
-        });
+//         $AEE.inputs.previewSegments = $A.newInput2({
+//             type:'select',
+//             labelTop:$A.translate('A recipient from this segment'),
+//             options:[],
+//             change:function(){
+//                 var segment = this.val();
+//                 $AEE.elements.$previewDialogScreen.find('[data-dynamic-segments]').each(function(){
+//                     var $t = $(this);
+//                     var segments = $t.attr('data-dynamic-segments').split(',');
+//                     if($.inArray(segment, segments) < 0){
+//                         $t.hide();
+//                     }else{
+//                         $t.show();
+//                     }
+//                 })
+//             }
+//         });
 
-        $AEE.forms.preview = $A.newForm().addInputs([
-            $AEE.inputs.screenSizeSelect,
-            $AEE.inputs.screenSizeX,
-            $AEE.inputs.screenSizeY,
-            $AEE.inputs.previewSegments
-        ]).addButtons([
-            $AEE.buttons.sendTestButton
-        ]).drawTo($AEE.elements.$previewDialogLeftColumn);
-        $AEE.inputs.previewSegments.widget().css('margin-bottom', '12px');
+//         $AEE.forms.preview = $A.newForm().addInputs([
+//             $AEE.inputs.screenSizeSelect,
+//             $AEE.inputs.screenSizeX,
+//             $AEE.inputs.screenSizeY,
+//             $AEE.inputs.previewSegments
+//         ]).addButtons([
+//             $AEE.buttons.sendTestButton
+//         ]).drawTo($AEE.elements.$previewDialogLeftColumn);
+//         $AEE.inputs.previewSegments.widget().css('margin-bottom', '12px');
 
-        $AEE.dialogs.preview = $A.dialog({
-            title: $A.translate('Preview'),
-            positionY:'top',
-            width:'85%',
-            id: 'aee-preview-dialog',
-            content: $AEE.elements.$previewDialogContent,
-            buttons: [
-                {
-                    text: $A.translate('Close'),
-                    click: function () {
-                        $AEE.dialogs.preview.close();
-                    }
-                }
-            ],
-            open: function () {
-                $AEE.elements.$previewDialogScreen.html($AEE.getHtmlCode());
-                $AEE.inputs.screenSizeSelect.val('general');
-                $AEE.inputs.screenSizeX.val($AEE.maxWidth());
-                $AEE.inputs.screenSizeY.val(600);
-                $AEE.setPreviewScreenSize($AEE.maxWidth(), 600);
-                $AEE.inputs.previewSegments.val(Object.keys($AEE.d.segments)[0] || '').change();
-            }
-        });
-    });
-})();
+//         $AEE.dialogs.preview = $A.dialog({
+//             title: $A.translate('Preview'),
+//             positionY:'top',
+//             width:'85%',
+//             id: 'aee-preview-dialog',
+//             content: $AEE.elements.$previewDialogContent,
+//             buttons: [
+//                 {
+//                     text: $A.translate('Close'),
+//                     click: function () {
+//                         $AEE.dialogs.preview.close();
+//                     }
+//                 }
+//             ],
+//             open: function () {
+//                 $AEE.elements.$previewDialogScreen.html($AEE.getHtmlCode());
+//                 $AEE.inputs.screenSizeSelect.val('general');
+//                 $AEE.inputs.screenSizeX.val($AEE.maxWidth());
+//                 $AEE.inputs.screenSizeY.val(600);
+//                 $AEE.setPreviewScreenSize($AEE.maxWidth(), 600);
+//                 $AEE.inputs.previewSegments.val(Object.keys($AEE.d.segments)[0] || '').change();
+//             }
+//         });
 
-(function(){
-    $AEE.ready(function() {
 
-        $AEE.inputs.sendTestRecipient = $A.newInput({
-            label:$A.translate('Recipient'),
-            name:'email',
-            value:''
-        });
-        $AEE.forms.sendTest = $A.newForm().addInput($AEE.inputs.sendTestRecipient);
-        $AEE.dialogs.sendTest = $A.dialog({
-            title: $A.translate('Send test'),
-            positionY: '40px',
-            id: 'aee-send-test-dialog',
-            content: $AEE.forms.sendTest,
-            buttons: [
-                {
-                    text: $A.translate('Cancel'),
-                    click: function () {
-                        $AEE.dialogs.sendTest.close();
-                    }
-                },
-                {
-                    skin: 'simple-orange',
-                    text: $A.translate('Send'),
-                    click: function () {
-                        $A.ajaxDocumentCover(true, [$A.translate('Test email sending')]);
-                        $.ajax({
-                            url: $AEE.emailPreviewApiUrl(),
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                recipient:$AEE.inputs.sendTestRecipient.val(),
-                                subject:$AEE.subject(),
-                                htmlCode:$AEE.getHtmlCode({conditions:false})
-                            },
-                            headers: {Authorization: 'Bearer ' + $AA.token().get()},
-                            beforeSend: function (xhr, data) {
-                                data.url = $AEE.emailPreviewApiUrl();
-                            }
-                        }).complete(function(){
-                            $A.ajaxDocumentCover(false);
-                            $AEE.dialogs.sendTest.close();
-                        }).fail(function(jqXHR, textStatus, errorThrown){
 
-                        });
-                    }
-                }
-            ],
-            open: function () {
+//     });
+// })();
 
-            }
-        });
+// (function(){
+//     $AEE.ready(function() {
 
-    });
-})();
+//         $AEE.inputs.sendTestRecipient = $A.newInput({
+//             label:$A.translate('Recipient'),
+//             name:'email',
+//             value:''
+//         });
+//         $AEE.forms.sendTest = $A.newForm().addInput($AEE.inputs.sendTestRecipient);
+//         $AEE.dialogs.sendTest = $A.dialog({
+//             title: $A.translate('Send test'),
+//             positionY: '40px',
+//             id: 'aee-send-test-dialog',
+//             content: $AEE.forms.sendTest,
+//             buttons: [
+//                 {
+//                     text: $A.translate('Cancel'),
+//                     click: function () {
+//                         $AEE.dialogs.sendTest.close();
+//                     }
+//                 },
+//                 {
+//                     skin: 'simple-white',
+//                     text: $A.translate('Send'),
+//                     click: function () {
+//                         $A.ajaxDocumentCover(true, [$A.translate('Test email sending')]);
+//                         $.ajax({
+//                             url: $AEE.emailPreviewApiUrl(),
+//                             type: 'POST',
+//                             dataType: 'json',
+//                             data: {
+//                                 recipient:$AEE.inputs.sendTestRecipient.val(),
+//                                 subject:$AEE.subject(),
+//                                 htmlCode:$AEE.getHtmlCode({conditions:false})
+//                             },
+//                             headers: {Authorization: 'Bearer ' + $AA.token().get()},
+//                             beforeSend: function (xhr, data) {
+//                                 data.url = $AEE.emailPreviewApiUrl();
+//                             }
+//                         }).complete(function(){
+//                             $A.ajaxDocumentCover(false);
+//                             $AEE.dialogs.sendTest.close();
+//                         }).fail(function(jqXHR, textStatus, errorThrown){
+
+//                         });
+//                     }
+//                 }
+//             ],
+//             open: function () {
+
+//             }
+//         });
+
+//     });
+// })();
 
 (function(){
     $AEE.ready(function(){
@@ -4979,15 +4985,15 @@
     //     }
     //     return $AEE.d.values.logoLink;
     // };
-    $AEE.recipient = function(value){
-        if (typeof value !== 'undefined') {
-            $AEE.layoutReady(function() {
-                $AEE.inputs.sendTestRecipient.val(value);
-            });
-            return $AEE;
-        }
-        return $AEE.inputs.sendTestRecipient.val();
-    };
+    // $AEE.recipient = function(value){
+    //     if (typeof value !== 'undefined') {
+    //         $AEE.layoutReady(function() {
+    //             $AEE.inputs.sendTestRecipient.val(value);
+    //         });
+    //         return $AEE;
+    //     }
+    //     return $AEE.inputs.sendTestRecipient.val();
+    // };
     $AEE.customFields = function(value){
         if (typeof value !== 'undefined') {
             $AEE.d.customFields = value;
@@ -5261,11 +5267,11 @@
         var previewText = $AEE.inputs.blockSettingsPreviewText.val();
 
         previewTextElement = '';
-        var shareText = $AEE.getDescription().substring(0, 150);
-        if(previewText.length > 0){
-            previewTextElement = '<div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">'+previewText+'</div>';
-            shareText = previewText;
-        }
+        // var shareText = $AEE.getDescription().substring(0, 150);
+        // if(previewText.length > 0){
+        //     previewTextElement = '<div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">'+previewText+'</div>';
+        //     shareText = previewText;
+        // }
 
         var metaTags = [
             '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">',
