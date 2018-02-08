@@ -112,7 +112,7 @@
         })
 
 
-        $AEE.baseDir('/vendor/tmp/living-maileditor/dist').layoutReady(function(){
+        $AEE.baseDir('/vendor/tmp/living-maileditor/dist').imageUploadApiUrl('{{route('campaigns.template.upload')}}').layoutReady(function(){
 
             $AEE.setEditorCode('{!!$item->mail_code!!}')
 

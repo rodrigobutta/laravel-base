@@ -340,4 +340,43 @@ class CampaignAdminController extends Controller{
     }
 
 
+
+
+    protected function templateUpload(Request $request){
+
+        if ($request->hasFile('upload_file')) {
+            $image      = $request->file('upload_file');
+            $fileName   = uniqid('img_') . '.' . $image->getClientOriginalExtension();
+
+            $img = \Image::make($image->getRealPath());
+            // $img->resize(120, 120, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            $img->stream(); // <-- Key point
+
+            $path = 'mails'.'/'.$fileName;
+
+            if(\Storage::disk('local')->put($path, $img, 'public')){
+
+                $url =  \Storage::url($path, 'public');
+
+                return response()->json([
+                    'name' => ['url' => $url] ,
+                    'message' => 'Archivo subido!',
+                    'status' => '200'
+                ]);
+
+            }
+            else{
+                return '';
+            }
+
+
+        }
+
+
+
+    }
+
+
 }

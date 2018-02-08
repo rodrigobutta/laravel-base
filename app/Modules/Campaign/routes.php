@@ -30,6 +30,7 @@ Route::group(['namespace' => '\App\Modules\Campaign'], function () {
 
         $router->get('campaigns/{itemId}/template', ['as' => 'campaigns.template', 'uses' => 'CampaignAdminController@template']);
         $router->post('campaigns/template', ['as' => 'campaigns.template.save', 'uses' => 'CampaignAdminController@templateSave']);
+        $router->post('campaigns/template/upload', ['as' => 'campaigns.template.upload', 'uses' => 'CampaignAdminController@templateUpload']);
 
         $router->post('campaigns/{itemId}/process', ['as' => 'campaigns.process', 'uses' => 'CampaignAdminController@processMails']);
         $router->post('campaigns/{itemId}/process/test', ['as' => 'campaigns.process.test', 'uses' => 'CampaignAdminController@processTestMail']);
