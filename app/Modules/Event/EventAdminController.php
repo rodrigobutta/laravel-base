@@ -113,14 +113,15 @@ class EventAdminController extends Controller{
         $item->save();
 
 
-        $leadlist = new LeadListModel();
+        // lo saco porque por ahora no tiene sentido un leadlist del evento general, ya que no comparten campos y no tendria formulario asociado
+        // $leadlist = new LeadListModel();
 
-            $leadlistType = LeadListTypeModel::find(1);
-            $leadlist->type()->associate($leadlistType);
+        //     $leadlistType = LeadListTypeModel::find(1);
+        //     $leadlist->type()->associate($leadlistType);
 
-            $leadlist->event()->associate($item);
+        //     $leadlist->event()->associate($item);
 
-        $leadlist->save();
+        // $leadlist->save();
 
 
         $campaign = new CampaignModel();

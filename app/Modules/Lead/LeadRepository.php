@@ -25,7 +25,7 @@ class LeadRepository implements LeadRepositoryInterface
     }
 
 
-    public function put($fields, $formId, $campaignId = null){
+    public function put($fields, $formId, $campaignId = null, $manual = false, $leadlistId = null){
 
         $data = serialize($fields);
 
@@ -35,6 +35,14 @@ class LeadRepository implements LeadRepositoryInterface
             $lead->event_id = $form->event_id;
             $lead->form_id = $formId;
             $lead->data = $data;
+
+            if($manual){
+                $lead->type_id = 2;
+            }
+            else{
+                $lead->type_id = 1;
+            }
+
             if($campaignId != null){
                 $lead->campaign_id = $campaignId;
             }
@@ -110,13 +118,25 @@ class LeadRepository implements LeadRepositoryInterface
         }
 
 
-        // MAPEO TODAS LASLEAD LISTS QUE CORRESPONDAN
-        $lead->leadlists()->attach($form->event->leadlist()->id);
-        $lead->leadlists()->attach($form->leadlist()->id);
-        if($campaignId != null){
-            $campaign = CampaignModel::find($campaignId);
-            $lead->leadlists()->attach($campaign->leadlist()->id);
+        if(!$manual){
+
+            // MAPEO TODAS LASLEAD LISTS QUE CORRESPONDAN
+            $lead->leadlists()->attach($form->event->leadlist()->id);
+            $lead->leadlists()->attach($form->leadlist()->id);
+            if($campaignId != null){
+                $campaign = CampaignModel::find($campaignId);
+                $lead->leadlists()->attach($campaign->leadlist()->id);
+            }
+
         }
+        else{
+
+            // si es agregado manual, no pongo el lead en todos lados sino solo en lalista que pide el administrador
+
+            $lead->leadlists()->attach($leadlistId);
+
+        }
+
 
 
         return $lead;
@@ -133,6 +153,29 @@ class LeadRepository implements LeadRepositoryInterface
         return true;
 
      }
+
+
+
+
+
+
+     public function cloneList($itemId){
+
+         $item = LeadListModel::findOrFail($itemId);
+
+         $new = $item->replicate();
+         $new->name = 'Copia de ' . $item->fullname . ' - ' . str_random(4);
+         $new->type_id = 4;
+         $new->push();
+
+         foreach($item->leads as $l){
+             $new->leads()->attach($l->id);
+         }
+
+         return $new;
+
+     }
+
 
 
 

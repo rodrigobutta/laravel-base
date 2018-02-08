@@ -14,4 +14,6 @@ interface LeadRepositoryInterface{
 
     public function removeFromList($itemId,$listID);
 
+    public function cloneList($itemId);
+
 }

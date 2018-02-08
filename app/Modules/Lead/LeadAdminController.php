@@ -37,152 +37,8 @@ class LeadAdminController extends Controller{
 
     public function __construct(LeadRepositoryInterface $lead)
     {
-        $this->lead = $lead;
+        $this->leadRepository = $lead;
     }
-
-
-	/**
-	 * Index interface.
-	 *
-	 * @return Content
-	 */
-	// public function index()
-	// {
-	// 	return Admin::content(function (Content $content) {
-
-	// 		$content->header('Conversiones');
-	// 		$content->description('listado');
-
-	// 		$content->body($this->list());
-	// 	});
-	// }
-
-	/**
-	 * Edit interface.
-	 *
-	 * @param $id
-	 * @return Content
-	 */
-	// public function edit($id)
-	// {
-
-	// 	// fix reb por resources que no interpretan bien el method del controller
-	// 	if($id=="create"){
-	// 		return $this->create();
-	// 	}
-
-	// 	return Admin::content(function (Content $content) use ($id) {
-
-	// 		$content->header('Conversion');
-	// 		$content->description('Resumen');
-
- //            $item = LeadModel::findOrFail($id);
-
- //            $fields = $item->getFields();
-
-
- //            $user = UserModel::findOrFail(1);
-
- //            $userfields = $user->getFields();
-
-
- //            $content->row(
- //                view('lead::admin.resume', compact('fields','userfields'))
- //            );
-
-
-	// 		// $content->body($this->form()->edit($id));
-	// 	});
-	// }
-
-	/**
-	 * Create interface.
-	 *
-	 * @return Content
-	 */
-	// public function create()
-	// {
-
- //        // TODO no deberia pasar nunca por este circuito porque el lead llega de un form
-
-	// 	return Admin::content(function (Content $content) {
-
-	// 		$content->header('Conversion');
-	// 		$content->description('creando');
-
-	// 		$content->body($this->form());
-	// 	});
-	// }
-
-	/**
-	 * Admin init page
-	 *
-	 * @return Grid
-	 */
-	// protected function list()
-	// {
-	// 	return Admin::grid(LeadModel::class, function (Grid $grid) {
-
-	// 		$grid->id('ID');
-
- //            $grid->form()->display(function ($form) {
- //                if($form){
- //                    return $form['name'];
- //                }
- //                return '';
- //            });
-
- //            $grid->campaign()->display(function ($campaign) {
- //                if($campaign){
- //                    return $campaign['name'];
- //                }
- //                return '';
- //            });
-
-	// 		$grid->event()->display(function ($event) {
-	// 		    if($event){
-	// 		        return $event['name'];
-	// 		    }
-	// 		    return '';
-	// 		});
-
-
-	// 		// $grid->actions(function ($actions) {
-
-	// 		//     $actions->prepend('<a href="'.route('leads.schema', ['leadid' => $actions->row->id]).'"><i class="fa fa-list-alt"></i></a>');
-
-	// 		// });
-
-	// 	});
-	// }
-
-	/**
-	 * Make a form builder.
-	 *
-	 * @return Form
-	 */
-	// protected function form()
-	// {
-
- //        return Admin::form(LeadModel::class, function (Form $form) {
-
- //            $form->display('id', 'ID');
-
- //            $form->display('data');
-
- //            var_dump($form->model()->data);
-
- //            // $form->multipleSelect('userlists')->options(UserListModel::all()->pluck('name', 'id'));
-
- //            $form->display('created_at', 'Created At');
- //            $form->display('updated_at', 'Updated At');
-
- //        });
-
-	// }
-
-
-
 
 
 
@@ -196,8 +52,41 @@ class LeadAdminController extends Controller{
 
             $fields = $item->getFields();
 
+
+
+            // $schema y $formfields lo usamos para mostar form de alta en el admin
+
+            if($form = $item->getform()){
+
+                $schema = json_decode($form->schema);
+
+                $formFields = $schema->fields;
+
+                foreach ($formFields as &$field) {
+
+                    if($field->type == 'select' && isset($field->nature) && $field->nature == 'userfield'){
+
+                        $userfieldId = str_replace('userfield_','',$field->id_name);
+
+                        $userfield = UserFieldModel::findOrFail($userfieldId);
+
+                        $field->choices = $userfield->choices;
+
+                    }
+                }
+
+            }
+            else{
+                $schema = null;
+                $formFields = [];
+            }
+
+
+
+
+
             $content->row(
-                view('lead::admin.leadlist.manage', compact('item','fields'))->render()
+                view('lead::admin.leadlist.manage', compact('item','fields','formFields','schema'))->render()
             );
 
         });
@@ -211,7 +100,7 @@ class LeadAdminController extends Controller{
 
         $arrIds = explode(',', $ids);
 
-        if($this->lead->removeFromList($itemId,$arrIds)){
+        if($this->leadRepository->removeFromList($itemId,$arrIds)){
             $response = sizeof($arrIds) . ' conversiones eliminadas de la lista';
             $status = 'success';
         }
@@ -307,5 +196,75 @@ class LeadAdminController extends Controller{
 
 
 
+
+    public function cloneList(Request $request, $itemId){
+
+        if($item = $this->leadRepository->cloneList($itemId)){
+            return redirect()->back()->with('flashSuccess', 'Lista Clonada');
+        }
+        else{
+            return redirect()->back()->with('flashError', 'No se pudo clonar');
+        }
+
+    }
+
+
+
+    public function editList($itemId){
+
+        $item = LeadListModel::findOrFail($itemId);
+
+        // return Admin::content(function (Content $content) use($item){
+
+        //     $content->header($item->event->name . ' - Lista > ' . $item->fullname);
+
+        //     $content->row(
+                return view('lead::admin.leadlist.edit', compact('item'))->render();
+        //     );
+
+        // });
+
+    }
+
+
+    protected function saveList(Request $request)
+    {
+        $id = $request->get("item_id");
+
+        $item = LeadListModel::findOrFail($id);
+
+        $item->name = $request->get("name");
+        $item->description = $request->get("description");
+
+        $item->save();
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->event_id]),
+            'status' => '200'
+        ]);
+
+    }
+
+
+
+
+
+
+
+    public function leadlistAddManual(Request $request, $itemId){
+
+        $item = LeadListModel::findOrFail($itemId);
+
+        if($form = $item->getForm()){
+
+            $fields = $request->all();
+
+            $lead = $this->leadRepository->put($fields,$form->id,null,true,$item->id);
+
+        }
+
+        return back();
+
+    }
 
 }

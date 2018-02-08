@@ -1,5 +1,70 @@
 
 <div class="row">
+    <div class="col-md-6">
+
+
+        {!! Form::open(['url' => route('leadlist.add.manual',['itemId' => $item->id] ), 'method' => 'post', 'pjax-container', 'class' => 'form-horizontal']) !!}
+
+        <div class="box box-primary22 box-solid2">
+            <div class="box-header with-border">
+                <h3 class="box-title">Agregar</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+            <div class="box-body">
+
+                     @foreach($formFields as $field)
+
+                         <div class="control-group">
+
+                             <label class="control-label" for="{{$field->id_name}}">{{$field->title}}{!! $field->is_required ? ' <span class="required">*</span>' : '' !!}</label>
+
+                             <div class="controls">
+
+                             @if ($field->type == 'text' || $field->type == 'email')
+                                 <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="form-control">
+                             @elseif ($field->type == 'phone')
+                                 <input type="text" name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="form-control phone">
+                             @elseif ($field->type == 'textarea')
+                                 <textarea name="{{$field->id_name}}" id="{{$field->id_name}}" placeholder="{{$field->placeholder}}" rows="8" class="form-control span5"></textarea>
+                             @elseif ($field->type == 'select')
+                                 <select name="{{$field->id_name}}" id="{{$field->id_name}}" class="form-control">
+                                     <option value="" selected=""></option>
+                                     {{-- al ser userfield, tengo valores de tabla que son id, name, title, en vez del texto comun en choice --}}
+                                     @if (isset($field->nature) && $field->nature == 'userfield')
+                                         @foreach($field->choices as $choice)
+                                             <option value="{{ $choice->id }}">{{ $choice->title }}</option>
+                                         @endforeach
+                                     @else
+                                         @foreach($field->choices as $choice)
+                                             <option value="{{ $choice->choice }}">{{ $choice->choice }}</option>
+                                         @endforeach
+                                     @endif
+                                 </select>
+                             @endif
+
+                             </div>
+
+                         </div>
+
+                     @endforeach
+
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+
+        {!! Form::close() !!}
+
+
+    </div>
+</div>
+
+
+
+<div class="row">
 
 
     <div class="col-md-12">
@@ -51,7 +116,7 @@
 
                             </td>
                               <td>
-                                  {{$l->created_at}}
+                                  <i class="fa {{$l->type->icon}}"></i>&nbsp;{{$l->created_at}}
                               </td>
 
                                 @foreach($fields as $field)

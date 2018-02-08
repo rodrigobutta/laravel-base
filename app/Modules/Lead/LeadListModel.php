@@ -111,8 +111,11 @@ class LeadListModel extends \App\Models\Profiled
         if($this->form){
             return $this->form;
         }
-        else{
+        else if($this->campaign->form){
             return $this->campaign->form;
+        }
+        else{
+            return null;    ///  puede que lalista no sea de un form directo y sea de una campaña pero a su vez esa campaña no este asociada a un form destino
         }
 
     }

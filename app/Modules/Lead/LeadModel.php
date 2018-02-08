@@ -38,6 +38,11 @@ class LeadModel extends \App\Models\Profiled
         return $this->belongsToMany(LeadListModel::class, 'leadlist_lead', 'lead_id', 'leadlist_id');
     }
 
+    public function type()
+    {
+        return $this->belongsTo(LeadTypeModel::class, 'type_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(UserModel::class, 'user_id');

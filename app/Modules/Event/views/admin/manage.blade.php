@@ -285,7 +285,7 @@
                 <h3 class="box-title">Listas</h3>
               </div>
 
-
+{{--
               <div class="box-header">
 
                   <span>
@@ -303,16 +303,16 @@
                   </span>
 
               </div>
-
+ --}}
               <div class="box-body">
                 <div class="table-responsive">
                   <table class="table no-margin">
                     <thead>
                     <tr>
-                        <th></th>
+                        {{-- <th></th> --}}
                       <th>Tipo</th>
                       <th>Nombre</th>
-                      <th>Criterio</th>
+                      <th>Formulario Asociado</th>
                       <th class="text-center">Conversiones</th>
                       <th></th>
                     </tr>
@@ -322,11 +322,11 @@
                         @foreach($item->leadlists as $l)
 
                             <tr>
-                                <td>
+                                {{-- <td>
                                     @if(!$l->isTest())
                                         <input type="checkbox" class="grid-row-checkbox" data-id="{{$l->id}}">
                                     @endif
-                                </td>
+                                </td> --}}
                                 <td>
                                     <i class="fa {{$l->type->icon}}"></i>&nbsp;{{$l->type->name}}
                                 </td>
@@ -334,14 +334,18 @@
                                     {{$l->fullname}}
                                 </td>
                                 <td>
-
+                                    {{$l->getForm()->name or '-'}}
                                 </td>
                                   <td class="text-center">
                                     {{$l->leadsCount()}}
                                 </td>
                                 <td class="text-right">
                                     @if(!$l->isTest())
-                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Detalles</a>
+                                        @if($l->type_id==4)
+                                            <a class="btn btn-default btn-sm btn-flat btn-leadlist-edit" href="#" data-id="{{$l->id}}">Editar</a>
+                                        @endif
+                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
+                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.clone', ['itemId' => $l->id])}}">Clonar</a>
                                         <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
                                     @endif
                                 </td>
@@ -638,6 +642,41 @@
                     console.log('dialog form submited')
                     console.log(data)
                     toastr.success("Campaña creada");
+                    document.location = response.route;
+                },
+                closed:function(that){
+                    console.log('dialog closed')
+                }
+            });
+
+
+        });
+
+
+
+
+
+        $('.btn-leadlist-edit').on('click', function(e){
+            e.preventDefault();
+
+            var url = '{{ route('leadlist.edit', ['itemId' => 'xxx']) }}';
+                url = url.replace('xxx',$(this).attr('data-id'));
+
+            $('#modal_form').livingDialog({
+                url:url,
+                open: {
+                    type:'GET',
+                    predata: function(el) {
+                    }
+                },
+                error: function(when, that, xhr, data) {
+                    console.log('livingdialog error')
+                    console.log(when)
+                },
+                submited:function(data,response){
+                    console.log('dialog form submited')
+                    console.log(data)
+                    toastr.success("Campaña configurada");
                     document.location = response.route;
                 },
                 closed:function(that){

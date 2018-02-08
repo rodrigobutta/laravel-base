@@ -21,6 +21,13 @@ Route::group(['namespace' => '\App\Modules\Lead'], function () {
 
 
         $router->delete('leadlist/batch/{itemId}/removeitem', ['as' => 'leadlist.batch.removeitem', 'uses' => 'LeadAdminController@leadlistBatchRemoveitem']);
+
+        $router->get('leadlist/{itemId}/clone', ['as' => 'leadlist.clone', 'uses' => 'LeadAdminController@cloneList']);
+
+        $router->get('leadlist/{itemId}/edit', ['as' => 'leadlist.edit', 'uses' => 'LeadAdminController@editList']);
+        $router->post('leadlist/edit/save', ['as' => 'leadlist.edit.save', 'uses' => 'LeadAdminController@saveList']);
+
+        $router->post('leadlist/{itemId}/add/manual', ['as' => 'leadlist.add.manual', 'uses' => 'LeadAdminController@leadlistAddManual']);
     });
 
 });
