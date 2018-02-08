@@ -30,7 +30,7 @@
     <div class="box-body">
 
 
-        <ul class="list-unstyled">
+      {{--   <ul class="list-unstyled">
 
              @if($item->destinationLeadlist)
 
@@ -50,7 +50,7 @@
 
 
         </ul>
-
+ --}}
 
         <div id="email_editor"></div>
 
@@ -114,7 +114,29 @@
 
         $AEE.baseDir('/vendor/tmp/living-maileditor/dist').imageUploadApiUrl('{{route('campaigns.template.upload')}}').layoutReady(function(){
 
-            $AEE.setEditorCode('{!!$item->mail_code!!}')
+
+            @if($item->destinationLeadlist)
+
+                $AEE.customFields({
+                   @foreach($item->destinationLeadlist->getFields() as $f)
+                       "%recipient.{{$f->id_name}}%": "{{$f->title}}",
+                   @endforeach
+                });
+
+            @else
+
+                $AEE.customFields({
+                    @foreach($item->userlists as $u)
+                        @foreach($u->getFields() as $f)
+                            "%recipient.{{$f->slug}}%": "{{$f->title}}",
+                        @endforeach
+                    @endforeach
+                });
+
+            @endif
+
+
+            $AEE.setEditorCode('{!!addslashes($item->mail_code)!!}')
 
             // $AEE.buttons.saveAndExitButton.text($A.translate('Download'));
             $AEE.imagePicker.d.buttons.gallery.click(function(){
