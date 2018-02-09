@@ -25,6 +25,8 @@
     {!! HTML::style('/vendor/sweetalert2/dist/sweetalert2.min.css') !!}
     {!! HTML::style('/vendor/toastr/toastr.min.css') !!}
 
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css') !!}
+
 
     {!! HTML::style('/css/app.css') !!}
 
@@ -78,6 +80,9 @@
       }(document, 'script', 'facebook-jssdk'));
 
     </script>
+
+
+    @include('front.master.includes')
 
 
 </head>

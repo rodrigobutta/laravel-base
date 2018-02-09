@@ -3,6 +3,12 @@
 
     {!! HTML::script('https://code.jquery.com/jquery-3.2.1.min.js') !!}
 
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js') !!}
+
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-es.min.js') !!}
+
+
+
     {{-- {!! HTML::script('http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js') !!} --}}
     {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js') !!}
 

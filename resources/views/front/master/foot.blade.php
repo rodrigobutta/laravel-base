@@ -1,4 +1,4 @@
-@include('front.master.includes')
+
 
 @yield('extra-js')
 

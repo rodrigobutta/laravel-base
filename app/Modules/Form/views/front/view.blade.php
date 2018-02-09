@@ -113,6 +113,22 @@
                                         @endforeach
                                     @endif
                                 </select>
+                            @elseif ($field->type == 'date')
+                                <input type="text" name="alt_{{$field->id_name}}" id="alt_{{$field->id_name}}" placeholder="{{$field->placeholder}}" class="form-control {!! $schema->input_size !!} ">
+                                <input type="hidden" name="{{$field->id_name}}" id="{{$field->id_name}}" class=" ">
+
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $( "#alt_{{$field->id_name}}" ).datepicker({
+                                            yearRange: "-80:+0",
+                                            dateFormat : 'dd/mm/yy',
+                                            changeMonth : true,
+                                            changeYear: true,
+                                            altFormat: "yy-mm-dd",
+                                            altField: "#{{$field->id_name}}"
+                                        });
+                                    });
+                                </script>
                             @endif
 
                             </div>
@@ -204,6 +220,30 @@
 
         $(document).ready(function () {
 
+            initFields();
+
+            initForm();
+
+        });
+
+
+        function initFields(){
+            console.log('initFields')
+
+            $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+
+
+            // $(".date").each(function(){})
+
+            // $( ".date" ).datepicker({
+            //     yearRange: "-80:+0",
+            //     dateFormat : 'dd/mm/yy',
+            //     changeMonth : true,
+            //     changeYear: true,
+            //     altFormat: "yy-mm-dd",
+            //     altField: "#alt_" + $(this).attr('name')
+            // });
+
 
             // $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
 
@@ -242,6 +282,11 @@
             // $('.phone').mask('(000) 0000-0000', options);
 
 
+        }
+
+
+        function initForm(){
+
 
 
             $('#form').validate({
@@ -258,7 +303,21 @@
                             @if ($field->type=='email')
                                 email: true,
                             @endif
+
+                            @if ($field->type=='date')
+                                date:false, // fixpara que no valide mal
+                                dateITA: true
+                            @endif
                         },
+
+
+                        @if ($field->type=='date')
+                            alt_{{$field->id_name}}: {
+                                date:false,
+                                dateITA: true
+                            },
+                        @endif
+
 
                     @endforeach
 
@@ -288,6 +347,8 @@
                 },
                 submitHandler: function(form) {
 
+                    // console.log(form);
+                    // return false;
 
                     swal({
                       title: '{!!$item->confirm_title!!}',
@@ -301,49 +362,28 @@
                       preConfirm: function () {
                         return new Promise(function (resolve, reject) {
 
+                            $(form).ajaxSubmit({
+                                loader: '.form-loader',
+                                message: '.form-message',
+                                messageErrorClasses: 'message-error',
+                                messageSuccessClasses: 'message-success',
+                                error: function(response) {
+                                    console.log(response)
+                                    reject('Error al enviar formulario')
+                                 },
+                                success: function(response) {
+                                    console.log(response)
 
-                                $(form).ajaxSubmit({
-                                    // data: function() {
-                                    //   return $(this).serialize();
-                                    // },
-                                    // hideInvalid: function(input) {
-                                    //   $(input).closest('.form-group').removeClass('has-warning');
-                                    // },
-                                    loader: '.form-loader',
-                                    message: '.form-message',
-                                    messageErrorClasses: 'message-error',
-                                    messageSuccessClasses: 'message-success',
-                                    // method: function() {
-                                    //   return $(this).attr('method');
-                                    // },
-                                    // showInvalid: function(input) {
-                                    //   $(input).closest('.form-group').addClass('has-warning');
-                                    // },
-                                    // url: function() {
-                                    //   return $(this).attr('action');
-                                    // },
-                                    // after: function(response) {
-                                    // },
-                                    // before: function() {
-                                    // },
-                                    error: function(response) {
-                                        console.log(response)
-                                        reject('Error al enviar formulario')
-                                     },
-                                    success: function(response) {
-                                        console.log(response)
-
-                                        if (typeof response === 'object') {
-                                            if (response.status=='success') {
-                                                resolve(response)
-                                            } else {
-                                                reject(response.message)
-                                            }
+                                    if (typeof response === 'object') {
+                                        if (response.status=='success') {
+                                            resolve(response)
+                                        } else {
+                                            reject(response.message)
                                         }
+                                    }
 
-                                     }
-                                });
-
+                                 }
+                            });
 
                         })
                       },
@@ -379,7 +419,7 @@
                 }
             });
 
-        });
+        }
 
 
     </script>
