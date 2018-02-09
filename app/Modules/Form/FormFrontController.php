@@ -174,40 +174,32 @@ class FormFrontController extends Controller
         }
 
 
-
-
-
         $errors = '';
-        try {
+        // try {
 
             // MAIL AL USUARIO
             if($form->usermail_enabled){
 
                 // si no recupero el mail del form, no puedo enviar confirmacion
-                if($request->has('userfield_1')){
+                if($email = $lead->getEmail()){
 
-                    $email_tmp = $request->get('userfield_1');
+                    $recipents = [];
+                    $recipents[$email] = $lead->getFieldsArray();
+                    // $recipents[$email]['pixel'] = route('campaign.pixel',["sendId" => $send->id]) ;
+                    // $recipents[$email]['cta'] =  $item->link($send->id);
 
-                    if($request->has('userfield_3')){
-                        $name_tmp = $request->get('userfield_3');
-                    }
-                    else{
-                        $name_tmp = "";
-                    }
-
-
-                    $subject = $form->usermail_subject;
+                    $subject = $form->mail_subject;
 
                     $data = [
-                        'title' => $subject,
-                        'form' => $form
+                        'content' => $form->mail_html,
                     ];
 
-                    \Mailgun::send('form::emails.confirm', $data, function ($message) use($subject,$email_tmp, $name_tmp) {
+                    \Mailgun::send('form::emails.template-blank', $data, function ($message) use($recipents,$subject) {
                         $message
                         ->subject($subject)
-                        ->to($email_tmp, $name_tmp);
+                        ->to($recipents);
                     });
+
 
                 }
 
@@ -237,10 +229,10 @@ class FormFrontController extends Controller
 
             }
 
-        } catch (Exception $e) {
-            // $mailResponse = $e->xdebug_message;
-            $errors = $e->getMessage();
-        }
+        // } catch (Exception $e) {
+        //     // $mailResponse = $e->xdebug_message;
+        //     $errors = $e->getMessage();
+        // }
 
 
         return response()->json([

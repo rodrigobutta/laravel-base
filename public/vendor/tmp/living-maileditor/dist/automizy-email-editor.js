@@ -327,7 +327,7 @@
                 // var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
                 // $(editor.getElement()).parent().append(inp);
 
-                var inp = $('input[name="upload_file"]').trigger('click');
+                var inp = $('input[name="upload_file"]');
 
 
                 inp.on("change",function(){
@@ -1606,7 +1606,7 @@
             drop:function($block, $contentCell, $topCell, $rightCell, $bottomCell, $leftCell){
                 $block.addClass('aee-button-block-item');
                 var $content = $('<div class="aee-button-block-content"></div>').appendTo($contentCell).attr('style', 'text-align:center');
-                var $button = $('<a href="#" class="aee-button-block-button"></a>').text($A.translate('My button')).appendTo($content).attr('style', 'border-top-width: 9px; border-right-width:36px; border-bottom-width:9px; border-left-width:36px; border-style:solid; border-color:#b8b8b8; font-size: 14px; display: inline-block; text-decoration: none; background-color: #b8b8b8; color: #ffffff; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; font-weight:normal; text-decoration:none; font-style:normal;');
+                var $button = $('<a href="'+mailCta+'" class="aee-button-block-button"></a>').text($A.translate('Botón al formulario')).appendTo($content).attr('style', 'border-top-width: 9px; border-right-width:36px; border-bottom-width:9px; border-left-width:36px; border-style:solid; border-color:#b8b8b8; font-size: 14px; display: inline-block; text-decoration: none; background-color: #b8b8b8; color: #ffffff; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; font-weight:normal; text-decoration:none; font-style:normal;');
             }
         });
 
@@ -5363,7 +5363,7 @@
         var metaTags = [
             '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">',
             '<meta property="og:title" content="[{subject}]" />',
-            '<meta property="og:description" content="' + shareText + '..." />',
+            '<meta property="og:description" content="" />',
             '<meta property="og:type" content="website" />',
             '<meta property="og:url" content="[{webversion}]" />',
             '<meta property="og:image" content="' + $AEE.d.config.url + '/images/automizy-logo-100x100.jpg" />'
@@ -5729,6 +5729,8 @@
                 '<body align="center" width="100%" bgcolor="'+outerColor+'" style="font-family: arial, helvetica, sans-serif; text-align:center; width:100%; background-color:'+outerColor+'">' +
 
                     content +
+
+                    '<img src="%recipient.pixel%" alt="" >' +
 
                 '</body>' +
             '</html>';

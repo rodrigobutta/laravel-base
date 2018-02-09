@@ -1,4 +1,14 @@
 
+<style type="text/css">
+
+    body{
+        text-align: left !important;
+    }
+
+</style>
+
+
+
 <div class="row">
     <div class="col-md-6">
 
@@ -46,12 +56,12 @@
                 </div>
             </div>
             <div class="box-body">
-                @if($item->social_title)
-                    <h4><strong>{{$item->social_title}}</strong></h4>
+                @if($item->mail_subject)
+                    <h4><strong>{{$item->mail_subject}}</strong></h4>
                 @endif
                 <hr>
-                @if($item->social_description)
-                    <p>{!!$item->social_description!!}</p>
+                @if($item->mail_html)
+                    {!!$item->mail_html!!}
                 @endif
             </div>
            {{--  <div class="box-footer">

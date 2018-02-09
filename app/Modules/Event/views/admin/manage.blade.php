@@ -115,6 +115,9 @@
                               <td class="text-right">
                                   <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Editar</a>
                                   <a class="btn btn-default btn-sm btn-flat reload" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
+                                  @if($f->type_id==1)
+                                    <a href="{{route('forms.template',["itemId"=>$f->id])}}" class="btn btn-default btn-sm btn-flat reload">Mail Automático</a>
+                                  @endif
                                   <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
                                   {{-- <a href="javascript:void(0);" data-id="{{$f->id}}" class="btn btn-default btn-sm btn-flat form-row-delete">Eliminar</a> --}}
                               </td>
@@ -234,7 +237,7 @@
                                     @endif
 
                                     @if($c->type_id>1)
-                                        <a href="{{route('campaigns.clone',["itemId"=>$c->id])}}" class="btn btn-primary btn-sm btn-flat">Clonar</a>
+                                        <a href="{{route('campaigns.clone',["itemId"=>$c->id])}}" class="btn btn-default btn-sm btn-flat">Clonar</a>
                                     @endif
 
 
@@ -345,8 +348,8 @@
                                             <a class="btn btn-default btn-sm btn-flat btn-leadlist-edit" href="#" data-id="{{$l->id}}">Editar</a>
                                         @endif
                                         <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
-                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.clone', ['itemId' => $l->id])}}">Clonar</a>
-                                        <a class="btn btn-primary btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
+                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
+                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.clone', ['itemId' => $l->id])}}">Clonar</a>
                                     @endif
                                 </td>
 

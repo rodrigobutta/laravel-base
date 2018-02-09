@@ -38,11 +38,12 @@
         <label for="destination_leadlist_id" class="col-sm-4 control-label">Lista</label>
         <div class="col-sm-8">
             <select class="form-control destination_leadlist_id" style="width: 100%;" name="destination_leadlist_id">
+                <option value="">- ninguna -</option>
                 @if($item->destinationLeadlist)
                     <option value="{{$item->destinationLeadlist->id}}" selected>{{$item->destinationLeadlist->fullname}}</option>
                 @endif
                 @foreach($item->event->leadlists as $l)
-                    <option value="">- ninguna -</option>
+
                     @if($item->destination_leadlist_id!=$l->id && !$l->isTest())
                         <option value="{{$l->id}}">{{$l->fullname}}</option>
                     @endif
@@ -74,7 +75,9 @@
         <div class="col-sm-8">
             <select class="form-control form_id" style="width: 100%;" name="form_id">
                 <option value="">- ninguno -</option>
-                <option value="{{$item->getForm()->id}}" selected>{{$item->getForm()->name}}</option>
+                @if($item->form)
+                    <option value="{{$item->form->id}}" selected>{{$item->getForm()->name}}</option>
+                @endif
                 @foreach($forms as $form)
                     @if($item->form_id!=$form->id)
                         <option value="{{$form->id}}">{{$form->name}}</option>

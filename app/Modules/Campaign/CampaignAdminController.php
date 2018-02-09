@@ -88,9 +88,13 @@ class CampaignAdminController extends Controller{
 
             $item = new CampaignModel();
             $item->name = $request->get("name");;
+            $item->slug = @str_slug($request->get("name"));
+
             $item->form_id = $request->get("form_id");
 
             $item->destination_leadlist_id = $request->get("destination_leadlist_id");
+
+            $item->save();
 
             $item->userlists()->sync($request->get("userlists"));
 

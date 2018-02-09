@@ -121,7 +121,7 @@ class LeadRepository implements LeadRepositoryInterface
         if(!$manual){
 
             // MAPEO TODAS LASLEAD LISTS QUE CORRESPONDAN
-            $lead->leadlists()->attach($form->event->leadlist()->id);
+            // $lead->leadlists()->attach($form->event->leadlist->id);
             $lead->leadlists()->attach($form->leadlist()->id);
             if($campaignId != null){
                 $campaign = CampaignModel::find($campaignId);

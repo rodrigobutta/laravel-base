@@ -90,7 +90,7 @@
     <div class="box-footer">
         <div class="pull-right">
             <button type="button" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submit" onclick="save_form('{{ csrf_token() }}')">Guardar</button>&nbsp;
-            <button type="button" class="btn btn-default" onclick="history.back()">Cerrar</button>&nbsp;
+            <a href="{{route('events.manage', ['itemId'=>$item->event_id])}}" class="btn btn-default reload">Cerrar</a>
         </div>
     </div>
 </div>

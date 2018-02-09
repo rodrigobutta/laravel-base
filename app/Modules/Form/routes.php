@@ -4,16 +4,16 @@ use Illuminate\Routing\Router;
 Route::group(['namespace' => '\App\Modules\Form'], function () {
 
     // los meto en este group para poder recuperar si esta autenticado o no y en base a eso ver si muestro el form y demas
-    Route::group([
-       'middleware'    => ['web'],
-    ], function (Router $router) {
+    // Route::group([
+    //    'middleware'    => ['web'],
+    // ], function (Router $router) {
 
-        $router->get('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@getView']);
-        $router->post('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@pushLead']);
+    //     $router->get('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@getView']);
+    //     $router->post('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@pushLead']);
 
-    });
-    // Route::get('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@getView']);
-    // Route::post('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@pushLead']);
+    // });
+    Route::get('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@getView']);
+    Route::post('form/{eventSlug}/{formSlug}', ['as' => 'forms.view', 'uses' => 'FormFrontController@pushLead']);
 
 
     Route::group([
@@ -26,6 +26,9 @@ Route::group(['namespace' => '\App\Modules\Form'], function () {
 
         $router->resource('forms', FormAdminController::class);
 
+        $router->get('forms/{itemId}/template', ['as' => 'forms.template', 'uses' => 'FormAdminController@template']);
+        $router->post('forms/template', ['as' => 'forms.template.save', 'uses' => 'FormAdminController@templateSave']);
+        $router->post('forms/template/upload', ['as' => 'forms.template.upload', 'uses' => 'FormAdminController@templateUpload']);
 
         $router->get('forms/{formid}/preview/{mail}', ['as' => 'forms.preview', 'uses' => 'FormAdminController@previewEmail']);
 

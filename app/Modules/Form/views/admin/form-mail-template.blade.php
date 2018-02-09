@@ -49,7 +49,7 @@
 
     var currentEditorBookmark;
     var currentEditor;
-    var mailCta = '%recipient.cta%'; // {{$item->link('SENDID')}}
+    var mailCta = '%recipient.cta%';
     // var mailPixel = '%recipient.pixel%';
 
     $(function(){
@@ -62,7 +62,7 @@
 
             $.ajax({
                 method: 'post',
-                url: '{{route('campaigns.template.save')}}' ,
+                url: '{{route('forms.template.save')}}' ,
                 data: {
                     _method:'post',
                     _token:LA.token,
@@ -88,29 +88,13 @@
         })
 
 
-        $AEE.baseDir('/vendor/tmp/living-maileditor/dist').imageUploadApiUrl('{{route('campaigns.template.upload')}}').layoutReady(function(){
+        $AEE.baseDir('/vendor/tmp/living-maileditor/dist').imageUploadApiUrl('{{route('forms.template.upload')}}').layoutReady(function(){
 
-            $AEE.systemFields({
-                @foreach($item->uploads as $u)
-                    '<a href="{{$u->url}}">{{$u->name}}</a>': '{{$u->name}}',
-                @endforeach
+            $AEE.customFields({
+               @foreach($item->getFields() as $f)
+                   "%recipient.{{$f->id_name}}%": "{{$f->title}}",
+               @endforeach
             });
-
-            @if($item->destinationLeadlist)
-                $AEE.customFields({
-                   @foreach($item->destinationLeadlist->getFields() as $f)
-                       "%recipient.{{$f->id_name}}%": "{{$f->title}}",
-                   @endforeach
-                });
-            @else
-                $AEE.customFields({
-                    @foreach($item->userlists as $u)
-                        @foreach($u->getFields() as $f)
-                            "%recipient.{{$f->slug}}%": "{{$f->title}}",
-                        @endforeach
-                    @endforeach
-                });
-            @endif
 
             $AEE.setEditorCode('{!!addslashes($item->mail_code)!!}')
 

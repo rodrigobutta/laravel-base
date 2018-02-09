@@ -164,18 +164,11 @@ class FormAdminController extends Controller{
             $form->text('success_button_ok','Boton Aceptar')->default('Aceptar')->rules('required');
             $form->text('success_button_ok_action','Acción del botón aceptar')->placeholder('URL para redireccionar o dejar vacio para permanecer en la pantalla');
 
-            $form->divide();
-            $form->html('<h3><i class="fa fa-envelope"></i>&nbsp;Mail de confirmación al usuario</h3>');
-
             $states = [
                 'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
                 'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
             ];
-            $form->switch("usermail_enabled","Activo")->states($states)->value(1);
-            $form->text('usermail_subject','Asunto')->default('Gracias');
-            $form->ckeditor('usermail_content','Cuerpo del mail');
-            $form->file('attach','Documento de descarga');
-
+            $form->switch("usermail_enabled","Enviar mail automático al usuario")->states($states)->value(1);
 
             $form->divide();
             $form->html('<h3><i class="fa fa-envelope"></i>&nbsp;Mail de notificación al administrador</h3>');
@@ -193,8 +186,6 @@ class FormAdminController extends Controller{
 
             $form->multipleSelect('userlists','Agregar a las siguientes listas')->options(UserListModel::all()->pluck('name', 'id'));
 
-
-
             $form->saved(function ($form){
 
                // CREO LISTA ASOCIADA
@@ -209,7 +200,7 @@ class FormAdminController extends Controller{
 
                }
 
-                return redirect(route('events.manage',['eventid' => $event->id]));
+                return redirect(route('events.manage',['itemId' => $form->model()->event_id]));
 
             });
 
@@ -274,6 +265,87 @@ class FormAdminController extends Controller{
 		]);
 
 	}
+
+
+
+
+
+    public function template($itemId){
+
+        $item = FormModel::findOrFail($itemId);
+
+        return Admin::content(function (Content $content) use($item){
+
+            $content->header($item->name);
+
+            $content->row(
+                view('form::admin.form-mail-template', compact('item'))->render()
+            );
+
+        });
+
+    }
+
+    protected function templateSave(Request $request)
+    {
+        $id = $request->get("id");
+        $item = FormModel::findOrFail($id);
+
+        $mail_html = $request->get("mail_html");
+        $mail_code = $request->get("mail_code");
+        $mail_subject = $request->get("mail_subject");
+
+        $item->mail_html = $mail_html;
+        $item->mail_code = $mail_code;
+        $item->mail_subject = $mail_subject;
+
+        $item->save();
+
+        return response()->json([
+            'route' => route('events.manage', ['itemId' => $item->event_id]),
+            'message' => 'E-mail guardado!',
+            'status' => '200'
+        ]);
+
+    }
+
+
+
+    // TODO usar una misma en campaign
+    protected function templateUpload(Request $request){
+
+        if ($request->hasFile('upload_file')) {
+            $image      = $request->file('upload_file');
+            $fileName   = uniqid('img_') . '.' . $image->getClientOriginalExtension();
+
+            $img = \Image::make($image->getRealPath());
+            // $img->resize(120, 120, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            $img->stream(); // <-- Key point
+
+            $path = 'mails'.'/'.$fileName;
+
+            if(\Storage::disk('local')->put($path, $img, 'public')){
+
+                $url =  \Storage::url($path, 'public');
+
+                return response()->json([
+                    'name' => ['url' => $url] ,
+                    'message' => 'Archivo subido!',
+                    'status' => '200'
+                ]);
+
+            }
+            else{
+                return '';
+            }
+
+
+        }
+
+    }
+
 
 
 
