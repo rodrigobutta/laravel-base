@@ -15,6 +15,9 @@ Route::group(['namespace' => '\App\Modules\Api'], function () {
         $router->any('api/events', ['as' => 'api.events', 'uses' => 'ApiAdminController@events']);
         $router->any('api/formtypes', ['as' => 'api.formtypes', 'uses' => 'ApiAdminController@formTypes']);
 
+
+        $router->post('api/upload/file', ['as' => 'api.upload.file', 'uses' => 'ApiAdminController@uploadFile']);
+
     });
 
 });

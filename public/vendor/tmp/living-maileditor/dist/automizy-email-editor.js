@@ -188,9 +188,11 @@
             },
             inline: true,
             theme: "modern",
+            skin: "lightgray",
+            language: 'es_MX',
             width: "100%",
             forced_root_block : "",
-            height: "400px",
+            height: "500px",
             /*schema: "html5",*/
             convert_fonts_to_spans: true,
             entity_encoding:"raw",
@@ -314,11 +316,56 @@
                 }
             ],
             toolbar: [
-                "styleselect | undo redo | alignleft aligncenter alignright alignjustify | image | link | bullist numlist | customfields systemfields",
-                "bold italic underline | fontselect fontsizeselect | forecolor backcolor | table | code"
+                "styleselect | undo redo | alignleft aligncenter alignright alignjustify | image | link | bullist numlist",
+                "bold italic underline | fontselect fontsizeselect | forecolor backcolor | table | code",
+                "customfields systemfields imageupload",
             ],
             contextmenu: "link inserttable | cell row column deletetable",
             setup: function (editor) {
+
+
+                // var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
+                // $(editor.getElement()).parent().append(inp);
+
+                var inp = $('input[name="upload_file"]').trigger('click');
+
+
+                inp.on("change",function(){
+
+                    var form = $('form[name="upload_file_form"]');
+                    var formData = new FormData(form[0]);
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            console.log(data)
+
+                            currentEditor.focus();
+                            currentEditor.selection.moveToBookmark(currentEditorBookmark);
+                            currentEditor.insertContent('<a href="'+data.url+'"/>'+data.name+'</a>');
+
+                        },
+                        cache: false,
+                        processData: false
+                    });
+
+                });
+
+                // editor.addButton( 'imageupload', {
+                //     text:"Archivo",
+                //     icon: false,
+                //     onclick: function(e) {
+                //         currentEditor = editor;
+                //         currentEditorBookmark = editor.selection.getBookmark();
+                //         inp.trigger('click');
+                //     }
+                // });
+
+
+
                 var hasNodeClass = function(target, className){
                     return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
                 };
@@ -340,34 +387,74 @@
                         editor.formatter.apply('jqueryTextColor', {value : 'red'});
                     }
                 });
+
+
+                // editor.addButton('customfields', {
+                //     type: 'menubutton',
+                //     text: $A.translate('Insertar'),
+                //     // icon: 'none fa fa-user',
+                //     menu: [
+                //         {
+                //             text: $A.translate('Usuario'),
+                //             menu: $AEE.getTinyMceUserDefinedMenu(editor)
+                //         },
+                //         {
+                //             text: $A.translate('Archivo'),
+                //             menu: $AEE.getTinyMceBuiltInMenu(editor)
+                //         }
+                //     ]
+                // });
+
+
                 editor.addButton('customfields', {
                     type: 'menubutton',
-                    text: $A.translate('Campos de Usuario'),
-                    icon: false,
+                    text: $A.translate('Insertar'),
+                    // icon: 'none fa fa-user',
                     menu: [
                         {
-                            text: $A.translate('User defined'),
+                            text: $A.translate('Usuario'),
                             menu: $AEE.getTinyMceUserDefinedMenu(editor)
                         },
+                        // {
+                        //     text: $A.translate('Archivo'),
+                        //     menu: $AEE.getTinyMceBuiltInMenu(editor)
+                        // },
                         {
-                            text: $A.translate('Built-in'),
-                            menu: $AEE.getTinyMceBuiltInMenu(editor)
-                        }
+                           text:"Archivo",
+                           icon: false,
+                           onclick: function(e) {
+
+                               currentEditor = editor;
+
+                               currentEditorBookmark = editor.selection.getBookmark();
+
+                               inp.trigger('click');
+                           }
+                       }
                     ]
                 });
-                editor.on('BeforeSetContent', function(e) {
-                    /*fix: link underline*/
-                    if(e.content.substring(0, 3) === '<a '){
-                        if(e.content.indexOf('data-mce-href') < 0){
-                            e.content = $(e.content).attr('style', 'text-decoration:none').wrapInner('<u></u>')[0].outerHTML;
-                        }
-                    }
-                    console.log('BeforeSetContent event', e);
-                });
-                editor.on('NodeChange', function(e) {
-                    console.log('NodeChange event', e);
-                    console.log($AEE.rgbStyleToHex(getColor(e)));
-                });
+
+                // editor.addButton('customfields', {
+                //     text: $A.translate('Usuario'),
+                //     // icon: 'none fa fa-user',
+                //     menu: $AEE.getTinyMceUserDefinedMenu(editor)
+                // });
+
+
+
+                // editor.on('BeforeSetContent', function(e) {
+
+                //     if(e.content.substring(0, 3) === '<a '){
+                //         if(e.content.indexOf('data-mce-href') < 0){
+                //             e.content = $(e.content).attr('style', 'text-decoration:none').wrapInner('<u></u>')[0].outerHTML;
+                //         }
+                //     }
+                //     console.log('BeforeSetContent event', e);
+                // });
+                // editor.on('NodeChange', function(e) {
+                //     console.log('NodeChange event', e);
+                //     console.log($AEE.rgbStyleToHex(getColor(e)));
+                // });
                 /*
                 editor.on('AddUndo', function(e) {
                     console.log('AddUndo event', e);
@@ -687,11 +774,11 @@
                     icon: false,
                     menu: [
                         {
-                            text: $A.translate('User defined'),
+                            text: $A.translate('Usuario'),
                             menu: $AEE.getTinyMceUserDefinedMenu(editor)
                         },
                         {
-                            text: $A.translate('Built-in'),
+                            text: $A.translate('Otros'),
                             menu: $AEE.getTinyMceBuiltInMenu(editor)
                         }
                     ]
@@ -1550,8 +1637,8 @@
             $buttonClone;
 
         $AEE.inputs.buttonSettings.text = $A.newInput({
-            label:$A.translate('Button text'),
-            value:$A.translate('My button'),
+            label:$A.translate('Texto del botón'),
+            value:$A.translate('Botón'),
             validator:'notEmpty',
             change:function(){
                 styleClone();
@@ -1566,7 +1653,7 @@
             }
         });
         $AEE.inputs.buttonSettings.radius = $A.newInput({
-            label:$A.translate('Border radius'),
+            label:$A.translate('Redondeado'),
             value:5,
             type:'number',
             labelAfter:' px',
@@ -1579,7 +1666,7 @@
         });
 
         $AEE.inputs.buttonSettings.paddingTop = $A.newInput({
-            label:$A.translate('Padding top'),
+            label:$A.translate('Espacio superior'),
             type:'number',
             labelAfter:' px',
             create:function(){
@@ -1590,7 +1677,7 @@
             }
         });
         $AEE.inputs.buttonSettings.paddingRight = $A.newInput({
-            label:$A.translate('Padding right'),
+            label:$A.translate('Espacio a derecha'),
             type:'number',
             labelAfter:' px',
             create:function(){
@@ -1601,7 +1688,7 @@
             }
         });
         $AEE.inputs.buttonSettings.paddingBottom = $A.newInput({
-            label:$A.translate('Padding bottom'),
+            label:$A.translate('Espacio inferior'),
             type:'number',
             labelAfter:' px',
             create:function(){
@@ -1612,7 +1699,7 @@
             }
         });
         $AEE.inputs.buttonSettings.paddingLeft = $A.newInput({
-            label:$A.translate('Padding left'),
+            label:$A.translate('Espacio a izquierda'),
             type:'number',
             labelAfter:' px',
             create:function(){
@@ -1624,7 +1711,7 @@
         });
 
         $AEE.inputs.buttonSettings.fontSize = $A.newInput({
-            label:$A.translate('Font size'),
+            label:$A.translate('Tamaño'),
             type:'number',
             labelAfter:' px',
             create:function(){
@@ -1635,7 +1722,7 @@
             }
         });
         $AEE.inputs.buttonSettings.position = $A.newInput({
-            label:$A.translate('Button position'),
+            label:$A.translate('Posición'),
             type:'select',
             options:[
                 ['left', $A.translate('Left')],
@@ -1647,19 +1734,19 @@
             }
         });
         $AEE.inputs.buttonSettings.textPosition = $A.newInput({
-            label:$A.translate('Text position'),
+            label:$A.translate('Alineación del texto'),
             type:'select',
             options:[
-                ['left', $A.translate('Left')],
-                ['center', $A.translate('Center'), true],
-                ['right', $A.translate('Right')]
+                ['left', $A.translate('Izquierda')],
+                ['center', $A.translate('Centrado'), true],
+                ['right', $A.translate('Derecha')]
             ],
             change:function(){
                 styleClone();
             }
         });
         $AEE.inputs.buttonSettings.fontFamily = $A.newInput({
-            label:$A.translate('Font family'),
+            label:$A.translate('Tipo de Fuente'),
             type:'select',
             options:$AEE.settings.fontFamilies,
             change:function(){
@@ -1667,28 +1754,28 @@
             }
         });
         $AEE.inputs.buttonSettings.bold = $A.newInput({
-            label:$A.translate('Bold'),
+            label:$A.translate('Negrita'),
             type:'checkbox',
             change:function(){
                 styleClone();
             }
         });
         $AEE.inputs.buttonSettings.underline = $A.newInput({
-            label:$A.translate('Underline'),
+            label:$A.translate('Subrayado'),
             type:'checkbox',
             change:function(){
                 styleClone();
             }
         });
         $AEE.inputs.buttonSettings.italic = $A.newInput({
-            label:$A.translate('Italic'),
+            label:$A.translate('Cursiva'),
             type:'checkbox',
             change:function(){
                 styleClone();
             }
         });
         $AEE.inputs.buttonSettings.backgroundColor = $A.newInput({
-            label:$A.translate('Background color'),
+            label:$A.translate('Color de fondo'),
             width:'32px',
             create:function(){
                 this.input().css({
@@ -1714,7 +1801,7 @@
             }
         });
         $AEE.inputs.buttonSettings.textColor = $A.newInput({
-            label:$A.translate('Text color'),
+            label:$A.translate('Color de texto'),
             width:'32px',
             create:function(){
                 this.input().css({
@@ -1741,7 +1828,7 @@
         });
 
         $AEE.buttons.buttonSettings.cancel = $A.newButton({
-            text: $A.translate('Cancel'),
+            text: $A.translate('Cancelar'),
             click: function () {
                 $AEE.dialogs.buttonSettings.close();
             }
@@ -1848,7 +1935,7 @@
         }).drawTo($td1);
 
         $AEE.dialogs.buttonSettings = $A.newDialog({
-            title:$A.translate('Button settings'),
+            title:$A.translate('Configuración del botón'),
             content:$table,
             width:'85%',
             buttons:[
@@ -1957,14 +2044,14 @@
             },
             buttons:[
                 {
-                    text: $A.translate('Cancel'),
+                    text: $A.translate('Cancelar'),
                     click: function () {
                         $AEE.dialogs.htmlCode.close();
                     }
                 },
                 {
                     skin: 'simple-white',
-                    text: $A.translate('Save'),
+                    text: $A.translate('Aceptar'),
                     data:{
                         $textarea:$textarea
                     },
@@ -2137,7 +2224,7 @@
             icon:'gallery.gif',
             name:'gallery',
             category:'content',
-            title:$A.translate('Image gallery'),
+            title:$A.translate('Imagenes'),
             drop:function($block, $contentCell, $topCell, $rightCell, $bottomCell, $leftCell) {
                 $block.addClass('aee-gallery-block-item').attr('data-space', 6);
                 $contentCell[0].style.textAlign = 'center';
@@ -2243,7 +2330,7 @@
         $AEE.elements.$blockSettingsGalleryBox = $('<div id="aee-block-settings-gallery-box" class="aee-block-settings-box"></div>').appendTo($AEE.elements.$blockSettingsContent);
         $AEE.inputs.blockSettingsGalleryDistanceBetween = $A.newInput({
             type:'number',
-            label:$A.translate('Space between images'),
+            label:$A.translate('Espaciado entre imagenes'),
             labelAfter:'px',
             value:6,
             enter:function(){
@@ -2260,12 +2347,12 @@
             }
         });
         $AEE.inputs.blockSettingsGalleryAlign = $A.newInput({
-            label:$A.translate('Alignment'),
+            label:$A.translate('Alineación'),
             type:'select',
             options:[
-                ['left', $A.translate('Left')],
-                ['center', $A.translate('Center'), true],
-                ['right', $A.translate('Right')]
+                ['left', $A.translate('Izquierda')],
+                ['center', $A.translate('Centrado'), true],
+                ['right', $A.translate('Derecha')]
             ],
             change:function(){
                 $AEE.elements.$activeBlock.data('$contentCell')[0].style.textAlign = this.val();
@@ -2287,7 +2374,7 @@
             icon:'columns.gif',
             name:'columns',
             category:'content',
-            title:$A.translate('Columns'),
+            title:$A.translate('Columnas'),
             drop:function($block, $contentCell, $topCell, $rightCell, $bottomCell, $leftCell) {
 
                 var $column1 = $('<div class="aee-columns-block-column aee-columns-block-column-1 aee-block-drop-zone aee-active" style="width:50%; display:block; float:left; margin:0; padding:0; border:none"></div>').appendTo($contentCell);
@@ -2544,7 +2631,7 @@
         $AEE.inputs.blockSettingsColumns1 = $A.newInput({
             type:'checkbox',
             labelWidth:'150px',
-            label:$A.translate('First column'),
+            label:$A.translate('Primer columna'),
             newRow:false,
             checked:true,
             change:function(){
@@ -2554,7 +2641,7 @@
         $AEE.inputs.blockSettingsColumns1.input().attr('tabindex', -1);
         $AEE.inputs.blockSettingsColumns1Width = $A.newInput2({
             type:'number',
-            labelBefore:$A.translate('width:'),
+            labelBefore:$A.translate('Ancho:'),
             labelAfter:'%',
             value:'50',
             create:function(){
@@ -2566,7 +2653,7 @@
         });
         $AEE.inputs.blockSettingsColumns1MinWidth = $A.newInput2({
             type:'number',
-            labelBefore:$A.translate('min width:'),
+            labelBefore:$A.translate('Ancho mínimo:'),
             labelAfter:'px',
             value:'200',
             create:function(){
@@ -2579,7 +2666,7 @@
         $AEE.inputs.blockSettingsColumns2 = $A.newInput({
             type:'checkbox',
             labelWidth:'150px',
-            label:$A.translate('Second column'),
+            label:$A.translate('Segunda columna'),
             checked:true,
             change:function(){
                 $AEE.rebuildColumns();
@@ -2589,7 +2676,7 @@
         $AEE.inputs.blockSettingsColumns2Width = $A.newInput2({
             type:'number',
             labelAfter:'%',
-            labelBefore:$A.translate('width:'),
+            labelBefore:$A.translate('Ancho:'),
             value:'50',
             create:function(){
                 this.input().pbmInput();
@@ -2600,7 +2687,7 @@
         });
         $AEE.inputs.blockSettingsColumns2MinWidth = $A.newInput2({
             type:'number',
-            labelBefore:$A.translate('min width:'),
+            labelBefore:$A.translate('Ancho mínimo:'),
             labelAfter:'px',
             value:'200',
             create:function(){
@@ -2613,7 +2700,7 @@
         $AEE.inputs.blockSettingsColumns3 = $A.newInput({
             type:'checkbox',
             labelWidth:'150px',
-            label:$A.translate('Third column'),
+            label:$A.translate('Tercer columna'),
             checked:false,
             change:function(){
                 $AEE.rebuildColumns();
@@ -2623,7 +2710,7 @@
         $AEE.inputs.blockSettingsColumns3Width = $A.newInput2({
             type:'number',
             labelAfter:'%',
-            labelBefore:$A.translate('width:'),
+            labelBefore:$A.translate('Ancho:'),
             value:'50',
             create:function(){
                 this.input().pbmInput();
@@ -2635,7 +2722,7 @@
         $AEE.inputs.blockSettingsColumns3MinWidth = $A.newInput2({
             type:'number',
             labelAfter:'px',
-            labelBefore:$A.translate('min width:'),
+            labelBefore:$A.translate('Ancho mínimo:'),
             value:'200',
             create:function(){
                 this.input().pbmInput();
@@ -2647,7 +2734,7 @@
         $AEE.inputs.blockSettingsColumns4 = $A.newInput({
             type:'checkbox',
             labelWidth:'150px',
-            label:$A.translate('Fourth column'),
+            label:$A.translate('Cuarta columna'),
             checked:false,
             change:function(){
                 $AEE.rebuildColumns();
@@ -2657,7 +2744,7 @@
         $AEE.inputs.blockSettingsColumns4Width = $A.newInput2({
             type:'number',
             labelAfter:'%',
-            labelBefore:$A.translate('width:'),
+            labelBefore:$A.translate('Ancho:'),
             value:'50',
             create:function(){
                 this.input().pbmInput();
@@ -2669,7 +2756,7 @@
         $AEE.inputs.blockSettingsColumns4MinWidth = $A.newInput2({
             type:'number',
             labelAfter:'px',
-            labelBefore:$A.translate('min width:'),
+            labelBefore:$A.translate('Ancho mínimo:'),
             value:'200',
             create:function(){
                 this.input().pbmInput();
@@ -2682,7 +2769,7 @@
         $AEE.inputs.blockSettingsColumnsFloatable = $A.newInput({
             type:'checkbox',
             labelWidth:'150px',
-            label:$A.translate('Floatable'),
+            label:$A.translate('Flotante'),
             checked:false,
             change:function(){
                 var $block = $block || $AEE.elements.$activeBlock;

@@ -1,23 +1,100 @@
+<div class="row">
+    <div class="col-md-12">
 
-<div class="box box-primary22 box-solid2">
-    <div class="box-header with-border">
-        <h3 class="box-title">Propiedades</h3>
-        <div class="box-tools pull-right">
 
-        </div>
+      <div class="box box-primary22 box-solid2">
+          <div class="box-header with-border">
+              <h3 class="box-title">Propiedades</h3>
+              <div class="box-tools pull-right">
+
+              </div>
+          </div>
+          <div class="box-body">
+
+              <div class="form-group">
+                  <label for="mail_subject" class="col-sm-2 control-label">Asunto</label>
+                  <div class="col-sm-10">
+                      <input type="text" id="mail_subject" name="mail_subject" value="{{$item->mail_subject}}" class="form-control" placeholder="" autofocus style="width: 100%;"/>
+                  </div>
+              </div>
+
+          </div>
+
+      </div>
+
+
     </div>
-    <div class="box-body">
 
-        <div class="form-group">
-            <label for="mail_subject" class="col-sm-2 control-label">Asunto</label>
-            <div class="col-sm-10">
-                <input type="text" id="mail_subject" name="mail_subject" value="{{$item->mail_subject}}" class="form-control" placeholder="" autofocus style="width: 100%;"/>
+    {{-- <div class="col-md-6">
+
+        <div class="box box-primary22 box-solid2">
+            <div class="box-header with-border">
+                <h3 class="box-title">Archivos</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+            <div class="box-body">
+
+                <table class="table no-margin">
+                  <thead>
+                  <tr>
+                    <th>Nombre</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    @foreach($item->uploads as $u)
+
+                        <tr>
+
+                            <td>
+                                {{$u->name}}
+                            </td>
+                        </tr>
+
+                    @endforeach
+
+                  </tbody>
+                </table>
+
+            </div>
+            <div class="box-footer">
+
+                {!! Form::open(['name' => 'upload_file_form', 'url' => route('api.upload.file'), 'method' => 'post', 'pjax-container222', 'class' => 'form-horizontal']) !!}
+
+                    {{ Form::hidden('campaign_id', $item->id) }}
+                    {{ Form::hidden('folder', 'mails') }}
+
+                    <div class="fields-group">
+
+                        <div class="form-group">
+                            <label for="social_title" class="col-sm-2 control-label">Título</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="upload_file[]" multiple class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input class="btn btn-default" type="submit" value="Upload" />
+
+                {!! Form::close() !!}
+
             </div>
         </div>
 
-    </div>
+    </div> --}}
+
 
 </div>
+
+
+
+
+
+{!! Form::open(['name' => 'upload_file_form', 'url' => route('api.upload.file'), 'method' => 'post', 'class' => 'hidden']) !!}
+    <input type="file" name="upload_file" class="form-control" />
+{!! Form::close() !!}
 
 
 <div class="box box-primary22 box-solid2">
@@ -28,29 +105,6 @@
         </div>
     </div>
     <div class="box-body">
-
-
-      {{--   <ul class="list-unstyled">
-
-             @if($item->destinationLeadlist)
-
-                @foreach($item->destinationLeadlist->getFields() as $f)
-                    <li data-id="{{$f->id_name}}">{{$f->title}}&nbsp;&rArr;&nbsp;<code>%recipient.{{$f->id_name}}%</code></li>
-                @endforeach
-
-             @else
-
-                 @foreach($item->userlists as $u)
-                     @foreach($u->getFields() as $f)
-                         <li data-id="{{$f->slug}}">{{$f->title}}&nbsp;&rArr;&nbsp;<code>%recipient.{{$f->slug}}%</code></li>
-                     @endforeach
-                 @endforeach
-
-             @endif
-
-
-        </ul>
- --}}
 
         <div id="email_editor"></div>
 
@@ -71,10 +125,59 @@
 
 <script type="text/javascript" data-exec-on-popstate>
 
+    var currentEditorBookmark;
+    var currentEditor;
+
+    // function uploadFile(){
+
+
+    //         console.log('subiendo')
+
+    //         var form = $('form[name="upload_file_form"]');
+
+    //         var formData = new FormData($(this)[0]);
+
+    //         $.ajax({
+    //             url: form.attr('action'),
+    //             type: 'POST',
+    //             contentType: false,
+    //             data: formData,
+    //             success: function (data) {
+    //                 console.log(data)
+    //             },
+    //             cache: false,
+    //             processData: false
+    //         });
+
+
+    // }
+
+
 
     $(function(){
 
 
+        // $('form[name="upload_file_form"]').on('submit',function(e){
+        //     e.preventDefault();
+        //     console.log('subiendo')
+
+        //     var form = $(this);
+
+        //     var formData = new FormData($(this)[0]);
+
+        //     $.ajax({
+        //         url: form.attr('action'),
+        //         type: 'POST',
+        //         contentType: false,
+        //         data: formData,
+        //         success: function (data) {
+        //             console.log(data)
+        //         },
+        //         cache: false,
+        //         processData: false
+        //     });
+
+        // })
 
 
 
@@ -113,6 +216,13 @@
 
 
         $AEE.baseDir('/vendor/tmp/living-maileditor/dist').imageUploadApiUrl('{{route('campaigns.template.upload')}}').layoutReady(function(){
+
+
+            $AEE.systemFields({
+                @foreach($item->uploads as $u)
+                    '<a href="{{$u->url}}">{{$u->name}}</a>': '{{$u->name}}',
+                @endforeach
+            });
 
 
             @if($item->destinationLeadlist)

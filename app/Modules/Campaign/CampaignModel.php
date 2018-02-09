@@ -10,6 +10,8 @@ use App\Modules\Form\FormModel;
 use App\Modules\Lead\LeadListModel;
 use App\Modules\Campaign\SendModel;
 
+use App\Modules\Api\UploadModel;
+
 class CampaignModel extends \App\Models\Profiled
 {
 
@@ -31,6 +33,11 @@ class CampaignModel extends \App\Models\Profiled
     public function sends()
     {
         return $this->hasMany(SendModel::class, 'campaign_id');
+    }
+
+    public function uploads()
+    {
+        return $this->hasMany(UploadModel::class, 'campaign_id');
     }
 
     public function event()

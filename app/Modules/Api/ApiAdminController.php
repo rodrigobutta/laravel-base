@@ -75,4 +75,85 @@ class ApiAdminController extends Controller{
 
 
 
+
+    protected function uploadFile(Request $request){
+
+        // var_dump($request->all());
+        // exit();
+
+        if ($request->hasFile('upload_file')) {
+
+            $file = $request->file('upload_file');
+
+            // $fileName   = uniqid('file_') . '.' . $file->getClientOriginalExtension();
+            $name   = $file->getClientOriginalName();
+
+            if($url =  $file->store('mails', 'public')){
+
+                return response()->json([
+                    'url' => \URL::to('/') . $url,
+                    'name' => $name,
+                    'message' => 'Ok!!!!!',
+                    'status' => '200'
+                ]);
+
+            }
+
+
+        }
+
+
+
+    }
+
+
+
+
+    // protected function uploadFile(Request $request){
+
+    //     $res = [];
+
+    //     $folder = $request->get('folder');
+
+    //     // var_dump($folder);
+    //     // var_dump($request->all());
+    //     // exit();
+
+    //     if ($request->hasFile('upload_file')) {
+
+    //         foreach ($request->file('upload_file') as $file) {
+
+    //             // $fileName   = uniqid('file_') . '.' . $file->getClientOriginalExtension();
+    //             $name   = $file->getClientOriginalName();
+
+    //             if($url =  $file->store($folder, 'public')){
+
+    //                 $upload = new UploadModel();
+    //                 $upload->url = $url;
+    //                 $upload->name = $name;
+    //                 $upload->campaign_id = $request->get('campaign_id');
+    //                 $upload->save();
+
+    //                 array_push($res, [
+    //                     'url' => $url,
+    //                     'name' => $name,
+    //                     'id' => $upload->id
+    //                 ]);
+
+    //             }
+
+    //         }
+
+    //     }
+
+    //     return response()->json([
+    //         'files' => $res ,
+    //         'message' => 'Ok!!!!!',
+    //         'status' => '200'
+    //     ]);
+
+
+    // }
+
+
 }
