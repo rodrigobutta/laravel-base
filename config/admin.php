@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'      => 'HUB',
+    'name'      => 'Eventos',
 
     /*
      * Logo in admin panel header.
      */
-    'logo'      => '<b>HUB</b>',
+    'logo'      => '<b>Eventos</b>',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => '<b>HUB</b>',
+    'logo-mini' => '<b>Eventos</b>',
 
     /*
      * Route configration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'  => 'HUB',
+    'title'  => 'Eventos',
 
     /*
      * Use `https`.
