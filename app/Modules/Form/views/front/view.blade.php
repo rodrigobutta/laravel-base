@@ -87,7 +87,7 @@
 
                     @foreach($fields as $field)
 
-                        <div class="form-group {!! $schema->corner_style !!} control-group">
+                        <div class="form-group {!! $schema->corner_style !!} control-group {!! $field->inline ? 'field-inline' : '' !!}">
 
                             <label class="control-label" for="{{$field->id_name}}">{{$field->title}}{!! $field->is_required ? ' <span class="required">*</span>' : '' !!}</label>
 
@@ -247,7 +247,7 @@
 
             // $('.phone').mask('(0000) 0000-0000').attr('placeholder','(0000) 0000-0000');
 
-            $('.phone').attr('placeholder','característica + teléfono');
+            // $('.phone').attr('placeholder','característica + teléfono');
 
 
             // var options =  {
@@ -305,11 +305,10 @@
                             @endif
 
                             @if ($field->type=='date')
-                                date:false, // fixpara que no valide mal
+                                date:false,
                                 dateITA: true
                             @endif
                         },
-
 
                         @if ($field->type=='date')
                             alt_{{$field->id_name}}: {
@@ -317,7 +316,6 @@
                                 dateITA: true
                             },
                         @endif
-
 
                     @endforeach
 

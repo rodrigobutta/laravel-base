@@ -321,10 +321,10 @@
 			</div>
 
 
-			<div data-bind="if: inlineNeeded" class="form-group">
+			<div class="form-group">
 				<label class="control-label">
 					<input type="checkbox" data-bind="checked: inline">
-					Display Inline?
+					Mostrar en la misma linea
 				</label>
 			</div>
 
@@ -508,7 +508,7 @@
 <!-- Helpers, por ahora para el select -->
 <script type="text/html" id="tmp-choices">
 	<div class="clearfix" data-bind="ifnot: hasNature">
-		<label>Choices</label>
+		<label>Opciones</label>
 		<ul data-bind="foreach: choices" class="list-unstyled"s>
 			<li>
 				<div class="form-group">
@@ -520,11 +520,11 @@
 			</li>
 		</ul>
 		<div data-bind="ifnot: hasChoices">
-			<button data-bind="click: addChoice" class="btn small btn-default">+ Add a Choice</button>
+			<button data-bind="click: addChoice" class="btn small btn-default">+ Agregar una opción</button>
 		</div>
 	</div>
 	<div class="clearfix" data-bind="if: hasNature">
-		<label>(choices aredefined in User Field)</label>
+		<label class="label label-default">Las opciones están definidas en la configuración del campo de la Base Unificada</label>
 	</div>
 </script>
 

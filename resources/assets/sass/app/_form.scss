@@ -33,25 +33,44 @@
 }
 
 .form-wrapper{
-    padding:20px;
+    // padding:20px;
+    max-width: 520px;
+    margin: auto;
 }
 
 #form {
     // padding:20px 0px;
     // background-color:#0f0;
 
+    .control-label {
+
+        span.required{
+            color: #dd0000;
+            font-weight: bold;
+        }
+
+    }
+
 
     &.form-horizontal{
+
         .control-label {
             float: left;
-            text-align: right;
-            width: 30%;
+            // text-align: right;
+            // width: 30%;
+            width: 160px;
             padding-right: 20px;
             padding-top: 5px;
+
+            span.required{
+                color: #dd0000;
+            }
         }
+
         .controls{
             float: left;
-            width: 50%;
+            width: calc( 100% - 160px);
+            position: relative;
         }
     }
 
@@ -70,9 +89,10 @@
 
 
         &.error{
-            position: absolute;
-            margin-top: 2px;
-            margin-left: 5px;
+            // position: absolute;
+            // z-index: 10;
+            // margin-top: 2px;
+            // margin-left: 5px;
             color: #f00 !important;
             font-size: 0.85em !important;
         }
@@ -82,7 +102,7 @@
 
     .control-group {
         // margin-bottom: 30px;
-        min-height: 50px;
+        min-height: 45px;
     }
 
 
@@ -93,15 +113,46 @@
     }
 
     .form-group {
-        margin-bottom: 1.5rem;
+        // margin-bottom: 1.5rem;
+        margin-bottom: 0px;
+        display: flex;
+
+
+        &.field-inline{
+
+            width: 100%;
+            display: table-cell;
+            padding-bottom: 10px;
+            // padding-right: 10px;
+
+            &:last-of-type{
+                background-color: #0f0;
+            }
+
+            .controls{
+                width: auto;
+                float: none;
+                // input,select{
+                //     width: 20%;
+                // }
+
+            }
+        }
+
+
+
+
+
+
+        &.half {
+            width: 50%;
+            float: left;
+            padding-right: 30px;
+            position: relative;
+        }
     }
 
-    .form-group.half {
-        width: 50%;
-        float: left;
-        padding-right: 30px;
-        position: relative;
-    }
+
 
 
 }
@@ -113,3 +164,6 @@ footer{
 }
 
 
+select.form-control:not([size]):not([multiple]) {
+    height: 38px;
+}
