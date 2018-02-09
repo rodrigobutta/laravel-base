@@ -1,11 +1,15 @@
-
+<h2>Activar campaña de e-mails</h2>
 <dl class="dl-horizontal">
       <dt>Campaña</dt><dd>{{$item->name}}</dd>
       <dt>Destinatarios</dt><dd>{{ $item->getDestinaionCount() }}</dd>
+      <dt>Asunto</dt><dd>{{ $item->mail_subject }}</dd>
 </dl>
 
-<a href="#" class="btn btn-default btn-send-test"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando Prueba">Enviar Prueba</a>
-<a href="#" class="btn btn-primary btn-send"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando">Enviar Campaña</a>
+{{-- <a href="#" class="btn btn-default btn-send-test"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando Prueba">Enviar Prueba</a> --}}
+
+<div class="text-center">
+    <a href="#" class="btn btn-success btn-send"  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando">Enviar</a>
+</div>
 
 
 
@@ -19,57 +23,57 @@
     $(function () {
 
 
-        $('.btn-send-test').on('click', function(e){
-            e.preventDefault;
+        // $('.btn-send-test').on('click', function(e){
+        //     e.preventDefault;
 
-            $that = $(this);
+        //     $that = $(this);
 
-            swal({
-              title: "Envio de Prueba",
-              text: "Ingresá la casilla de correo donde enviar el mail de prueba",
-              type: "input",
-              showCancelButton: true,
-              closeOnConfirm: false,
-              animation: "slide-from-top",
-              inputPlaceholder: "prueba@prueba.com"
-            },
-            function(inputValue){
-              if (inputValue === false) return false;
+        //     swal({
+        //       title: "Envio de Prueba",
+        //       text: "Ingresá la casilla de correo donde enviar el mail de prueba",
+        //       type: "input",
+        //       showCancelButton: true,
+        //       closeOnConfirm: false,
+        //       animation: "slide-from-top",
+        //       inputPlaceholder: "prueba@prueba.com"
+        //     },
+        //     function(inputValue){
+        //       if (inputValue === false) return false;
 
-              if (inputValue === "") {
-                swal.showInputError("Es necesario al menos un E-mail de destino de la prueba");
-                return false
-              }
+        //       if (inputValue === "") {
+        //         swal.showInputError("Es necesario al menos un E-mail de destino de la prueba");
+        //         return false
+        //       }
 
-              $that.button('loading');
+        //       $that.button('loading');
 
-              $.ajax({
-                  method: 'post',
-                  url: '{{route('campaigns.process.test',['itemId' => $item->id])}}',
-                  data: {
-                      _token:LA.token,
-                      email: inputValue,
-                      action: 'test'
-                  },
-                  success: function (data) {
+        //       $.ajax({
+        //           method: 'post',
+        //           url: '{{route('campaigns.process.test',['itemId' => $item->id])}}',
+        //           data: {
+        //               _token:LA.token,
+        //               email: inputValue,
+        //               action: 'test'
+        //           },
+        //           success: function (data) {
 
-                      $that.button('reset');
+        //               $that.button('reset');
 
-                      console.log(data)
+        //               console.log(data)
 
-                      swal("Prueba Enviada!", "Por favor, verificá la casilla " + inputValue, "success");
+        //               swal("Prueba Enviada!", "Por favor, verificá la casilla " + inputValue, "success");
 
-                  }
-              });
-
-
-            });
+        //           }
+        //       });
 
 
+        //     });
 
 
 
-        });
+
+
+        // });
 
 
         $('.btn-send').on('click', function(e){
@@ -97,8 +101,6 @@
 
                 if (isConfirm) {
 
-
-
                     $.ajax({
                         method: 'post',
                         url: '{{route('campaigns.process',['itemId' => $item->id])}}',
@@ -113,19 +115,15 @@
 
                             console.log(data)
 
-                            swal("Campaña Enviada!", "Se enviaron " + data.sentcnt + " correos", "success");
+                            swal({title: "Campaña Enviada!", text: "Se enviaron " + data.sentcnt + " correos.", type: "success"},
+                               function(){
+                                   // location.reload();
+                                   document.location = '{{route('campaigns.details',['itemId' => $item->id])}}';
+                               }
+                            );
 
                         }
                     });
-
-
-                    // swal({
-                    //     title: 'Shortlisted!',
-                    //     text: 'Candidates are successfully shortlisted!',
-                    //     type: 'success'
-                    // }, function() {
-                    //     form.submit();
-                    // });
 
                 } else {
                     $that.button('reset');

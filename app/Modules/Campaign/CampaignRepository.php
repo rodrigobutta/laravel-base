@@ -188,7 +188,14 @@ class CampaignRepository implements CampaignRepositoryInterface
         $item = CampaignModel::findOrFail($itemId);
 
         $new = $item->replicate();
-        $new->name = $new->name . ' - Copia ' . str_random(4);
+
+        $suffix = ' Replica ';
+        $newname = $new->name;
+        if (strpos($newname, $suffix) !== false) {
+            $newname = substr($newname, 0, strpos($newname, $suffix));
+        }
+        $new->name = $newname . $suffix . str_random(4);
+
         $new->slug = @str_slug($new->name);
         $new->push();
 

@@ -164,7 +164,15 @@ class LeadRepository implements LeadRepositoryInterface
          $item = LeadListModel::findOrFail($itemId);
 
          $new = $item->replicate();
-         $new->name = 'Copia de ' . $item->fullname . ' - ' . str_random(4);
+
+         $suffix = ' Copia ';
+         $newname = $new->fullname;
+         if (strpos($newname, $suffix) !== false) {
+             $newname = substr($newname, 0, strpos($newname, $suffix));
+         }
+         $new->name = $newname . $suffix . str_random(4);
+         // $new->name = 'Copia de ' . $item->fullname . ' - ' . str_random(4);
+
          $new->type_id = 4;
          $new->push();
 

@@ -133,9 +133,12 @@
                 </div>
               </div>
 
-              <div class="box-footer clearfix">
-
-              </div>
+             <div class="box-footer ">
+                 <div class="pull-right">
+                     <input type="button" class="btn btn-primary " id="btn_save" value="Guardar"/>
+                     <a href="{{route('events.manage', ['itemId'=>$item->event_id])}}" class="btn btn-default reload">Cerrar</a>
+                 </div>
+             </div>
 
         </div>
 

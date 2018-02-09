@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
 
         <div class="box box-primary22 box-solid2">
             <div class="box-header with-border">
@@ -26,15 +26,13 @@
 
     </div>
 
-    <div class="col-md-6">
+{{--     <div class="col-md-6">
 
         <div class="box box-primary22 box-solid2">
             <div class="box-header with-border">
                 <h3 class="box-title">Propiedades</h3>
                 <div class="box-tools pull-right">
-                  {{-- <span class="label label-danger">Algun alerta??</span> --}}
-                  {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> --}}
-                  {{-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> --}}
+
                 </div>
             </div>
             <div class="box-body">
@@ -42,14 +40,10 @@
 
               </dl>
             </div>
-           {{--  <div class="box-footer">
-                <a href="#" class="btn btn-primary btn-sm btn-edit-event" data-id="{{$item->id}}" data-toggle="tooltip" title="Editar {{$item->name}}">
-                    <i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar
-                </a>
-            </div> --}}
+
         </div>
 
-    </div>
+    </div> --}}
 
 
 </div>
@@ -114,8 +108,9 @@
                               </td>
                               <td class="text-right">
                                   <a class="btn btn-default btn-sm btn-flat"  href="{{route('forms.edit', ['formid' => $f->id])}}">Editar</a>
-                                  <a class="btn btn-default btn-sm btn-flat reload" href="{{route('forms.schema', ['formid' => $f->id])}}">Configurar</a>
+
                                   @if($f->type_id==1)
+                                    <a class="btn btn-default btn-sm btn-flat reload" href="{{route('forms.schema', ['formid' => $f->id])}}">Campos del Formulario</a>
                                     <a href="{{route('forms.template',["itemId"=>$f->id])}}" class="btn btn-default btn-sm btn-flat reload">Mail Automático</a>
                                   @endif
                                   <a class="btn btn-primary btn-sm btn-flat"  href="{{route('forms.view', ['eventSlug' => $f->event->slug, 'formSlug' => $f->slug, 'campaign' => 'test'])}}" target="_blank">Vista Previa</a>
@@ -218,7 +213,7 @@
                                     @if($c->type_id==2)
                                         <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
                                         <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-config" data-id="{{$c->id}}">Configurar</a>
-                                        <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Compartir</a>
+                                        <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Activar</a>
                                     @endif
 
                                     @if($c->type_id==3)
@@ -227,12 +222,12 @@
                                             <a href="#" class="btn btn-default btn-sm btn-flat btn-campaign-edit" data-id="{{$c->id}}">Editar</a>
                                             <a href="{{route('campaigns.template',["itemId"=>$c->id])}}" class="btn btn-default btn-sm btn-flat reload">Configurar</a>
                                         @else
-                                            <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-primary btn-sm btn-flat">Detalles</a>
+                                            <a href="{{route('campaigns.details',["itemId"=>$c->id])}}" class="btn btn-info btn-sm btn-flat">Detalles</a>
                                         @endif
 
-                                        {{-- @if($status->id==2) --}}
-                                            <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Enviar</a>
-                                        {{-- @endif --}}
+                                        @if($status->id==2)
+                                            <a href="#" class="btn btn-primary btn-sm btn-flat btn-campaign-process" data-id="{{$c->id}}">Activar</a>
+                                        @endif
 
                                     @endif
 
@@ -347,7 +342,7 @@
                                         @if($l->type_id==4)
                                             <a class="btn btn-default btn-sm btn-flat btn-leadlist-edit" href="#" data-id="{{$l->id}}">Editar</a>
                                         @endif
-                                        <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
+                                        <a class="btn btn-info btn-sm btn-flat" href="{{route('leadlist.manage', ['itemId' => $l->id])}}">Administrar</a>
                                         <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.export', ['itemId' => $l->id])}}" target="_blank">Exportar</a>
                                         <a class="btn btn-default btn-sm btn-flat" href="{{route('leadlist.clone', ['itemId' => $l->id])}}">Clonar</a>
                                     @endif
