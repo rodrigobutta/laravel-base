@@ -79,28 +79,38 @@ class LeadModel extends \App\Models\Profiled
             $item->value = $value;
             $item->key = $key;
 
-            // busco info del campo en la definicion de campos de usuario
-            if (strpos($key, 'userfield_') !== false) {
 
-                $fieldId = str_replace('userfield_','',$key);
 
-                $userField = UserFieldModel::findOrFail($fieldId);
 
-                $item->title = $userField->title;
+            if (strpos($key, 'alt_') === false) {
 
-                $item->nature = 'userfield';
+                // busco info del campo en la definicion de campos de usuario
+                if (strpos($key, 'userfield_') !== false) {
 
-            }
-            else{
+                    $fieldId = str_replace('userfield_','',$key);
 
-                // busco info del campo en la definicion json del formulario
-                if($obj = findObjectInArray($form_fields_map,'id_name',$key)){
-                    $item->title = $obj->title;
+                    $userField = UserFieldModel::find($fieldId);
+
+                    $item->title = $userField->title;
+
+                    $item->nature = 'userfield';
+
+                }
+                else{
+
+                    // busco info del campo en la definicion json del formulario
+                    if($obj = findObjectInArray($form_fields_map,'id_name',$key)){
+                        $item->title = $obj->title;
+                    }
+
                 }
 
+                array_push($res,$item);
+
             }
 
-            array_push($res,$item);
+
+
 
         }
 

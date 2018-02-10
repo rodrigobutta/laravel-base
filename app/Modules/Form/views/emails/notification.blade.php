@@ -136,10 +136,15 @@
                                 <tr>
                                     <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
                                         @foreach($lead->getFields() as $field)
-                                            @if(isset($field->title) && isset($field->value) && isset($field->key) )
-                                                <strong>{{$field->title}}:</strong>&nbsp;{{$field->value}}<br>
-                                            @else
-                                                <strong>{{strtoupper($field->key)}}:</strong>&nbsp;{{$field->value}}<br>
+
+                                            @if( isset($field->value) && (isset($field->key) || isset($field->title)) )
+
+                                                @if(isset($field->title) )
+                                                    <strong>{{$field->title}}:</strong>&nbsp;{{$field->value}}<br>
+                                                @else
+                                                    <strong>{{strtoupper($field->key)}}:</strong>&nbsp;{{$field->value}}<br>
+                                                @endif
+
                                             @endif
                                         @endforeach
                                     </td>

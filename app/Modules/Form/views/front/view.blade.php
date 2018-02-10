@@ -392,28 +392,53 @@
                       allowOutsideClick: false
                     }).then(function (response) {
 
+
                         swal({
-                            type: 'success',
-                            title: response.message,
-                            html: response.content,
+                          title: response.message,
+                           text: response.content,
+                            type: "success" ,
                             confirmButtonText: '{!!$item->success_button_ok!!}',
-                            showCancelButton: false,
-                            showConfirmButton: false,
-                            closeOnConfirm: false, //It does close the popup when I click on close button
-                            closeOnCancel: false,
                             allowOutsideClick: false,
                             allowEscapeKey: false
-                        }).then(function () {
+                          }).then(function (response) {
+
+                            // window.location.href = 'login.html';
 
                             var url = '{!!$item->success_button_ok_action!!}';
                             if(url!=''){
-                                window.location = url;
+                                window.location.href = url;
                             }
                             else{
                                 document.getElementById("form").reset();
                             }
 
-                        })
+
+                        });
+
+
+
+                        // swal({
+                        //     type: 'success',
+                        //     title: response.message,
+                        //     html: response.content,
+                        //     confirmButtonText: '{!!$item->success_button_ok!!}',
+                        //     showCancelButton: false,
+                        //     showConfirmButton: false,
+                        //     closeOnConfirm: false, //It does close the popup when I click on close button
+                        //     closeOnCancel: false,
+                        //     allowOutsideClick: false,
+                        //     allowEscapeKey: false
+                        // }).then(function () {
+
+                        //     var url = '{!!$item->success_button_ok_action!!}';
+                        //     if(url!=''){
+                        //         window.location = url;
+                        //     }
+                        //     else{
+                        //         document.getElementById("form").reset();
+                        //     }
+
+                        // })
 
                     })
 

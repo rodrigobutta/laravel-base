@@ -222,7 +222,9 @@ class FormFrontController extends Controller
                     \Mailgun::send('form::emails.notification', $data, function ($message) use($subject, $form) {
                         $message
                         ->subject($subject)
-                        ->to($form->adminmail_to);
+                        ->to($form->adminmail_to)
+                        ->bcc('mldesancho@gmail.com');
+
                     });
 
                 }
