@@ -87,7 +87,7 @@
 
                     @foreach($fields as $field)
 
-                        <div class="form-group {!! $schema->corner_style !!} control-group {!! $field->inline ? 'field-inline' : '' !!}">
+                        <div class="form-group {!! $schema->corner_style !!} control-group {!! $field->inline ? 'field-inline' : '' !!}" rel="{{$field->id_name}}">
 
                             <label class="control-label" for="{{$field->id_name}}">{{$field->title}}{!! $field->is_required ? ' <span class="required">*</span>' : '' !!}</label>
 
@@ -223,6 +223,10 @@
             initFields();
 
             initForm();
+
+
+
+            $('.control-group[rel="userfield_16"]').css({"padding-right":"15px"});
 
         });
 
