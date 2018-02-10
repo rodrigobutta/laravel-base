@@ -3,7 +3,7 @@
 
        <div class="box box-default">
            <div class="box-header with-border">
-               <h3 class="box-title">Seleccione el proyecto a administrar</h3>
+               <h3 class="box-title">Eventos</h3>
            </div>
            <div class="box-body">
 
