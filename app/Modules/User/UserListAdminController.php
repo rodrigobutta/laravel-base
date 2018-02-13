@@ -45,7 +45,7 @@ class UserListAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Lista de receptores');
+            $content->header('Base de Usuarios Unificada');
             $content->description('userlistado');
 
             $content->body($this->grid());
@@ -68,7 +68,7 @@ class UserListAdminController extends Controller{
 
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Lista de receptores');
+            $content->header('Base de Usuarios Unificada');
             $content->description('editando');
 
             $content->body($this->form()->edit($id));
@@ -84,7 +84,7 @@ class UserListAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Lista de receptores');
+            $content->header('Base de Usuarios Unificada');
             $content->description('creando');
 
             $content->body($this->form());
@@ -169,8 +169,8 @@ class UserListAdminController extends Controller{
             });
 
 
-            $form->text('name');
-            $form->text('description');
+            $form->text('name','Nombre');
+            $form->text('description','Descripción');
 
             // $enable_states = [
             //     'on'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
@@ -178,7 +178,7 @@ class UserListAdminController extends Controller{
             // ];
             // $form->switch("enabled")->states($enable_states);
 
-            $form->multipleSelect('users')->options(UserModel::all()->pluck('name', 'id'));
+            $form->multipleSelect('users','Usuarios')->options(UserModel::all()->pluck('name', 'id'));
 
         });
     }

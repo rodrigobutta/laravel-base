@@ -109,13 +109,13 @@ class UserAdminController extends Controller{
             $grid->column('surname', 'Apellido');
             $grid->column('email', 'E-mail');
 
-            $grid->note()->editable('textarea');
+            // $grid->note()->editable('textarea');
 
-            $published_states = [
-                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $grid->enabled()->switch($published_states);
+            // $published_states = [
+            //     'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+            //     'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+            // ];
+            // $grid->enabled()->switch($published_states);
 
         });
     }
@@ -134,15 +134,15 @@ class UserAdminController extends Controller{
             $form->text('name', 'Nombre');
             $form->text('surname', 'Apellido');
             $form->text('email', 'E-mail');
-            $form->text('dni', 'DNI');
+            // $form->text('dni', 'DNI');
 
-            $form->textarea('note');
+            // $form->textarea('note');
 
-            $enabled_states = [
-                'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
-                'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
-            ];
-            $form->switch("enabled")->states($enabled_states);
+            // $enabled_states = [
+            //     'on'  => ['value' => 0, 'text' => 'YES', 'color' => 'primary'],
+            //     'off' => ['value' => 1, 'text' => 'NO', 'color' => 'default'],
+            // ];
+            // $form->switch("enabled")->states($enabled_states);
 
 
 
