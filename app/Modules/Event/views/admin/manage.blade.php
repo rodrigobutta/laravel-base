@@ -359,7 +359,7 @@
               </div>
 
               <div class="box-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-default btn-flat pull-left"><i class="fa fa-hand-lizard-o"></i>&nbsp;Nueva lista segmentada</a>
+                {{-- <a href="javascript:void(0)" class="btn btn-default btn-flat pull-left"><i class="fa fa-hand-lizard-o"></i>&nbsp;Nueva lista segmentada</a> --}}
               </div>
 
         </div>
