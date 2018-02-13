@@ -34,10 +34,10 @@ class FormRepository implements FormRepositoryInterface
     private function posts(){
 
         // if(Auth::guard('admin')->check()){
-            $posts = $this->form;
+            // $posts = $this->form;
         // }
         // else{
-        //     $posts = $this->form->public();
+            $posts = $this->form->public();
         // }
 
         return $posts;
