@@ -126,6 +126,7 @@ class EventAdminController extends Controller{
 
         $campaign = new CampaignModel();
         $campaign->name = 'Pruebas de formulario';
+        $campaign->slug = 'test';
         $this->campaignRepository->create($campaign,$item->id,1);
 
 
