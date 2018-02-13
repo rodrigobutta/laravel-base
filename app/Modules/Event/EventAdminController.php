@@ -107,7 +107,7 @@ class EventAdminController extends Controller{
         $item = new EventModel();
 
         $item->name = $request->get("name");
-        $item->description = $request->get("description");
+        // $item->description = $request->get("description");
         $item->slug = @str_slug($item->name);
 
         $item->save();
