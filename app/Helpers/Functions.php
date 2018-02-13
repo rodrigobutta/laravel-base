@@ -91,6 +91,14 @@ function getUserlists(){
 }
 
 
+function getUserOptionsCollection(){
+    return Cache::rememberForever('user-field-choice', function () {
+        $res = collect(DB::table('user_field_choice')->get())->keyBy('id');
+        return $res;
+    });
+}
+
+
 
 // REB: http://laravel-tricks.com/tricks/using-bootstrap-error-classes-for-flash-message
 

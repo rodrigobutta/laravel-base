@@ -198,7 +198,7 @@
             var ids = selectedRows().join();
 
             swal({
-              title: "¿Eliminar estos elementos?",
+              title: "Eliminar estos elementos?",
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#DD6B55",

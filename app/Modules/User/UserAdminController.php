@@ -110,6 +110,37 @@ class UserAdminController extends Controller{
             $grid->column('surname', 'Apellido');
             $grid->column('email', 'E-mail');
 
+            $grid->sex('Sexo')->display(function ($val) {
+                if($val){
+                    $values = getUserOptionsCollection();
+                    return $values->get($val)->title;
+                }
+                else{
+                    return '';
+                }
+            });
+
+            $grid->country('Pais')->display(function ($val) {
+                if($val){
+                    $values = getUserOptionsCollection();
+                    return $values->get($val)->title;
+                }
+                else{
+                    return '';
+                }
+            });
+
+            $grid->state('Provincia')->display(function ($val) {
+                if($val){
+                    $values = getUserOptionsCollection();
+                    return $values->get($val)->title;
+                }
+                else{
+                    return '';
+                }
+            });
+
+
 
             $grid->tools(function ($tools) {
                 $tools->batch(function ($batch) {

@@ -211,6 +211,9 @@ class FormFrontController extends Controller
                 // si no recupero el mail del form, no puedo enviar confirmacion
                 if(isset($form->adminmail_to) && $form->adminmail_to!=''){
 
+
+                    $mails = explode( ',' , str_replace(';',',', $form->adminmail_to) ); // multiple destinatarios
+
                     $subject = 'Nueva conversion para el formulario ' . $form->name;
 
                     $data = [
@@ -222,7 +225,7 @@ class FormFrontController extends Controller
                     \Mailgun::send('form::emails.notification', $data, function ($message) use($subject, $form) {
                         $message
                         ->subject($subject)
-                        ->to($form->adminmail_to)
+                        ->to($mails)
                         ->bcc('mldesancho@gmail.com');
 
                     });
