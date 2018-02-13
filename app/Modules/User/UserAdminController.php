@@ -29,6 +29,10 @@ use RodrigoButta\Admin\Layout\Content;
 use RodrigoButta\Admin\Traits\ResourceDispatcherTrait;
 
 
+use App\Admin\Extensions\Tools\ReleasePost;
+use App\Admin\Extensions\Tools\AddToList;
+
+
 
 class UserAdminController extends Controller{
 
@@ -48,8 +52,7 @@ class UserAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('listado');
+            $content->header('Base de Usuarios Unificada');
 
             $content->body($this->list());
         });
@@ -71,8 +74,7 @@ class UserAdminController extends Controller{
 
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('editando');
+            $content->header('Base de Usuarios Unificada');
 
             $content->body($this->form()->edit($id));
         });
@@ -87,8 +89,7 @@ class UserAdminController extends Controller{
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('creando');
+            $content->header('Base de Usuarios Unificada');
 
             $content->body($this->form());
         });
@@ -108,6 +109,17 @@ class UserAdminController extends Controller{
             $grid->column('name', 'Nombre');
             $grid->column('surname', 'Apellido');
             $grid->column('email', 'E-mail');
+
+
+            $grid->tools(function ($tools) {
+                $tools->batch(function ($batch) {
+                    // $batch->add('Release post', new ReleasePost(1));
+                    // $batch->add('Unrelease post', new ReleasePost(0));
+                    $batch->add('Nueva lista', new AddToList(0));
+                });
+            });
+
+
 
             // $grid->note()->editable('textarea');
 
