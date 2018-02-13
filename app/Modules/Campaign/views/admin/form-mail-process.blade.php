@@ -84,6 +84,11 @@
 
             $that.button('loading');
 
+
+
+
+
+
             swal({
                 title: "Estas seguro de enviar la campaña?",
                 text: "Una vez hecho, esta acción no va a poder cancelarse.",
@@ -99,7 +104,11 @@
             },
             function(isConfirm){
 
+                console.log('aaaa')
+
                 if (isConfirm) {
+
+                    console.log('bbb')
 
                     $.ajax({
                         method: 'post',
@@ -129,8 +138,6 @@
                     $that.button('reset');
                     swal("Envio cancelado", "Siempre es bueno revisar todo una segunda vez.", "error");
                 }
-
-
 
             });
 
