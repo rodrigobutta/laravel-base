@@ -84,7 +84,7 @@
                                 <i class="fa {{$f->type->icon}}"></i>&nbsp;{{$f->type->name}}
                             </td>
                               <td>
-                                  <a href="pages/examples/invoice.html">{{$f->name}}</a>
+                                  {{$f->name}}
                               </td>
                               <td>
                                     @if($f->enabled)
@@ -177,7 +177,7 @@
                                     <i class="fa {{$c->type->icon}}"></i>&nbsp;{{$c->type->name}}
                                 </td>
                               <td>
-                                  <a href="pages/examples/invoice.html">{{$c->name}}</a>
+                                  {{$c->name}}
                               </td>
                               <td>
                                   <span class="label label-success">{{$c->getDestinaionLeadlist()->fullname}}</span>
