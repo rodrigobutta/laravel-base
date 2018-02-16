@@ -119,11 +119,8 @@
 
 
         &.field-inline{
-
-            // width: 100%;
             display: table-cell;
             padding-bottom: 10px;
-            // padding-right: 10px;
 
             &:last-of-type{
                 background-color: #0f0;
@@ -132,11 +129,12 @@
             .controls{
                 width: auto;
                 float: none;
-                // input,select{
-                //     width: 20%;
-                // }
-
             }
+
+            @media (max-width: 800px){
+                display: contents;
+            }
+
         }
 
 
