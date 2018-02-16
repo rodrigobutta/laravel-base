@@ -212,7 +212,14 @@ class FormFrontController extends Controller
                 if(isset($form->adminmail_to) && $form->adminmail_to!=''){
 
 
-                    $mails = explode( ',' , str_replace(';',',', $form->adminmail_to) ); // multiple destinatarios
+                    $tmpMails = explode( ',' , str_replace(';',',', $form->adminmail_to) ); // multiple destinatarios
+
+
+                    $mails = [];
+                    foreach ($tmpMails as $value) {
+                        $mails[$value] = [];
+                    }
+
 
                     $subject = 'Nueva conversion para el formulario ' . $form->name;
 
@@ -222,7 +229,7 @@ class FormFrontController extends Controller
                         'lead' => $lead
                     ];
 
-                    \Mailgun::send('form::emails.notification', $data, function ($message) use($subject, $form) {
+                    \Mailgun::send('form::emails.notification', $data, function ($message) use($subject, $form, $mails) {
                         $message
                         ->subject($subject)
                         ->to($mails)

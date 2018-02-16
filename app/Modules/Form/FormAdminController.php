@@ -34,33 +34,33 @@ use Illuminate\Support\MessageBag;
 
 class FormAdminController extends Controller{
 
-	use ResourceDispatcherTrait;
+    use ResourceDispatcherTrait;
 
 
-	public function edit($id)
-	{
+    public function edit($id)
+    {
 
-		// fix reb por resources que no interpretan bien el method del controller
-		if($id=="create"){
-			return $this->create();
-		}
+        // fix reb por resources que no interpretan bien el method del controller
+        if($id=="create"){
+            return $this->create();
+        }
 
-		return Admin::content(function (Content $content) use ($id) {
+        return Admin::content(function (Content $content) use ($id) {
 
 
             // $item = FormModel::findOrFail($id);
 
-			// $content->header($item->name);
+            // $content->header($item->name);
             $content->header('Formulario');
-			$content->description('editando');
+            $content->description('editando');
 
             $content->body($this->form()->edit($id));
-			// $content->body($this->form($item->event_id)->edit($id));
-		});
-	}
+            // $content->body($this->form($item->event_id)->edit($id));
+        });
+    }
 
 
-	public function create(Request $request)
+    public function create(Request $request)
     {
 
         if($request->has('event_id')){
@@ -74,7 +74,7 @@ class FormAdminController extends Controller{
 
         return Admin::content(function (Content $content) use($eventId) {
 
-        		if($eventId!=0){
+                if($eventId!=0){
                       $event = EventModel::find($eventId);
                       $content->header('Crear formulario para evento ' . $event->name);
                   }
@@ -86,13 +86,13 @@ class FormAdminController extends Controller{
                   $content->body($this->form($eventId));
 
           });
-	}
+    }
 
 
-	protected function form($eventId = 0)
-	{
+    protected function form($eventId = 0)
+    {
 
-		return Admin::form(FormModel::class, function (Form $form) use($eventId){
+        return Admin::form(FormModel::class, function (Form $form) use($eventId){
 
 
             $form->disableReset();
@@ -112,8 +112,8 @@ class FormAdminController extends Controller{
 
             $form->hidden('schema')->value("{}");
 
-			$form->text('name','Nombre')->rules('required|min:5');
-			$form->text('slug','Slug (url)')->rules('required|min:5');
+            $form->text('name','Nombre')->rules('required|min:5');
+            $form->text('slug','Slug (url)')->rules('required|min:5');
 
             $states = [
                 'on'  => ['value' => 1, 'text' => 'SI', 'color' => 'primary'],
@@ -152,7 +152,7 @@ class FormAdminController extends Controller{
             $form->html('<h3><i class="fa fa-question"></i>&nbsp;Cuadro de confirmación</h3>');
 
             $form->text('confirm_title','Título')->default('¿Confirma enviar el formulario?')->rules('required');
-            $form->ckeditor('confirm_content','Contenido');
+            $form->textarea('confirm_content','Contenido');
             $form->text('confirm_button_ok','Boton Aceptar')->default('Aceptar')->rules('required');
             $form->text('confirm_button_cancel','Boton Cancelar')->default('Cancelar')->rules('required');//->placeholder('Texto del botón cancelaro dejar vacio para ocultar el botón');
 
@@ -160,7 +160,7 @@ class FormAdminController extends Controller{
             $form->html('<h3><i class="fa fa-check"></i>&nbsp;Cuadro posterior al envio</h3>');
 
             $form->text('success_title','Título')->default('Gracias')->rules('required');
-            $form->ckeditor('success_content','Contenido');
+            $form->textarea('success_content','Contenido');
             $form->text('success_button_ok','Boton Aceptar')->default('Aceptar')->rules('required');
             $form->text('success_button_ok_action','Acción del botón aceptar')->placeholder('URL para redireccionar o dejar vacio para permanecer en la pantalla');
 
@@ -205,66 +205,66 @@ class FormAdminController extends Controller{
             });
 
 
-		});
-	}
+        });
+    }
 
 
 
 
 
-	public function schemaEditor($formid){
+    public function schemaEditor($formid){
 
-		// Admin::css(asset('modules/form/css/editor.css'));
+        // Admin::css(asset('modules/form/css/editor.css'));
 
-		// Admin::css('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css');
-		// Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js');
-		// Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-es.min.js');
+        // Admin::css('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css');
+        // Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js');
+        // Admin::js('https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-es.min.js');
 
-		// Admin::js(asset('modules/form/js/jquery.hotkeys.js'));
+        // Admin::js(asset('modules/form/js/jquery.hotkeys.js'));
 
-		// Admin::js(asset('modules/form/js/knockout-3.4.2.js'));
-		// Admin::js(asset('modules/form/js/knockout.mapping-latest.js'));
-		// Admin::js(asset('modules/form/js/knockout-sortable.js'));
+        // Admin::js(asset('modules/form/js/knockout-3.4.2.js'));
+        // Admin::js(asset('modules/form/js/knockout.mapping-latest.js'));
+        // Admin::js(asset('modules/form/js/knockout-sortable.js'));
 
-		// Admin::js(asset('modules/form/js/editor_custom.js'));
-		// Admin::js(asset('modules/form/js/builder.js'));
-
-
-		$item = FormModel::findOrFail($formid);
+        // Admin::js(asset('modules/form/js/editor_custom.js'));
+        // Admin::js(asset('modules/form/js/builder.js'));
 
 
-		return Admin::content(function (Content $content) use($item){
-
-			$content->header($item->fullname);
-			// $content->description('editando');
-
-			$schema = $item->schema;
-
-			// \Debugbar::info($schema);
-
-			$userFields = UserFieldModel::all();
-
-			$content->body(view('form::admin.schema.edit', compact('item', 'schema', 'userFields')));
-
-		});
-
-	}
+        $item = FormModel::findOrFail($formid);
 
 
-	public function schemaUpdate($formid, Request $request){
+        return Admin::content(function (Content $content) use($item){
 
-		$form = FormModel::findOrFail($formid);
+            $content->header($item->fullname);
+            // $content->description('editando');
 
-		$form->schema = $request->get('schema');
+            $schema = $item->schema;
 
-		$form->save();
+            // \Debugbar::info($schema);
 
-		return response([
-			'status'  => true,
-			'message' => trans('admin.update_succeeded'),
-		]);
+            $userFields = UserFieldModel::all();
 
-	}
+            $content->body(view('form::admin.schema.edit', compact('item', 'schema', 'userFields')));
+
+        });
+
+    }
+
+
+    public function schemaUpdate($formid, Request $request){
+
+        $form = FormModel::findOrFail($formid);
+
+        $form->schema = $request->get('schema');
+
+        $form->save();
+
+        return response([
+            'status'  => true,
+            'message' => trans('admin.update_succeeded'),
+        ]);
+
+    }
 
 
 
